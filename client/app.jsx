@@ -1,6 +1,7 @@
 import React from 'react';
 import Ideas from './pages/ideas';
-import Header from './components/header';
+import HeaderBar from './components/header-bar';
+import NavBar from './components/nav-bar';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -26,10 +27,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      // <>
-      // { this.renderPage() }
-      // </>
-      <Header />
+      <>
+        <HeaderBar />
+        <NavBar />
+        <main>
+          { this.renderPage() }
+        </main>
+      </>
     );
   }
 }
