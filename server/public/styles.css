@@ -1,0 +1,20 @@
+.header-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 24px;
+}
+
+.header-icon {
+  font-size: 28px;
+}
+
+.color-pink {
+  color: #ff9fc2;
+}
+
+.background-white {
+  background-color: white;
+}
+
+.header-icon:hover {
+  cursor: pointer;
+}

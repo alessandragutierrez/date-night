@@ -1,5 +1,6 @@
 import React from 'react';
-import Home from './pages/home';
+import Ideas from './pages/ideas';
+import Header from './components/header';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -19,15 +20,16 @@ export default class App extends React.Component {
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home />;
+      return <Ideas />;
     }
   }
 
   render() {
     return (
-      <>
-      { this.renderPage() }
-      </>
+      // <>
+      // { this.renderPage() }
+      // </>
+      <Header />
     );
   }
 }

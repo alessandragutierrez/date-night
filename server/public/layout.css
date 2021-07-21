@@ -1,0 +1,20 @@
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.column-half {
+  width: 50%;
+}
+
+.column-third {
+  width: 33.3%;
+}
+
+.column-quarter {
+  width: 25%;
+}
