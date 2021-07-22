@@ -1,32 +1,57 @@
 import React from 'react';
 
 export default class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {};
+  // }
+
+  renderIconClasses() {
+    return (
+      this.props.page === '' || this.props.page === 'add-idea'
+        ? {
+            ideas: 'fas fa-lightbulb nav-icon',
+            upcoming: 'far fa-calendar-check nav-icon',
+            myDates: 'far fa-heart nav-icon'
+          }
+        : this.props.page === 'upcoming'
+          ? {
+              ideas: 'far fa-lightbulb nav-icon',
+              upcoming: 'fas fa-calendar-check nav-icon',
+              myDates: 'far fa-heart nav-icon'
+            }
+          : this.props.page === 'my-dates'
+            ? {
+                ideas: 'far fa-lightbulb nav-icon',
+                upcoming: 'far fa-calendar-check nav-icon',
+                myDates: 'fas fa-heart nav-icon'
+              }
+            : null
+    );
   }
 
   render() {
+    const iconClasses = this.renderIconClasses();
     return (
       <div className="nav-bar-container background-white">
         <div className="row text-center color-pink nav-bar">
           <div className="nav-column-third">
-            <div className="nav-option-container">
-              <span className="fas fa-lightbulb nav-icon"></span>
+            <a href="#" className="nav-option-container color-pink">
+              <span className={iconClasses.ideas}></span>
               <span className="nav-label">Ideas</span>
-            </div>
+            </a>
           </div>
           <div className="nav-column-third">
-            <div className="nav-option-container">
-              <span className="far fa-calendar-check nav-icon"></span>
+            <a href="#upcoming" className="nav-option-container color-pink">
+              <span className={iconClasses.upcoming}></span>
               <span className="nav-label">Upcoming</span>
-            </div>
+            </a>
           </div>
           <div className="nav-column-third">
-            <div className="nav-option-container">
-              <span className="far fa-heart nav-icon"></span>
+            <a href="#my-dates" className="nav-option-container color-pink">
+              <span className={iconClasses.myDates}></span>
               <span className="nav-label">My Dates</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>

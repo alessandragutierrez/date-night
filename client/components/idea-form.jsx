@@ -1,10 +1,10 @@
 import React from 'react';
 
 export default class IdeaForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {};
+  // }
 
   render() {
     return (

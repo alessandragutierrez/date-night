@@ -2,6 +2,8 @@ import React from 'react';
 import HeaderBar from './components/header-bar';
 import NavBar from './components/nav-bar';
 import Ideas from './pages/ideas';
+import Upcoming from './pages/upcoming';
+import MyDates from './pages/my-dates';
 import AddIdeaForm from './pages/add-idea';
 import { parseRoute } from './lib';
 
@@ -21,19 +23,27 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === '') {
-      return <Ideas />;
-    }
+    return (
+      route.path === ''
+        ? <Ideas />
+        : route.path === 'add-idea'
+          ? <AddIdeaForm />
+          : route.path === 'upcoming'
+            ? <Upcoming />
+            : route.path === 'my-dates'
+              ? <MyDates />
+              : null
+    );
   }
 
   render() {
+    const { route } = this.state;
     return (
       <>
-        <HeaderBar />
-        <NavBar />
+        <HeaderBar page={route.path}/>
+        <NavBar page={route.path}/>
         <main>
-          {/* { this.renderPage() } */}
-          <AddIdeaForm />
+          { this.renderPage() }
         </main>
       </>
     );

@@ -6,7 +6,7 @@ drop schema "public" cascade;
 
 create schema "public";
 
-CREATE TABLE "public.ideas" (
+CREATE TABLE "ideas" (
 	"ideaId" serial NOT NULL,
 	"title" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE "public.ideas" (
   OIDS=FALSE
 );
 ​
-CREATE TABLE "public.users" (
+CREATE TABLE "users" (
 	"userId" serial NOT NULL,
 	"firstName" TEXT NOT NULL,
 	"lastName" TEXT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "public.users" (
   OIDS=FALSE
 );
 ​
-CREATE TABLE "public.locations" (
+CREATE TABLE "locations" (
 	"locationId" serial NOT NULL,
 	"address" TEXT NOT NULL,
 	"line2" TEXT NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE "public.locations" (
   OIDS=FALSE
 );
 ​
-CREATE TABLE "public.schedule" (
+CREATE TABLE "schedule" (
 	"scheduleId" serial NOT NULL,
 	"date" DATE NOT NULL,
 	"time" TIME NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE "public.schedule" (
   OIDS=FALSE
 );
 ​
-CREATE TABLE "public.notes" (
+CREATE TABLE "notes" (
 	"noteId" serial NOT NULL,
 	"note" TEXT NOT NULL,
 	"scheduleId" integer NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE "public.notes" (
   OIDS=FALSE
 );
 ​
-CREATE TABLE "public.images" (
+CREATE TABLE "images" (
 	"imageId" serial NOT NULL,
 	"url" TEXT NOT NULL,
 	"scheduleId" integer NOT NULL,
