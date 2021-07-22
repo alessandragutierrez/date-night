@@ -1,7 +1,8 @@
 import React from 'react';
-import Ideas from './pages/ideas';
 import HeaderBar from './components/header-bar';
 import NavBar from './components/nav-bar';
+import Ideas from './pages/ideas';
+import AddIdeaForm from './pages/add-idea';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -31,7 +32,8 @@ export default class App extends React.Component {
         <HeaderBar />
         <NavBar />
         <main>
-          { this.renderPage() }
+          {/* { this.renderPage() } */}
+          <AddIdeaForm />
         </main>
       </>
     );

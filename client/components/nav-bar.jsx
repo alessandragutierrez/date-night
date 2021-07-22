@@ -9,20 +9,20 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div className="nav-bar-container background-white">
-        <div className="row text-center color-pink font-open-sans nav-bar">
-          <div className="column-third margin-auto">
+        <div className="row text-center color-pink nav-bar">
+          <div className="nav-column-third">
             <div className="nav-option-container">
               <span className="fas fa-lightbulb nav-icon"></span>
               <span className="nav-label">Ideas</span>
             </div>
           </div>
-          <div className="column-third margin-auto">
+          <div className="nav-column-third">
             <div className="nav-option-container">
               <span className="far fa-calendar-check nav-icon"></span>
               <span className="nav-label">Upcoming</span>
             </div>
           </div>
-          <div className="column-third margin-auto">
+          <div className="nav-column-third">
             <div className="nav-option-container">
               <span className="far fa-heart nav-icon"></span>
               <span className="nav-label">My Dates</span>

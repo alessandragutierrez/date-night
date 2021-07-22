@@ -10,13 +10,13 @@ export default class HeaderBar extends React.Component {
     return (
       <div className="header-bar-container background-white">
         <div className="row text-center color-pink header-bar">
-          <div className="column-quarter margin-auto">
+          <div className="header-column-quarter header-column">
             <span className="fas fa-arrow-left header-icon"></span>
           </div>
-          <div className="column-half margin-auto">
-            <h1 className="header-title margin-auto font-pacifico">Date Night</h1>
+          <div className="header-column-half header-column">
+            <h1 className="header-title font-pacifico">Date Night</h1>
           </div>
-          <div className="column-quarter">
+          <div className="header-column-quarter header-column">
             <span className="header-icon"></span>
           </div>
         </div>
