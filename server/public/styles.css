@@ -100,3 +100,31 @@ body {
 .form-button:hover {
   cursor: pointer;
 }
+
+.location-input {
+  border: 1px solid #b6b6b6;
+  border-radius: 8px;
+  outline-color: darkgray;
+  font-size: 16px;
+  padding: 5px 12px;
+  margin-top: 3px;
+}
+
+.autocomplete-dropdown-container {
+  border-radius: 8px;
+}
+
+.suggestion-item--active,
+.suggestion-item {
+  padding: 5px 8px;
+}
+
+.suggestion-item--active {
+  background-color: #f0f0f0;
+  cursor: 'pointer';
+}
+
+.suggestion-item {
+  background-color: white;
+  cursor: 'pointer';
+}

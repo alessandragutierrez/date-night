@@ -70,6 +70,14 @@ main {
   margin-bottom: 15px;
 }
 
+.location-input {
+  width: 250px;
+}
+
+.autocomplete-dropdown-container {
+  width: 250px;
+}
+
 /* desktop view */
 @media screen and (min-width: 768px) {
   main {
@@ -125,5 +133,13 @@ main {
   .form-textarea {
     width: 350px;
     margin-bottom: 25px;
+  }
+
+  .location-input {
+    width: 350px;
+  }
+
+  .autocomplete-dropdown-container {
+    width: 350px;
   }
 }

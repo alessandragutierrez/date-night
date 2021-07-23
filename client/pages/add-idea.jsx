@@ -19,6 +19,7 @@ export default class AddIdeaForm extends React.Component {
     })
       .then(res => res.json())
       .then(newIdea => {
+        // eslint-disable-next-line no-console
         console.log(newIdea);
       });
   }
