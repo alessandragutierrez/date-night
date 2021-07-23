@@ -1,0 +1,136 @@
+body {
+  background-color: #fafafa;
+}
+
+.header-icon {
+  font-size: 28px;
+}
+
+.header-title {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.nav-option-container {
+  display: inline-flex;
+  flex-direction: column;
+  margin: 0;
+  padding-top: 5px;
+  text-decoration: none;
+}
+
+.nav-icon {
+  font-size: 24px;
+}
+
+.nav-label {
+  font-size: 12px;
+  display: inline;
+}
+
+.idea-form-title {
+  font-size: 20px;
+  font-weight: 500;
+  padding-top: 20px;
+}
+
+.idea-form-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 10px;
+  position: relative;
+}
+
+.form-label {
+  color: #5b5b5b;
+  padding-left: 10px;
+}
+
+.form-input,
+.form-textarea,
+.location-input {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  outline: none;
+  font-size: 16px;
+  padding: 5px 12px;
+  margin-top: 3px;
+}
+
+.location-input {
+  position: relative;
+}
+
+.form-buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-button {
+  border: none;
+  font-size: 16px;
+}
+
+.cancel-button {
+  background-color: transparent;
+  align-self: center;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.submit-button {
+  border-radius: 8px;
+  background-color: #ff9fc2;
+  color: white;
+  padding: 5px 25px;
+  font-weight: 600;
+}
+
+.color-pink {
+  color: #ff9fc2;
+}
+
+.background-white {
+  background-color: white;
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
+}
+
+.header-icon:hover,
+.nav-option-container:hover,
+.form-button:hover {
+  cursor: pointer;
+}
+
+.form-input:focus,
+.form-input:hover,
+.location-input:focus,
+.location-input:hover,
+.form-textarea:focus,
+.form-textarea:hover {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-input::placeholder,
+.location-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.autocomplete-dropdown-container {
+  position: absolute;
+  z-index: 5;
+}
+
+.suggestion-item {
+  background-color: white;
+  padding: 5px 8px;
+  border: 0.1px solid rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
