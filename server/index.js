@@ -10,6 +10,23 @@ const app = express();
 app.use(staticMiddleware);
 app.use(jsonMiddleware);
 
+// change to include ':userId'
+// where "userId" = above param
+app.get('/api/ideas', (req, res, next) => {
+  const sql = `
+    select "idea"."title",
+           "idea"."description",
+           "location"."address"
+    from "ideas" as "idea"
+    join "locations" as "location" using ("locationId")
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/ideas', (req, res, next) => {
   const { address, latitude, longitude } = req.body;
   const locationSql = `
