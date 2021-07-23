@@ -74,7 +74,9 @@ body {
 
 .cancel-button {
   background-color: transparent;
+  align-self: center;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .submit-button {
@@ -96,10 +98,6 @@ body {
 .font-pacifico {
   font-family: 'Pacifico', cursive;
 }
-
-/* .font-open-sans {
-  font-family: 'Open Sans', sans-serif;
-} */
 
 .header-icon:hover,
 .nav-option-container:hover,

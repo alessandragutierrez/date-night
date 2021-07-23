@@ -2,13 +2,6 @@ import React from 'react';
 import IdeaForm from '../components/idea-form';
 
 export default class AddIdeaForm extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     ideas: []
-  //   };
-  // }
-
   addIdea(newIdea) {
     fetch('/api/ideas', {
       method: 'POST',
