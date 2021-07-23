@@ -39,6 +39,7 @@ body {
   justify-content: center;
   margin: auto;
   margin-top: 10px;
+  position: relative;
 }
 
 .form-label {
@@ -47,13 +48,18 @@ body {
 }
 
 .form-input,
-.form-textarea {
-  border: 1px solid #b6b6b6;
+.form-textarea,
+.location-input {
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  outline-color: darkgray;
+  outline: none;
   font-size: 16px;
   padding: 5px 12px;
   margin-top: 3px;
+}
+
+.location-input {
+  position: relative;
 }
 
 .form-buttons-container {
@@ -101,30 +107,32 @@ body {
   cursor: pointer;
 }
 
-.location-input {
-  border: 1px solid #b6b6b6;
-  border-radius: 8px;
-  outline-color: darkgray;
-  font-size: 16px;
-  padding: 5px 12px;
-  margin-top: 3px;
+.form-input:focus,
+.form-input:hover,
+.location-input:focus,
+.location-input:hover,
+.form-textarea:focus,
+.form-textarea:hover {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-input::placeholder,
+.location-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .autocomplete-dropdown-container {
-  border-radius: 8px;
-}
-
-.suggestion-item--active,
-.suggestion-item {
-  padding: 5px 8px;
-}
-
-.suggestion-item--active {
-  background-color: #f0f0f0;
-  cursor: 'pointer';
+  position: absolute;
+  z-index: 5;
 }
 
 .suggestion-item {
   background-color: white;
-  cursor: 'pointer';
+  padding: 5px 8px;
+  border: 0.1px solid rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
 }

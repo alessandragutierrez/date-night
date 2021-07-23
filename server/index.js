@@ -11,15 +11,16 @@ app.use(staticMiddleware);
 app.use(jsonMiddleware);
 
 app.post('/api/ideas', (req, res, next) => {
-  const { location } = req.body;
+  const { address, latitude, longitude } = req.body;
   const locationSql = `
     insert into "locations"
-      ("address", "line2", "city", "state", "zipCode", "userId")
+      ("address", "latitude", "longitude", "userId")
       values
-        ($1, $2, $3, $4, $5, $6)
+        ($1, $2, $3, $4)
         returning *
 `;
-  const locationParams = [location, 'somewhere', 'some city', 'some state', 12345, 1];
+  // change userID later
+  const locationParams = [address, latitude, longitude, 1];
 
   db.query(locationSql, locationParams)
     .then(locationResults => {
@@ -32,24 +33,18 @@ app.post('/api/ideas', (req, res, next) => {
                 ($1, $2, $3, $4)
                 returning *
         `;
+      // change userId later
       const ideaParams = [location.locationId, title, description, 1];
 
       return db.query(ideaSql, ideaParams)
         .then(ideaResult => {
           const [idea] = ideaResult.rows;
-
           const output = {
             idea: {
               title: idea.title,
               description: idea.description
             },
-            location: {
-              address: location.address,
-              line2: location.line2,
-              city: location.city,
-              state: location.state,
-              zipCode: location.zipCode
-            }
+            location: location.address
           };
           res.status(201).json(output);
         });

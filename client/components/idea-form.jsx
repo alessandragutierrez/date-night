@@ -7,28 +7,27 @@ import PlacesAutocomplete, {
 export default class IdeaForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: '',
-      location: '',
-      description: ''
-    };
+    this.state = this.initialState();
     this.handleTitleChange = this.handleTitleChange.bind(this);
-    this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleLocationSelect = this.handleLocationSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  initialState() {
+    return {
+      title: '',
+      description: '',
+      address: '',
+      latitude: null,
+      longitude: null
+    };
   }
 
   handleTitleChange() {
     this.setState({
       title: event.target.value
-    });
-  }
-
-  handleLocationChange() {
-    this.setState({
-      location: event.target.value
     });
   }
 
@@ -38,37 +37,66 @@ export default class IdeaForm extends React.Component {
     });
   }
 
+  handleLocationChange(address) {
+    this.setState({ address });
+  }
+
+  handleLocationSelect(address) {
+    this.setState({ address });
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => {
+        this.setState({
+          latitude: latLng.lat.toString(),
+          longitude: latLng.lng.toString()
+        });
+      })
+      .catch(error => console.error('Error', error));
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const newIdea = {
       title: this.state.title,
-      location: this.state.location,
-      description: this.state.description
+      description: this.state.description,
+      address: this.state.address,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude
     };
     this.props.onSubmit(newIdea);
-    this.setState({
-      title: '',
-      location: '',
-      description: ''
-    });
+    this.clearForm();
   }
 
-  handleChange(location) {
-    this.setState({ location });
+  clearForm() {
+    this.setState(this.initialState());
   }
 
-  async handleSelect(value) {
-
+  renderLocationInput({ getInputProps, suggestions, getSuggestionItemProps, loading }) {
+    return (
+      <>
+        <input
+          {...getInputProps({ placeholder: 'Where are we going?' })}
+          autoFocus
+          className="location-input"
+        />
+        <div className="autocomplete-dropdown-container">
+          {loading ? <div>...loading</div> : null}
+          {suggestions.map(suggestion => {
+            return (
+              <div
+                {...getSuggestionItemProps(suggestion)}
+                key={suggestion.index}
+                className="suggestion-item">
+                {suggestion.description}
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
   }
-
-  // renderLocationInput({ getInputProps, getSuggestionItemProps, suggestions, loading }) {
-  //   return (
-
-  //   );
-  // }
 
   render() {
-    const value = this.state;
     return (
       <div className="idea-form-container">
         <form onSubmit={this.handleSubmit}>
@@ -78,7 +106,7 @@ export default class IdeaForm extends React.Component {
               required
               autoFocus
               type="text"
-              value={value.title}
+              value={this.state.title}
               placeholder="What should we do?"
               className="form-input"
               onChange={this.handleTitleChange}/>
@@ -86,49 +114,25 @@ export default class IdeaForm extends React.Component {
           <br />
           <label className="form-label">Location
             <br />
-            {/* <input
-              autoFocus
-              type="text"
-              value={value.location}
-              className="form-input"
-              onChange={this.handleLocationChange}/> */}
+
             <PlacesAutocomplete
-              value={value.location}
-              onChange={this.handleChange}
-              onSelect={this.handleSelect}
-            >
+              value={this.state.address}
+              onChange={this.handleLocationChange}
+              onSelect={this.handleLocationSelect}>
               {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                <>
-                <input
-                  {...getInputProps({ placeholder: 'Where are we going?' })}
-                  autoFocus
-                  className="location-input"
-                />
-                <div className="autocomplete-dropdown-container">
-                  {loading ? <div>...loading</div> : null }
-                  {suggestions.map(suggestion => {
-                    const className = suggestion.active
-                      ? 'suggestion-item--active'
-                      : 'suggestion-item';
-                    return (
-                      <div {...getSuggestionItemProps(suggestion, { className })} key={suggestion.index}>
-                        {suggestion.description}
-                      </div>
-                    );
-                  })}
-                </div>
-                </>
+                this.renderLocationInput({ getInputProps, suggestions, getSuggestionItemProps, loading })
               )}
-              {/* {this.renderLocationInput()} */}
             </PlacesAutocomplete>
+
           </label>
+          <br />
           <br />
           <label className="form-label">Description
             <br />
             <textarea
               autoFocus
               type="text"
-              value={value.description}
+              value={this.state.description}
               className="form-textarea"
               rows="5"
               onChange={this.handleDescriptionChange}/>

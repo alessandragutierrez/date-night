@@ -32,10 +32,8 @@ CREATE TABLE "users" (
 CREATE TABLE "locations" (
 	"locationId" serial NOT NULL,
 	"address" TEXT NOT NULL,
-	"line2" TEXT NOT NULL,
-	"city" TEXT NOT NULL,
-	"state" TEXT NOT NULL,
-	"zipCode" integer NOT NULL,
+  "latitude" TEXT NOT NULL,
+  "longitude" TEXT NOT NULL,
 	"userId" integer NOT NULL,
 	CONSTRAINT "locations_pk" PRIMARY KEY ("locationId")
 ) WITH (
