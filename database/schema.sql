@@ -16,7 +16,7 @@ CREATE TABLE "ideas" (
 ) WITH (
   OIDS=FALSE
 );
-​
+
 CREATE TABLE "users" (
 	"userId" serial NOT NULL,
 	"firstName" TEXT NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE "users" (
 ) WITH (
   OIDS=FALSE
 );
-​
+
 CREATE TABLE "locations" (
 	"locationId" serial NOT NULL,
 	"address" TEXT NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE "locations" (
 ) WITH (
   OIDS=FALSE
 );
-​
+
 CREATE TABLE "schedule" (
 	"scheduleId" serial NOT NULL,
 	"date" DATE NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE "schedule" (
 ) WITH (
   OIDS=FALSE
 );
-​
+
 CREATE TABLE "notes" (
 	"noteId" serial NOT NULL,
 	"note" TEXT NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE "notes" (
 ) WITH (
   OIDS=FALSE
 );
-​
+
 CREATE TABLE "images" (
 	"imageId" serial NOT NULL,
 	"url" TEXT NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE "images" (
 ) WITH (
   OIDS=FALSE
 );
-​
+
 ALTER TABLE "ideas" ADD CONSTRAINT "ideas_fk0" FOREIGN KEY ("locationId") REFERENCES "locations"("locationId");
 ALTER TABLE "ideas" ADD CONSTRAINT "ideas_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "locations" ADD CONSTRAINT "locations_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
