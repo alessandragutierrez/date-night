@@ -107,7 +107,10 @@ main {
   display: none;
 }
 
-/* desktop view */
+.idea-box--modal {
+  width: 320px;
+}
+
 @media screen and (min-width: 768px) {
   main {
     max-width: 900px;
@@ -203,5 +206,9 @@ main {
   .desktop-idea-calendar-label,
   .idea-description {
     display: block;
+  }
+
+  .idea-box--modal {
+    width: 420px;
   }
 }

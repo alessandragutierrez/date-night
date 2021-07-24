@@ -123,13 +123,22 @@ body {
   cursor: pointer;
 }
 
-.idea-title {
+.idea-title,
+.idea-title--modal {
   font-size: 17px;
 }
 
 .idea-address,
-.idea-description {
+.idea-description,
+.idea-address--modal,
+.idea-description--modal {
   font-size: 13px;
+}
+
+.idea-title--modal,
+.idea-address--modal,
+.idea-description--modal {
+  margin-bottom: 8px;
 }
 
 .map-marker-icon {
@@ -155,11 +164,60 @@ body {
   align-self: center;
 }
 
+.idea-background--modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+}
+
+.idea-box--modal {
+  margin: auto;
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px 35px;
+}
+
+.edit-button-container--modal,
+.calendar-button-container--modal {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-button--modal,
+.calendar-button--modal {
+  width: 190px;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 0;
+  margin-top: 15px;
+}
+
+.calendar-button--modal {
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.idea-edit-icon--modal,
+.idea-calendar-icon--modal {
+  padding-right: 5px;
+}
+
+.idea-edit-label--modal,
+.idea-calendar-label--modal {
+  font-size: 14px;
+}
+
 .header-icon:hover,
 .nav-option-container:hover,
 .form-button:hover,
 .desktop-edit-button-container:hover,
-.desktop-calendar-button-container:hover {
+.desktop-calendar-button-container:hover,
+.edit-button--modal:hover,
+.calendar-button--modal:hover {
   cursor: pointer;
 }
 
