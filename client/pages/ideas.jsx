@@ -11,6 +11,7 @@ export default class Ideas extends React.Component {
         description: ''
       }
     };
+    this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
   }
 
   handleClick(idea) {
@@ -20,6 +21,20 @@ export default class Ideas extends React.Component {
         title: idea.title,
         address: idea.address,
         description: idea.description
+      }
+    });
+  }
+
+  handleModalBackgroundClick(event) {
+    if (!event.target.className.includes('idea-background--modal')) {
+      return;
+    }
+    this.setState({
+      ideaOpen: {
+        ideaId: null,
+        title: '',
+        address: '',
+        description: ''
       }
     });
   }
@@ -59,7 +74,7 @@ export default class Ideas extends React.Component {
     return (
       idea.ideaId === null || window.innerWidth > 767
         ? null
-        : <div className="idea-background--modal">
+        : <div onClick={this.handleModalBackgroundClick} className="idea-background--modal">
             <div className="idea-box--modal">
               <div className="idea-title--modal">
                 {idea.title}

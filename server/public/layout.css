@@ -33,7 +33,7 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
-  z-index: 100;
+  z-index: 10;
 }
 
 .header-bar-container {
