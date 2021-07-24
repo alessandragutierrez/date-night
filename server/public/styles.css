@@ -2,6 +2,12 @@ body {
   background-color: #fafafa;
 }
 
+.header-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .header-icon {
   font-size: 28px;
 }
@@ -87,24 +93,6 @@ body {
   font-weight: 600;
 }
 
-.color-pink {
-  color: #ff9fc2;
-}
-
-.background-white {
-  background-color: white;
-}
-
-.font-pacifico {
-  font-family: 'Pacifico', cursive;
-}
-
-.header-icon:hover,
-.nav-option-container:hover,
-.form-button:hover {
-  cursor: pointer;
-}
-
 .form-input:focus,
 .form-input:hover,
 .location-input:focus,
@@ -133,4 +121,64 @@ body {
 .suggestion-item:hover {
   background-color: #f1f1f1;
   cursor: pointer;
+}
+
+.idea-title {
+  font-size: 17px;
+}
+
+.idea-address,
+.idea-description {
+  font-size: 13px;
+}
+
+.map-marker-icon {
+  font-size: 12px;
+  padding-right: 7px;
+}
+
+.desktop-idea-buttons {
+  margin-top: 8px;
+  position: absolute;
+  bottom: 20px;
+}
+
+.desktop-edit-button-container,
+.desktop-calendar-button-container {
+  display: inline-flex;
+  margin-right: 25px;
+}
+
+.desktop-idea-edit-icon,
+.desktop-idea-calendar-icon {
+  padding-right: 5px;
+  align-self: center;
+}
+
+.header-icon:hover,
+.nav-option-container:hover,
+.form-button:hover,
+.desktop-edit-button-container:hover,
+.desktop-calendar-button-container:hover {
+  cursor: pointer;
+}
+
+.color-pink {
+  color: #ff9fc2;
+}
+
+.color-medium-gray {
+  color: #5b5b5b;
+}
+
+.color-dark-gray {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.background-white {
+  background-color: white;
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
 }
