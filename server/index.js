@@ -16,6 +16,7 @@ app.get('/api/ideas', (req, res, next) => {
   const sql = `
     select "idea"."title",
            "idea"."description",
+           "idea"."ideaId",
            "location"."address"
     from "ideas" as "idea"
     join "locations" as "location" using ("locationId")
@@ -59,7 +60,8 @@ app.post('/api/ideas', (req, res, next) => {
           const output = {
             idea: {
               title: idea.title,
-              description: idea.description
+              description: idea.description,
+              ideaId: idea.ideaId
             },
             location: location.address
           };

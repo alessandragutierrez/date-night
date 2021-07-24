@@ -11,8 +11,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash)
-      // ideas: []
+      route: parseRoute(window.location.hash),
+      ideas: []
     };
   }
 
@@ -20,13 +20,20 @@ export default class App extends React.Component {
     window.addEventListener('hashchange', () => {
       this.setState({ route: parseRoute(window.location.hash) });
     });
+    fetch('/api/ideas')
+      .then(res => res.json())
+      .then(ideas => {
+        this.setState({
+          ideas: ideas
+        });
+      });
   }
 
   renderPage() {
     const { route } = this.state;
     return (
       route.path === ''
-        ? <Ideas />
+        ? <Ideas ideas={this.state.ideas}/>
         : route.path === 'add-idea'
           ? <AddIdeaForm />
           : route.path === 'upcoming'
