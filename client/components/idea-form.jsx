@@ -65,6 +65,7 @@ export default class IdeaForm extends React.Component {
     };
     this.props.onSubmit(newIdea);
     this.clearForm();
+    window.location.href = '#';
   }
 
   clearForm() {

@@ -14,6 +14,7 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash),
       ideas: []
     };
+    this.addIdea = this.addIdea.bind(this);
   }
 
   componentDidMount() {
@@ -29,13 +30,29 @@ export default class App extends React.Component {
       });
   }
 
+  addIdea(newIdea) {
+    fetch('/api/ideas', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newIdea)
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          ideas: this.state.ideas.concat(data)
+        });
+      });
+  }
+
   renderPage() {
     const { route } = this.state;
     return (
       route.path === ''
         ? <Ideas ideas={this.state.ideas}/>
         : route.path === 'add-idea'
-          ? <AddIdeaForm />
+          ? <AddIdeaForm onSubmit={this.addIdea}/>
           : route.path === 'upcoming'
             ? <Upcoming />
             : route.path === 'my-dates'

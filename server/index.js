@@ -58,12 +58,10 @@ app.post('/api/ideas', (req, res, next) => {
         .then(ideaResult => {
           const [idea] = ideaResult.rows;
           const output = {
-            idea: {
-              title: idea.title,
-              description: idea.description,
-              ideaId: idea.ideaId
-            },
-            location: location.address
+            title: idea.title,
+            description: idea.description,
+            ideaId: idea.ideaId,
+            address: location.address
           };
           res.status(201).json(output);
         });

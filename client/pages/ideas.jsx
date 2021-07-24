@@ -91,7 +91,6 @@ export default class Ideas extends React.Component {
   render() {
     const ideaElements = this.renderIdeas();
     const ideaModal = this.renderIdeaModal();
-    // window.addEventListener('resize', () => this.render());
     return (
       <div className="ideas-container">
         {ideaElements}
