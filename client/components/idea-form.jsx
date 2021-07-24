@@ -77,7 +77,6 @@ export default class IdeaForm extends React.Component {
       <>
         <input
           {...getInputProps({ placeholder: 'Where are we going?' })}
-          autoFocus
           className="location-input"
         />
         <div className="autocomplete-dropdown-container">
@@ -131,7 +130,6 @@ export default class IdeaForm extends React.Component {
           <label className="form-label">Description
             <br />
             <textarea
-              autoFocus
               type="text"
               value={this.state.description}
               className="form-textarea"
