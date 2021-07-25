@@ -13,9 +13,12 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      ideas: []
+      ideas: [],
+      targetIdea: {}
     };
     this.addIdea = this.addIdea.bind(this);
+    this.updateIdea = this.updateIdea.bind(this);
+    this.getTargetIdea = this.getTargetIdea.bind(this);
   }
 
   componentDidMount() {
@@ -47,15 +50,30 @@ export default class App extends React.Component {
       });
   }
 
+  updateIdea(targetIdea) {
+    // console.log(targetIdea);
+  }
+
+  getTargetIdea(targetIdea) {
+    this.setState({
+      targetIdea: {
+        ideaId: targetIdea.ideaId,
+        title: targetIdea.title,
+        address: targetIdea.address,
+        description: targetIdea.description
+      }
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     return (
       route.path === ''
-        ? <Ideas ideas={this.state.ideas}/>
+        ? <Ideas ideas={this.state.ideas} targetIdea={this.getTargetIdea}/>
         : route.path === 'add-idea'
-          ? <AddIdea onSubmit={this.addIdea}/>
+          ? <AddIdea newIdea={this.addIdea}/>
           : route.path === 'edit-idea'
-            ? <EditIdea />
+            ? <EditIdea ideaToEdit={this.state.targetIdea}/>
             : route.path === 'upcoming'
               ? <Upcoming />
               : route.path === 'my-dates'

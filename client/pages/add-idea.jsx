@@ -8,14 +8,14 @@ export default class AddIdea extends React.Component {
   }
 
   getNewIdea(newIdea) {
-    this.props.onSubmit(newIdea);
+    this.props.newIdea(newIdea);
   }
 
   render() {
     return (
       <>
         <h1 className="text-center idea-form-title">Add Idea</h1>
-        <IdeaForm onSubmit={this.getNewIdea}/>
+        <IdeaForm newIdea={this.getNewIdea}/>
       </>
     );
   }

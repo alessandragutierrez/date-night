@@ -4,7 +4,7 @@ export default class Ideas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ideaOpen: {
+      idea: {
         ideaId: null,
         title: '',
         address: '',
@@ -14,9 +14,9 @@ export default class Ideas extends React.Component {
     this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
   }
 
-  handleClick(idea) {
+  handleIdeaClick(idea) {
     this.setState({
-      ideaOpen: {
+      idea: {
         ideaId: idea.ideaId,
         title: idea.title,
         address: idea.address,
@@ -25,12 +25,17 @@ export default class Ideas extends React.Component {
     });
   }
 
+  handleEditButtonClick(idea) {
+    const targetIdea = idea;
+    this.props.targetIdea(targetIdea);
+  }
+
   handleModalBackgroundClick(event) {
     if (!event.target.className.includes('idea-background--modal')) {
       return;
     }
     this.setState({
-      ideaOpen: {
+      idea: {
         ideaId: null,
         title: '',
         address: '',
@@ -43,7 +48,7 @@ export default class Ideas extends React.Component {
     const ideas = this.props.ideas;
     return (
       ideas.map(idea =>
-        <div key={idea.ideaId} onClick={() => this.handleClick(idea)} className="idea-item">
+        <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
           <div className="idea-title color-dark-gray">
             {idea.title}
           </div>
@@ -55,7 +60,7 @@ export default class Ideas extends React.Component {
             {idea.description}
           </div>
           <div className="row desktop-idea-buttons">
-            <a href="#edit-idea" className="desktop-edit-button-container no-underline">
+            <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="desktop-edit-button-container no-underline">
               <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
               <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
             </a>
@@ -70,7 +75,7 @@ export default class Ideas extends React.Component {
   }
 
   renderIdeaModal() {
-    const idea = this.state.ideaOpen;
+    const idea = this.state.idea;
     return (
       idea.ideaId === null || window.innerWidth > 767
         ? null
@@ -87,7 +92,7 @@ export default class Ideas extends React.Component {
                 {idea.description}
               </div>
               <div className="edit-button-container--modal">
-                <a href="#edit-idea" className="edit-button--modal no-underline text-center">
+              <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="edit-button--modal no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
                 </a>

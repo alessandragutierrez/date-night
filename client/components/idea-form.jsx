@@ -16,13 +16,24 @@ export default class IdeaForm extends React.Component {
   }
 
   initialState() {
-    return {
-      title: '',
-      description: '',
-      address: '',
-      latitude: null,
-      longitude: null
-    };
+    const ideaToEdit = this.props.ideaToEdit;
+    return (
+      this.props.ideaToEdit === undefined
+        ? {
+            title: '',
+            description: '',
+            address: '',
+            latitude: null,
+            longitude: null
+          }
+        : {
+            title: ideaToEdit.title,
+            description: ideaToEdit.description,
+            address: ideaToEdit.address,
+            latitude: null,
+            longitude: null
+          }
+    );
   }
 
   handleTitleChange() {
@@ -63,7 +74,7 @@ export default class IdeaForm extends React.Component {
       latitude: this.state.latitude,
       longitude: this.state.longitude
     };
-    this.props.onSubmit(newIdea);
+    this.props.newIdea(newIdea);
     this.clearForm();
     window.location.href = '#';
   }
