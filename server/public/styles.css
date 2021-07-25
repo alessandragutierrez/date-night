@@ -22,7 +22,6 @@ body {
   flex-direction: column;
   margin: 0;
   padding-top: 5px;
-  text-decoration: none;
 }
 
 .nav-icon {
@@ -82,7 +81,6 @@ body {
   background-color: transparent;
   align-self: center;
   font-weight: 700;
-  text-decoration: none;
 }
 
 .submit-button {
@@ -196,6 +194,7 @@ body {
   border: none;
   padding: 8px 0;
   margin-top: 15px;
+  background-color: rgb(239, 239, 239);
 }
 
 .calendar-button--modal {
@@ -206,6 +205,7 @@ body {
 .idea-edit-icon--modal,
 .idea-calendar-icon--modal {
   padding-right: 5px;
+  font-size: 13px;
 }
 
 .idea-edit-label--modal,
@@ -237,6 +237,10 @@ body {
 
 .background-white {
   background-color: white;
+}
+
+.no-underline {
+  text-decoration: none;
 }
 
 .font-pacifico {

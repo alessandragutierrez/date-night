@@ -55,10 +55,10 @@ export default class Ideas extends React.Component {
             {idea.description}
           </div>
           <div className="row desktop-idea-buttons">
-            <span className="desktop-edit-button-container">
+            <a href="#edit-idea" className="desktop-edit-button-container no-underline">
               <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
               <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
-            </span>
+            </a>
             <span className="desktop-calendar-button-container">
               <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
               <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
@@ -87,16 +87,16 @@ export default class Ideas extends React.Component {
                 {idea.description}
               </div>
               <div className="edit-button-container--modal">
-                <button className="edit-button--modal">
+                <a href="#edit-idea" className="edit-button--modal no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
-                </button>
+                </a>
               </div>
               <div className="calendar-button-container--modal">
-                <button className="calendar-button--modal">
+                <a className="calendar-button--modal no-underline text-center">
                   <span className="far fa-calendar-plus idea-calendar-icon--modal color-dark-gray"></span>
                   <span className="idea-calendar-label--modal color-dark-gray">Make It a Date</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>

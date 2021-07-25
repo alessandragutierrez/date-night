@@ -137,7 +137,7 @@ export default class IdeaForm extends React.Component {
               onChange={this.handleDescriptionChange}/>
           </label>
           <div className="row form-buttons-container">
-            <a href="#" className="form-button cancel-button color-pink">CANCEL</a>
+            <a href="#" className="form-button cancel-button color-pink no-underline">CANCEL</a>
             <button type="submit" className="form-button submit-button">ADD</button>
           </div>
         </form>

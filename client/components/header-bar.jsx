@@ -13,7 +13,7 @@ export default class HeaderBar extends React.Component {
             icon1: '',
             icon2: 'fas fa-plus header-icon'
           }
-        : this.props.page === 'add-idea'
+        : this.props.page === 'add-idea' || this.props.page === 'edit-idea'
           ? {
               icon1: 'fas fa-arrow-left header-icon',
               icon2: ''
@@ -31,7 +31,7 @@ export default class HeaderBar extends React.Component {
       <div className="header-bar-container background-white">
         <div className="row text-center header-bar">
           <div className="header-column-quarter header-column">
-            <a href="#" className="color-pink">
+            <a onClick={() => history.back()} className="color-pink">
               <span className={iconClasses.icon1}></span>
             </a>
           </div>
