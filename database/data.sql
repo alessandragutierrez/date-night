@@ -13,5 +13,5 @@ insert into "locations"
 insert into "ideas"
   ("title", "description", "locationId", "userId")
   values
-  ('go to disneyland', 'desc', 1, 1),
-  ('see a baseball game', 'desc', 2, 2);
+  ('Day at DisneyLand', 'Im baby occupy culpa glossier, tofu cardigan marfa lomo aliquip godard post-ironic unicorn +1 heirloom.', 1, 1),
+  ('Baseball Game', 'Mlkshk af reprehenderit, id art party labore sunt ad banjo bicycle rights ramps yr exercitation.', 2, 2);

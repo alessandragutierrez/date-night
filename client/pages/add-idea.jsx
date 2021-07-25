@@ -2,26 +2,20 @@ import React from 'react';
 import IdeaForm from '../components/idea-form';
 
 export default class AddIdeaForm extends React.Component {
-  addIdea(newIdea) {
-    fetch('/api/ideas', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newIdea)
-    })
-      .then(res => res.json())
-      .then(newIdea => {
-        // eslint-disable-next-line no-console
-        console.log(newIdea);
-      });
+  constructor(props) {
+    super(props);
+    this.getNewIdea = this.getNewIdea.bind(this);
+  }
+
+  getNewIdea(newIdea) {
+    this.props.onSubmit(newIdea);
   }
 
   render() {
     return (
       <>
         <h1 className="text-center idea-form-title">Add Idea</h1>
-        <IdeaForm onSubmit={this.addIdea}/>
+        <IdeaForm onSubmit={this.getNewIdea}/>
       </>
     );
   }
