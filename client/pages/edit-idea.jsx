@@ -6,6 +6,7 @@ export default class EditIdea extends React.Component {
   render() {
     return (
       <>
+        <h1 className="text-center idea-form-title">Edit Idea</h1>
         <IdeaForm />
       </>
     );
