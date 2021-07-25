@@ -81,7 +81,7 @@ app.put('/api/ideas/:ideaId', (req, res, next) => {
     update "ideas"
        set "title" = $1,
            "description" = $2
-     where "ideaId" = $3'
+     where "ideaId" = $3
     returning *
   `;
   const ideaParams = [title, description, ideaId];
