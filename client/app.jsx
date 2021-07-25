@@ -2,9 +2,10 @@ import React from 'react';
 import HeaderBar from './components/header-bar';
 import NavBar from './components/nav-bar';
 import Ideas from './pages/ideas';
+import AddIdea from './pages/add-idea';
+import EditIdea from './pages/edit-idea';
 import Upcoming from './pages/upcoming';
 import MyDates from './pages/my-dates';
-import AddIdeaForm from './pages/add-idea';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -52,12 +53,14 @@ export default class App extends React.Component {
       route.path === ''
         ? <Ideas ideas={this.state.ideas}/>
         : route.path === 'add-idea'
-          ? <AddIdeaForm onSubmit={this.addIdea}/>
-          : route.path === 'upcoming'
-            ? <Upcoming />
-            : route.path === 'my-dates'
-              ? <MyDates />
-              : null
+          ? <AddIdea onSubmit={this.addIdea}/>
+          : route.path === 'edit-idea'
+            ? <EditIdea />
+            : route.path === 'upcoming'
+              ? <Upcoming />
+              : route.path === 'my-dates'
+                ? <MyDates />
+                : null
     );
   }
 

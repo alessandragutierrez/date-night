@@ -1,7 +1,7 @@
 import React from 'react';
 import IdeaForm from '../components/idea-form';
 
-export default class AddIdeaForm extends React.Component {
+export default class AddIdea extends React.Component {
   constructor(props) {
     super(props);
     this.getNewIdea = this.getNewIdea.bind(this);
