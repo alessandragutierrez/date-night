@@ -13,16 +13,29 @@ export default class IdeaForm extends React.Component {
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleLocationSelect = this.handleLocationSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   initialState() {
-    return {
-      title: '',
-      description: '',
-      address: '',
-      latitude: null,
-      longitude: null
-    };
+    const ideaToEdit = this.props.ideaToEdit;
+    return (
+      this.props.ideaToEdit === undefined
+        ? {
+            title: '',
+            description: '',
+            address: '',
+            latitude: null,
+            longitude: null
+          }
+        : {
+            ideaId: ideaToEdit.ideaId,
+            title: ideaToEdit.title,
+            description: ideaToEdit.description,
+            address: ideaToEdit.address,
+            latitude: ideaToEdit.latitude,
+            longitude: ideaToEdit.longitude
+          }
+    );
   }
 
   handleTitleChange() {
@@ -63,13 +76,56 @@ export default class IdeaForm extends React.Component {
       latitude: this.state.latitude,
       longitude: this.state.longitude
     };
-    this.props.onSubmit(newIdea);
-    this.clearForm();
+    this.props.newIdea(newIdea);
     window.location.href = '#';
   }
 
-  clearForm() {
-    this.setState(this.initialState());
+  handleUpdate(event) {
+    event.preventDefault();
+    const updatedIdea = {
+      ideaId: this.state.ideaId,
+      title: this.state.title,
+      description: this.state.description,
+      address: this.state.address,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude
+    };
+    this.props.updatedIdea(updatedIdea);
+    window.location.href = '#';
+  }
+
+  renderTitleInput() {
+    return (
+      <label className="form-label">Title
+        <br />
+        <input
+          required
+          autoFocus
+          type="text"
+          value={this.state.title}
+          placeholder="What should we do?"
+          className="form-input"
+          onChange={this.handleTitleChange} />
+      </label>
+    );
+  }
+
+  renderPlacesAutocomplete() {
+    return (
+      <label className="form-label">Location
+        <br />
+
+        <PlacesAutocomplete
+          value={this.state.address}
+          onChange={this.handleLocationChange}
+          onSelect={this.handleLocationSelect}>
+          {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+            this.renderLocationInput({ getInputProps, suggestions, getSuggestionItemProps, loading })
+          )}
+        </PlacesAutocomplete>
+
+      </label>
+    );
   }
 
   renderLocationInput({ getInputProps, suggestions, getSuggestionItemProps, loading }) {
@@ -96,50 +152,72 @@ export default class IdeaForm extends React.Component {
     );
   }
 
+  renderDescriptionInput() {
+    return (
+      <label className="form-label">Description
+        <br />
+        <textarea
+          type="text"
+          value={this.state.description}
+          className="form-textarea"
+          rows="5"
+          onChange={this.handleDescriptionChange} />
+      </label>
+    );
+  }
+
+  checkWindowLocation() {
+    return (
+      window.location.hash === '#add-idea'
+        ? {
+            addButton: 'form-button add-button',
+            updateButton: 'hidden',
+            cancelButton: 'form-button cancel-button color-pink no-underline',
+            deleteButton: 'hidden'
+          }
+        : window.location.hash === '#edit-idea'
+          ? {
+              addButton: 'hidden',
+              updateButton: 'form-button update-button',
+              cancelButton: 'hidden',
+              deleteButton: 'form-button delete-button color-pink no-underline'
+            }
+          : {
+              addButton: '',
+              updateButton: '',
+              cancelButton: '',
+              deleteButton: ''
+            }
+    );
+  }
+
+  renderFormButtons() {
+    const buttonClasses = this.checkWindowLocation();
+    return (
+      <div className="row form-buttons-container">
+        <a href="#" className={buttonClasses.cancelButton}>CANCEL</a>
+        <a className={buttonClasses.deleteButton}>DELETE</a>
+        <button onClick={this.handleSubmit} type="submit" className={buttonClasses.addButton}>ADD</button>
+        <button onClick={this.handleUpdate} type="submit" className={buttonClasses.updateButton}>UPDATE</button>
+      </div>
+    );
+  }
+
   render() {
+    const titleInput = this.renderTitleInput();
+    const placesAutocomplete = this.renderPlacesAutocomplete();
+    const descriptionInput = this.renderDescriptionInput();
+    const formButtons = this.renderFormButtons();
     return (
       <div className="idea-form-container">
-        <form onSubmit={this.handleSubmit}>
-          <label className="form-label">Title
-            <br />
-            <input
-              required
-              autoFocus
-              type="text"
-              value={this.state.title}
-              placeholder="What should we do?"
-              className="form-input"
-              onChange={this.handleTitleChange}/>
-          </label>
+        <form>
+          {titleInput}
           <br />
-          <label className="form-label">Location
-            <br />
-
-            <PlacesAutocomplete
-              value={this.state.address}
-              onChange={this.handleLocationChange}
-              onSelect={this.handleLocationSelect}>
-              {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                this.renderLocationInput({ getInputProps, suggestions, getSuggestionItemProps, loading })
-              )}
-            </PlacesAutocomplete>
-
-          </label>
+          {placesAutocomplete}
           <br />
           <br />
-          <label className="form-label">Description
-            <br />
-            <textarea
-              type="text"
-              value={this.state.description}
-              className="form-textarea"
-              rows="5"
-              onChange={this.handleDescriptionChange}/>
-          </label>
-          <div className="row form-buttons-container">
-            <a href="#" className="form-button cancel-button color-pink">CANCEL</a>
-            <button type="submit" className="form-button submit-button">ADD</button>
-          </div>
+          {descriptionInput}
+          {formButtons}
         </form>
       </div>
     );

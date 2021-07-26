@@ -8,7 +8,7 @@ export default class NavBar extends React.Component {
 
   renderIconClasses() {
     return (
-      this.props.page === '' || this.props.page === 'add-idea'
+      this.props.page === '' || this.props.page === 'add-idea' || this.props.page === 'edit-idea'
         ? {
             ideas: 'fas fa-lightbulb nav-icon',
             upcoming: 'far fa-calendar-check nav-icon',
@@ -26,7 +26,11 @@ export default class NavBar extends React.Component {
                 upcoming: 'far fa-calendar-check nav-icon',
                 myDates: 'fas fa-heart nav-icon'
               }
-            : null
+            : {
+                ideas: 'far fa-lightbulb nav-icon',
+                upcoming: 'far fa-calendar-check nav-icon',
+                myDates: 'far fa-heart nav-icon'
+              }
     );
   }
 
@@ -36,19 +40,19 @@ export default class NavBar extends React.Component {
       <div className="nav-bar-container background-white">
         <div className="row text-center color-pink nav-bar">
           <div className="nav-column-third">
-            <a href="#" className="nav-option-container color-pink">
+            <a href="#" className="nav-option-container color-pink no-underline">
               <span className={iconClasses.ideas}></span>
               <span className="nav-label">Ideas</span>
             </a>
           </div>
           <div className="nav-column-third">
-            <a href="#upcoming" className="nav-option-container color-pink">
+            <a href="#upcoming" className="nav-option-container color-pink no-underline">
               <span className={iconClasses.upcoming}></span>
               <span className="nav-label">Upcoming</span>
             </a>
           </div>
           <div className="nav-column-third">
-            <a href="#my-dates" className="nav-option-container color-pink">
+            <a href="#my-dates" className="nav-option-container color-pink no-underline">
               <span className={iconClasses.myDates}></span>
               <span className="nav-label">My Dates</span>
             </a>

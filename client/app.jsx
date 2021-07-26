@@ -2,9 +2,10 @@ import React from 'react';
 import HeaderBar from './components/header-bar';
 import NavBar from './components/nav-bar';
 import Ideas from './pages/ideas';
+import AddIdea from './pages/add-idea';
+import EditIdea from './pages/edit-idea';
 import Upcoming from './pages/upcoming';
 import MyDates from './pages/my-dates';
-import AddIdeaForm from './pages/add-idea';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -12,9 +13,13 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      ideas: []
+      ideas: [],
+      targetIdea: {},
+      updatedIdea: {}
     };
     this.addIdea = this.addIdea.bind(this);
+    this.updateIdea = this.updateIdea.bind(this);
+    this.getTargetIdea = this.getTargetIdea.bind(this);
   }
 
   componentDidMount() {
@@ -39,25 +44,64 @@ export default class App extends React.Component {
       body: JSON.stringify(newIdea)
     })
       .then(res => res.json())
-      .then(data => {
+      .then(newIdea => {
         this.setState({
-          ideas: this.state.ideas.concat(data)
+          ideas: this.state.ideas.concat(newIdea)
         });
       });
+  }
+
+  updateIdea(updatedIdea) {
+    fetch(`/api/ideas/${updatedIdea.ideaId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedIdea)
+    })
+      .then(res => res.json())
+      .then(updatedIdea => {
+        const allIdeas = this.state.ideas.map(originalIdea => {
+          return originalIdea.ideaId === updatedIdea.ideaId
+            ? updatedIdea
+            : originalIdea;
+        });
+        this.setState({
+          updatedIdea: updatedIdea,
+          targetIdea: {},
+          ideas: allIdeas
+        });
+      });
+  }
+
+  getTargetIdea(targetIdea) {
+    this.setState({
+      targetIdea: {
+        ideaId: targetIdea.ideaId,
+        title: targetIdea.title,
+        description: targetIdea.description,
+        address: targetIdea.address,
+        latitude: targetIdea.latitude,
+        longitude: targetIdea.longitude
+      },
+      updatedIdea: {}
+    });
   }
 
   renderPage() {
     const { route } = this.state;
     return (
       route.path === ''
-        ? <Ideas ideas={this.state.ideas}/>
+        ? <Ideas ideas={this.state.ideas} targetIdea={this.getTargetIdea} targetedIdea={this.state.targetIdea} updatedIdea={this.state.updatedIdea}/>
         : route.path === 'add-idea'
-          ? <AddIdeaForm onSubmit={this.addIdea}/>
-          : route.path === 'upcoming'
-            ? <Upcoming />
-            : route.path === 'my-dates'
-              ? <MyDates />
-              : null
+          ? <AddIdea newIdea={this.addIdea}/>
+          : route.path === 'edit-idea'
+            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea}/>
+            : route.path === 'upcoming'
+              ? <Upcoming />
+              : route.path === 'my-dates'
+                ? <MyDates />
+                : null
     );
   }
 

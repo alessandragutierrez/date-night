@@ -4,25 +4,31 @@ export default class Ideas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ideaOpen: {
-        ideaId: null,
-        title: '',
-        address: '',
-        description: ''
-      }
+      ideaOpen: {},
+      ideaModalOpen: null
     };
     this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
   }
 
-  handleClick(idea) {
-    this.setState({
-      ideaOpen: {
-        ideaId: idea.ideaId,
-        title: idea.title,
-        address: idea.address,
-        description: idea.description
-      }
-    });
+  handleIdeaClick(idea) {
+    if (window.innerWidth < 768) {
+      this.setState({
+        ideaOpen: {
+          ideaId: idea.ideaId,
+          title: idea.title,
+          description: idea.description,
+          address: idea.address,
+          latitude: idea.latitude,
+          longitude: idea.longitude
+        },
+        ideaModalOpen: true
+      });
+    }
+  }
+
+  handleEditButtonClick(idea) {
+    const targetIdea = idea;
+    this.props.targetIdea(targetIdea);
   }
 
   handleModalBackgroundClick(event) {
@@ -30,12 +36,8 @@ export default class Ideas extends React.Component {
       return;
     }
     this.setState({
-      ideaOpen: {
-        ideaId: null,
-        title: '',
-        address: '',
-        description: ''
-      }
+      ideaOpen: {},
+      ideaModalOpen: false
     });
   }
 
@@ -43,7 +45,7 @@ export default class Ideas extends React.Component {
     const ideas = this.props.ideas;
     return (
       ideas.map(idea =>
-        <div key={idea.ideaId} onClick={() => this.handleClick(idea)} className="idea-item">
+        <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
           <div className="idea-title color-dark-gray">
             {idea.title}
           </div>
@@ -55,10 +57,10 @@ export default class Ideas extends React.Component {
             {idea.description}
           </div>
           <div className="row desktop-idea-buttons">
-            <span className="desktop-edit-button-container">
+            <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="desktop-edit-button-container no-underline">
               <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
               <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
-            </span>
+            </a>
             <span className="desktop-calendar-button-container">
               <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
               <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
@@ -70,9 +72,20 @@ export default class Ideas extends React.Component {
   }
 
   renderIdeaModal() {
-    const idea = this.state.ideaOpen;
+    const updatedIdea = this.props.updatedIdea;
+    const targetedIdea = this.props.targetedIdea;
+    let idea;
+    if (this.state.ideaOpen.ideaId !== undefined) {
+      idea = this.state.ideaOpen;
+    } else if (updatedIdea.ideaId !== undefined) {
+      idea = updatedIdea;
+    } else if (targetedIdea.ideaId !== undefined) {
+      idea = targetedIdea;
+    } else {
+      idea = {};
+    }
     return (
-      idea.ideaId === null || window.innerWidth > 767
+      idea.ideaId === undefined || window.innerWidth > 767 || this.state.ideaModalOpen === false
         ? null
         : <div onClick={this.handleModalBackgroundClick} className="idea-background--modal">
             <div className="idea-box--modal">
@@ -87,16 +100,16 @@ export default class Ideas extends React.Component {
                 {idea.description}
               </div>
               <div className="edit-button-container--modal">
-                <button className="edit-button--modal">
+              <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="edit-button--modal no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
-                </button>
+                </a>
               </div>
               <div className="calendar-button-container--modal">
-                <button className="calendar-button--modal">
+                <a className="calendar-button--modal no-underline text-center">
                   <span className="far fa-calendar-plus idea-calendar-icon--modal color-dark-gray"></span>
                   <span className="idea-calendar-label--modal color-dark-gray">Make It a Date</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -113,5 +126,4 @@ export default class Ideas extends React.Component {
       </div>
     );
   }
-
 }
