@@ -122,6 +122,28 @@ app.put('/api/ideas/:ideaId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/ideas/:ideaId', (req, res, next) => {
+  const ideaId = parseInt(req.params.ideaId, 10);
+  if (!Number.isInteger(ideaId) || ideaId < 1) {
+    throw new ClientError(400, 'ideaId must be a positive integer');
+  }
+
+  const sql = `
+    delete from "ideas"
+      where "ideaId" = $1
+      returning *
+  `;
+  const ideaParams = [ideaId];
+
+  db.query(sql, ideaParams)
+    .then(result => {
+      const [deletedIdea] = result.rows;
+      const output = { deletedIdea };
+      res.status(204).json(output);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
