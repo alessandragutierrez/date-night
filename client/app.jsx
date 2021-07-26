@@ -68,6 +68,7 @@ export default class App extends React.Component {
         });
         this.setState({
           updatedIdea: updatedIdea,
+          targetIdea: {},
           ideas: allIdeas
         });
       });
@@ -82,7 +83,8 @@ export default class App extends React.Component {
         address: targetIdea.address,
         latitude: targetIdea.latitude,
         longitude: targetIdea.longitude
-      }
+      },
+      updatedIdea: {}
     });
   }
 

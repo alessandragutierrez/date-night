@@ -4,15 +4,8 @@ export default class Ideas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ideaOpen: {
-        ideaId: null,
-        title: '',
-        description: '',
-        address: '',
-        latitude: null,
-        longitude: null
-      },
-      ideaModalIsOpen: false
+      ideaOpen: {},
+      ideaModalOpen: null
     };
     this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
   }
@@ -28,7 +21,7 @@ export default class Ideas extends React.Component {
           latitude: idea.latitude,
           longitude: idea.longitude
         },
-        ideaModalIsOpen: true
+        ideaModalOpen: true
       });
     }
   }
@@ -43,15 +36,8 @@ export default class Ideas extends React.Component {
       return;
     }
     this.setState({
-      ideaOpen: {
-        ideaId: null,
-        title: '',
-        description: '',
-        address: '',
-        latitude: null,
-        longitude: null
-      },
-      ideaModalIsOpen: false
+      ideaOpen: {},
+      ideaModalOpen: false
     });
   }
 
@@ -89,15 +75,17 @@ export default class Ideas extends React.Component {
     const updatedIdea = this.props.updatedIdea;
     const targetedIdea = this.props.targetedIdea;
     let idea;
-    if (updatedIdea.ideaId !== undefined) {
+    if (this.state.ideaOpen.ideaId !== undefined) {
+      idea = this.state.ideaOpen;
+    } else if (updatedIdea.ideaId !== undefined) {
       idea = updatedIdea;
     } else if (targetedIdea.ideaId !== undefined) {
       idea = targetedIdea;
     } else {
-      idea = this.state.ideaOpen;
+      idea = {};
     }
     return (
-      (idea.ideaId === null || idea.ideaId === undefined) || window.innerWidth > 767
+      idea.ideaId === undefined || window.innerWidth > 767 || this.state.ideaModalOpen === false
         ? null
         : <div onClick={this.handleModalBackgroundClick} className="idea-background--modal">
             <div className="idea-box--modal">
@@ -138,5 +126,4 @@ export default class Ideas extends React.Component {
       </div>
     );
   }
-
 }
