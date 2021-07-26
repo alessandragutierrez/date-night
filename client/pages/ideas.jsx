@@ -7,8 +7,10 @@ export default class Ideas extends React.Component {
       idea: {
         ideaId: null,
         title: '',
+        description: '',
         address: '',
-        description: ''
+        latitude: null,
+        longitude: null
       }
     };
     this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
@@ -19,8 +21,10 @@ export default class Ideas extends React.Component {
       idea: {
         ideaId: idea.ideaId,
         title: idea.title,
+        description: idea.description,
         address: idea.address,
-        description: idea.description
+        latitude: idea.latitude,
+        longitude: idea.longitude
       }
     });
   }
@@ -38,8 +42,10 @@ export default class Ideas extends React.Component {
       idea: {
         ideaId: null,
         title: '',
+        description: '',
         address: '',
-        description: ''
+        latitude: null,
+        longitude: null
       }
     });
   }

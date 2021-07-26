@@ -77,7 +77,8 @@ body {
   font-size: 16px;
 }
 
-.cancel-button {
+.cancel-button,
+.delete-button {
   background-color: transparent;
   align-self: center;
   font-weight: 700;

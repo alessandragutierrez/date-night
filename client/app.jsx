@@ -43,15 +43,32 @@ export default class App extends React.Component {
       body: JSON.stringify(newIdea)
     })
       .then(res => res.json())
-      .then(data => {
+      .then(newIdea => {
         this.setState({
-          ideas: this.state.ideas.concat(data)
+          ideas: this.state.ideas.concat(newIdea)
         });
       });
   }
 
-  updateIdea(targetIdea) {
-    // console.log(targetIdea);
+  updateIdea(updatedIdea) {
+    fetch(`/api/ideas/${updatedIdea.ideaId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedIdea)
+    })
+      .then(res => res.json())
+      .then(updatedIdea => {
+        const allIdeas = this.state.ideas.map(originalIdea => {
+          return originalIdea.ideaId === updatedIdea.ideaId
+            ? updatedIdea
+            : originalIdea;
+        });
+        this.setState({
+          ideas: allIdeas
+        });
+      });
   }
 
   getTargetIdea(targetIdea) {
@@ -59,8 +76,10 @@ export default class App extends React.Component {
       targetIdea: {
         ideaId: targetIdea.ideaId,
         title: targetIdea.title,
+        description: targetIdea.description,
         address: targetIdea.address,
-        description: targetIdea.description
+        latitude: targetIdea.latitude,
+        longitude: targetIdea.longitude
       }
     });
   }
@@ -73,7 +92,7 @@ export default class App extends React.Component {
         : route.path === 'add-idea'
           ? <AddIdea newIdea={this.addIdea}/>
           : route.path === 'edit-idea'
-            ? <EditIdea ideaToEdit={this.state.targetIdea}/>
+            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea}/>
             : route.path === 'upcoming'
               ? <Upcoming />
               : route.path === 'my-dates'

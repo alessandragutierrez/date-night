@@ -7,6 +7,10 @@
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
+
 /* mobile view */
 main {
   max-width: 575px;

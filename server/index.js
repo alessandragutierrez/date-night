@@ -18,9 +18,12 @@ app.get('/api/ideas', (req, res, next) => {
     select "idea"."title",
            "idea"."description",
            "idea"."ideaId",
-           "location"."address"
+           "location"."address",
+           "location"."latitude",
+           "location"."longitude"
     from "ideas" as "idea"
     join "locations" as "location" using ("locationId")
+    order by "ideaId"
   `;
   db.query(sql)
     .then(result => {

@@ -13,6 +13,7 @@ export default class IdeaForm extends React.Component {
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleLocationSelect = this.handleLocationSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   initialState() {
@@ -27,11 +28,12 @@ export default class IdeaForm extends React.Component {
             longitude: null
           }
         : {
+            ideaId: ideaToEdit.ideaId,
             title: ideaToEdit.title,
             description: ideaToEdit.description,
             address: ideaToEdit.address,
-            latitude: null,
-            longitude: null
+            latitude: ideaToEdit.latitude,
+            longitude: ideaToEdit.longitude
           }
     );
   }
@@ -75,12 +77,21 @@ export default class IdeaForm extends React.Component {
       longitude: this.state.longitude
     };
     this.props.newIdea(newIdea);
-    this.clearForm();
     window.location.href = '#';
   }
 
-  clearForm() {
-    this.setState(this.initialState());
+  handleUpdate(event) {
+    event.preventDefault();
+    const updatedIdea = {
+      ideaId: this.state.ideaId,
+      title: this.state.title,
+      description: this.state.description,
+      address: this.state.address,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude
+    };
+    this.props.updatedIdea(updatedIdea);
+    window.location.href = '#';
   }
 
   renderTitleInput() {
@@ -159,30 +170,35 @@ export default class IdeaForm extends React.Component {
     return (
       window.location.hash === '#add-idea'
         ? {
-            addOrUpdateText: 'ADD',
-            addOrUpdateClass: 'form-button add-button',
-            cancelOrDeleteText: 'CANCEL'
+            addButton: 'form-button add-button',
+            updateButton: 'hidden',
+            cancelButton: 'form-button cancel-button color-pink no-underline',
+            deleteButton: 'hidden'
           }
         : window.location.hash === '#edit-idea'
           ? {
-              addOrUpdateText: 'UPDATE',
-              addOrUpdateClass: 'form-button update-button',
-              cancelOrDeleteText: 'DELETE'
+              addButton: 'hidden',
+              updateButton: 'form-button update-button',
+              cancelButton: 'hidden',
+              deleteButton: 'form-button delete-button color-pink no-underline'
             }
           : {
-              addOrUpdateText: '',
-              addOrUpdateClass: '',
-              cancelOrDeleteText: ''
+              addButton: '',
+              updateButton: '',
+              cancelButton: '',
+              deleteButton: ''
             }
     );
   }
 
   renderFormButtons() {
-    const buttonTextAndClass = this.checkWindowLocation();
+    const buttonClasses = this.checkWindowLocation();
     return (
       <div className="row form-buttons-container">
-        <a href="#" className="form-button cancel-button color-pink no-underline">{buttonTextAndClass.cancelOrDeleteText}</a>
-        <button type="submit" className={buttonTextAndClass.addOrUpdateClass}>{buttonTextAndClass.addOrUpdateText}</button>
+        <a href="#" className={buttonClasses.cancelButton}>CANCEL</a>
+        <a className={buttonClasses.deleteButton}>DELETE</a>
+        <button onClick={this.handleSubmit} type="submit" className={buttonClasses.addButton}>ADD</button>
+        <button onClick={this.handleUpdate} type="submit" className={buttonClasses.updateButton}>UPDATE</button>
       </div>
     );
   }
@@ -194,7 +210,7 @@ export default class IdeaForm extends React.Component {
     const formButtons = this.renderFormButtons();
     return (
       <div className="idea-form-container">
-        <form onSubmit={this.handleSubmit}>
+        <form>
           {titleInput}
           <br />
           {placesAutocomplete}
