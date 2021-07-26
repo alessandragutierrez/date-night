@@ -14,7 +14,8 @@ export default class App extends React.Component {
     this.state = {
       route: parseRoute(window.location.hash),
       ideas: [],
-      targetIdea: {}
+      targetIdea: {},
+      updatedIdea: {}
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
@@ -66,6 +67,7 @@ export default class App extends React.Component {
             : originalIdea;
         });
         this.setState({
+          updatedIdea: updatedIdea,
           ideas: allIdeas
         });
       });
@@ -88,7 +90,7 @@ export default class App extends React.Component {
     const { route } = this.state;
     return (
       route.path === ''
-        ? <Ideas ideas={this.state.ideas} targetIdea={this.getTargetIdea}/>
+        ? <Ideas ideas={this.state.ideas} targetIdea={this.getTargetIdea} targetedIdea={this.state.targetIdea} updatedIdea={this.state.updatedIdea}/>
         : route.path === 'add-idea'
           ? <AddIdea newIdea={this.addIdea}/>
           : route.path === 'edit-idea'

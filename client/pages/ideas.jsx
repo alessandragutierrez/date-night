@@ -4,29 +4,33 @@ export default class Ideas extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      idea: {
+      ideaOpen: {
         ideaId: null,
         title: '',
         description: '',
         address: '',
         latitude: null,
         longitude: null
-      }
+      },
+      ideaModalIsOpen: false
     };
     this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
   }
 
   handleIdeaClick(idea) {
-    this.setState({
-      idea: {
-        ideaId: idea.ideaId,
-        title: idea.title,
-        description: idea.description,
-        address: idea.address,
-        latitude: idea.latitude,
-        longitude: idea.longitude
-      }
-    });
+    if (window.innerWidth < 768) {
+      this.setState({
+        ideaOpen: {
+          ideaId: idea.ideaId,
+          title: idea.title,
+          description: idea.description,
+          address: idea.address,
+          latitude: idea.latitude,
+          longitude: idea.longitude
+        },
+        ideaModalIsOpen: true
+      });
+    }
   }
 
   handleEditButtonClick(idea) {
@@ -39,14 +43,15 @@ export default class Ideas extends React.Component {
       return;
     }
     this.setState({
-      idea: {
+      ideaOpen: {
         ideaId: null,
         title: '',
         description: '',
         address: '',
         latitude: null,
         longitude: null
-      }
+      },
+      ideaModalIsOpen: false
     });
   }
 
@@ -81,9 +86,18 @@ export default class Ideas extends React.Component {
   }
 
   renderIdeaModal() {
-    const idea = this.state.idea;
+    const updatedIdea = this.props.updatedIdea;
+    const targetedIdea = this.props.targetedIdea;
+    let idea;
+    if (updatedIdea.ideaId !== undefined) {
+      idea = updatedIdea;
+    } else if (targetedIdea.ideaId !== undefined) {
+      idea = targetedIdea;
+    } else {
+      idea = this.state.ideaOpen;
+    }
     return (
-      idea.ideaId === null || window.innerWidth > 767
+      (idea.ideaId === null || idea.ideaId === undefined) || window.innerWidth > 767
         ? null
         : <div onClick={this.handleModalBackgroundClick} className="idea-background--modal">
             <div className="idea-box--modal">

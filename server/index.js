@@ -65,7 +65,9 @@ app.post('/api/ideas', (req, res, next) => {
             title: idea.title,
             description: idea.description,
             ideaId: idea.ideaId,
-            address: location.address
+            address: location.address,
+            latitude: location.latitude,
+            longitude: location.longitude
           };
           res.status(201).json(output);
         });
@@ -110,7 +112,9 @@ app.put('/api/ideas/:ideaId', (req, res, next) => {
             title: idea.title,
             description: idea.description,
             ideaId: idea.ideaId,
-            address: location.address
+            address: location.address,
+            latitude: location.latitude,
+            longitude: location.longitude
           };
           res.json(output);
         });
