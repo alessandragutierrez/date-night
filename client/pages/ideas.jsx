@@ -5,9 +5,13 @@ export default class Ideas extends React.Component {
     super(props);
     this.state = {
       ideaOpen: {},
-      ideaModalOpen: null
+      ideaModalOpen: null,
+      setDateModalOpen: false
     };
-    this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
+    this.handleIdeaModalBackgroundClick = this.handleIdeaModalBackgroundClick.bind(this);
+    this.handleSetDateModalBackgroundClick = this.handleSetDateModalBackgroundClick.bind(this);
+    // this.openSetDateModal = this.openSetDateModal.bind(this);
+    this.exitSetDateModal = this.exitSetDateModal.bind(this);
   }
 
   handleIdeaClick(idea) {
@@ -32,13 +36,34 @@ export default class Ideas extends React.Component {
     this.props.targetIdea(targetIdea);
   }
 
-  handleModalBackgroundClick(event) {
+  handleIdeaModalBackgroundClick(event) {
     if (!event.target.className.includes('background--modal')) {
       return;
     }
     this.setState({
       ideaOpen: {},
       ideaModalOpen: false
+    });
+  }
+
+  openSetDateModal(idea) {
+    this.setState({
+      setDateModalOpen: true,
+      ideaModalOpen: false
+    });
+  }
+
+  handleSetDateModalBackgroundClick(event) {
+    if (!event.target.className.includes('background--modal')) {
+      return;
+    }
+    this.exitSetDateModal();
+  }
+
+  exitSetDateModal() {
+    this.setState({
+      setDateModalOpen: false,
+      ideaModalOpen: true
     });
   }
 
@@ -64,7 +89,7 @@ export default class Ideas extends React.Component {
                   <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
                   <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
                 </a>
-                <span className="desktop-calendar-button-container">
+                <span onClick={() => this.openSetDateModal(idea)} className="desktop-calendar-button-container">
                   <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
                   <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
                 </span>
@@ -90,7 +115,7 @@ export default class Ideas extends React.Component {
     return (
       idea.ideaId === undefined || window.innerWidth > 767 || this.state.ideaModalOpen === false
         ? null
-        : <div onClick={this.handleModalBackgroundClick} className="background--modal">
+        : <div onClick={this.handleIdeaModalBackgroundClick} className="background--modal">
             <div className="modal border-radius background-white idea-box--modal">
               <div className="idea-title--modal">
                 {idea.title}
@@ -109,7 +134,7 @@ export default class Ideas extends React.Component {
                 </a>
               </div>
               <div className="calendar-button-container--modal">
-                <a className="calendar-button--modal border-radius no-underline text-center">
+              <a onClick={() => this.openSetDateModal(idea)} className="calendar-button--modal border-radius no-underline text-center">
                   <span className="far fa-calendar-plus idea-calendar-icon--modal color-dark-gray"></span>
                   <span className="idea-calendar-label--modal color-dark-gray">Make It a Date</span>
                 </a>
@@ -177,59 +202,61 @@ export default class Ideas extends React.Component {
     const dayOptions = this.renderDays();
     const hourOptions = this.renderHours();
     return (
-      <div className="background--modal">
-        <div className="modal border-radius background-white set-date-box--modal">
-          <div className="text-center set-date-text--modal">Make it a Date</div>
-          <form>
-            <div className="set-date-form-row">
-              <div className="set-date-form-section">
-                <label className="form-label">Month
-                  <br />
-                  <select className="border-radius form-select month-select">
-                    {monthOptions}
-                  </select>
-                </label>
-              </div>
-              <div className="set-date-form-section">
-                <label className="form-label">Day
-                  <br />
-                  <select className="border-radius form-select day-select">
-                    {dayOptions}
-                  </select>
-                </label>
-              </div>
-            </div>
-            <div className="set-date-form-row">
-              <div className="set-date-form-section">
-                <label className="form-label">Time
-                  <br />
-                  <select className="border-radius form-select time-select">
-                    {hourOptions}
-                  </select>
-                </label>
-              </div>
-              <div className="set-date-form-section set-date-form-radio-section">
-                <div className="set-date-form-radio-container">
-                  <label className="form-radio-label">
-                    <input type="radio" name="AM/PM" value="AM" className="form-radio-input"/>
-                    AM
-                  </label>
+      this.state.setDateModalOpen === false
+        ? null
+        : <div onClick={this.handleSetDateModalBackgroundClick} className="background--modal">
+            <div className="modal border-radius background-white set-date-box--modal">
+              <div className="text-center set-date-text--modal">Make it a Date</div>
+              <form>
+                <div className="set-date-form-row">
+                  <div className="set-date-form-section">
+                    <label className="form-label">Month
+                      <br />
+                      <select className="border-radius form-select month-select">
+                        {monthOptions}
+                      </select>
+                    </label>
+                  </div>
+                  <div className="set-date-form-section">
+                    <label className="form-label">Day
+                      <br />
+                      <select className="border-radius form-select day-select">
+                        {dayOptions}
+                      </select>
+                    </label>
+                  </div>
                 </div>
-                <div className="set-date-form-radio-container">
-                  <label className="form-radio-label">
-                    <input type="radio" name="AM/PM" value="PM" className="form-radio-input"/>
-                    PM
-                  </label>
+                <div className="set-date-form-row">
+                  <div className="set-date-form-section">
+                    <label className="form-label">Time
+                      <br />
+                      <select className="border-radius form-select time-select">
+                        {hourOptions}
+                      </select>
+                    </label>
+                  </div>
+                  <div className="set-date-form-section set-date-form-radio-section">
+                    <div className="set-date-form-radio-container">
+                      <label className="form-radio-label">
+                        <input type="radio" name="AM/PM" value="AM" className="form-radio-input" />
+                        AM
+                      </label>
+                    </div>
+                    <div className="set-date-form-radio-container">
+                      <label className="form-radio-label">
+                        <input type="radio" name="AM/PM" value="PM" className="form-radio-input" />
+                        PM
+                      </label>
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <div className="row set-date-buttons-container--modal">
+                  <a onClick={this.exitSetDateModal} className="border-radius button color-pink cancel-button--modal">CANCEL</a>
+                  <button className="border-radius button set-date-button--modal">IT&apos;S A DATE</button>
+                </div>
+              </form>
             </div>
-            <div className="row set-date-buttons-container--modal">
-              <button className="border-radius button color-pink cancel-button--modal">CANCEL</button>
-              <button className="border-radius button set-date-button--modal">IT&apos;S A DATE</button>
-            </div>
-          </form>
-        </div>
-      </div>
+          </div>
     );
   }
 
