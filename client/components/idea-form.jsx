@@ -15,6 +15,16 @@ export default class IdeaForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
+  }
+
+  handleModalBackgroundClick(event) {
+    if (!event.target.className.includes('background--modal')) {
+      return;
+    }
+    this.setState({
+      deleteModalOpen: false
+    });
   }
 
   handleDeleteClick() {
@@ -26,7 +36,7 @@ export default class IdeaForm extends React.Component {
   renderDeleteModal() {
     return (
       this.state.deleteModalOpen
-        ? <div className="background--modal">
+        ? <div onClick={this.handleModalBackgroundClick} className="background--modal">
             <div className="modal border-radius delete-box--modal background-white">
               <div className="confirm-delete-text--modal text-center">
                 Are you sure you would like to delete?
