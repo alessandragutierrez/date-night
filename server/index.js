@@ -160,7 +160,14 @@ app.delete('/api/ideas/:locationId', (req, res, next) => {
 });
 
 app.post('/api/upcoming', (req, res, next) => {
-  const { date, time, ideaId } = req.body;
+  const { date, time } = req.body;
+  const ideaId = parseInt(req.body.ideaId, 10);
+  if (!date || !time || !ideaId) {
+    throw new ClientError(400, 'date, time, and ideaId are required fields');
+  }
+  if (!Number.isInteger(ideaId) || ideaId < 1) {
+    throw new ClientError(400, 'ideaId must be a positive integer');
+  }
   const scheduleSql = `
     insert into "schedule"
       ("date", "time", "ideaId", "canceled")
