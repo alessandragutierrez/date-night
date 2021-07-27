@@ -159,6 +159,27 @@ app.delete('/api/ideas/:locationId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/upcoming', (req, res, next) => {
+  const { date, time, ideaId } = req.body;
+  const scheduleSql = `
+    insert into "schedule"
+      ("date", "time", "ideaId", "canceled")
+      values
+        ($1, $2, $3, $4)
+        returning *
+  `;
+  const scheduleParams = [date, time, ideaId, false];
+  db.query(scheduleSql, scheduleParams)
+    .then(scheduleResult => {
+      const [schedule] = scheduleResult.rows;
+      const output = {
+        schedule
+      };
+      res.status(201).json(output);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
