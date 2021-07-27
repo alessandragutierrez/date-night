@@ -118,7 +118,8 @@ main {
 
 /* modals */
 .idea-box--modal,
-.delete-box--modal {
+.delete-box--modal,
+.set-date-box--modal {
   width: 320px;
 }
 

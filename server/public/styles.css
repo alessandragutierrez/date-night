@@ -105,7 +105,8 @@ body {
 
 .form-input,
 .form-textarea,
-.location-input {
+.location-input,
+.form-select {
   border: 1px solid rgba(0, 0, 0, 0.2);
   outline: none;
   font-size: 16px;
@@ -115,15 +116,6 @@ body {
 
 .location-input {
   position: relative;
-}
-
-.form-input:focus,
-.form-input:hover,
-.location-input:focus,
-.location-input:hover,
-.form-textarea:focus,
-.form-textarea:hover {
-  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
 .form-input::placeholder,
@@ -147,9 +139,83 @@ body {
   cursor: pointer;
 }
 
+.set-date-form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.set-date-form-section {
+  display: inline;
+  margin-bottom: 20px;
+}
+
+.set-date-form-radio-section {
+  padding-top: 33px;
+  padding-right: 5px;
+}
+
+.month-select {
+  width: 140px;
+}
+
+.day-select,
+.time-select {
+  width: 80px;
+}
+
+.set-date-form-radio-container {
+  display: inline;
+  margin: 0 10px;
+  padding-left: 30px;
+  position: relative;
+}
+
+.form-radio-label {
+  color: #5b5b5b;
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.form-radio-input {
+  height: 23px;
+  width: 23px;
+  position: absolute;
+  left: 0;
+  color: pink;
+  border-radius: 50%;
+  border: 1px solid #5b5b5b;
+  background-color: transparent;
+}
+
+.form-radio-input:hover {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-radio-input:checked {
+  background-color: #ff9fc2;
+  border: 1px solid #ff9fc2;
+  box-shadow: inset 0 0 0 3px white;
+}
+
+.form-input:focus,
+.form-input:hover,
+.location-input:focus,
+.location-input:hover,
+.form-textarea:focus,
+.form-textarea:hover,
+.form-select:focus,
+.form-select:hover {
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
 /* modals and buttons */
 .form-buttons-container,
-.delete-buttons-container--modal {
+.delete-buttons-container--modal,
+.set-date-buttons-container--modal {
   display: flex;
   justify-content: space-between;
   margin: auto;
@@ -165,7 +231,8 @@ body {
 
 .add-button,
 .update-button,
-.delete-button--modal {
+.delete-button--modal,
+.set-date-button--modal {
   background-color: #ff9fc2;
   color: white;
   font-weight: 600;
@@ -177,7 +244,8 @@ body {
 }
 
 .update-button,
-.delete-button--modal {
+.delete-button--modal,
+.set-date-button--modal {
   padding-inline: 15px;
 }
 
@@ -220,6 +288,16 @@ body {
 .idea-edit-label--modal,
 .idea-calendar-label--modal {
   font-size: 14px;
+}
+
+.set-date-text--modal {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.set-date-buttons-container--modal {
+  margin-top: 5px;
 }
 
 .background--modal {
@@ -278,6 +356,8 @@ body {
 .desktop-edit-button-container:hover,
 .desktop-calendar-button-container:hover,
 .edit-button--modal:hover,
-.calendar-button--modal:hover {
+.calendar-button--modal:hover,
+.form-select:hover,
+.form-radio-input:hover {
   cursor: pointer;
 }

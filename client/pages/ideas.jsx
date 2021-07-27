@@ -91,7 +91,7 @@ export default class Ideas extends React.Component {
       idea.ideaId === undefined || window.innerWidth > 767 || this.state.ideaModalOpen === false
         ? null
         : <div onClick={this.handleModalBackgroundClick} className="background--modal">
-            <div className="modal border-radius idea-box--modal background-white">
+            <div className="modal border-radius background-white idea-box--modal">
               <div className="idea-title--modal">
                 {idea.title}
               </div>
@@ -119,13 +119,129 @@ export default class Ideas extends React.Component {
     );
   }
 
+  renderMonths() {
+    const monthsArray = [
+      { monthText: 'January', monthInteger: '01' },
+      { monthText: 'February', monthInteger: '02' },
+      { monthText: 'March', monthInteger: '03' },
+      { monthText: 'April', monthInteger: '04' },
+      { monthText: 'May', monthInteger: '05' },
+      { monthText: 'June', monthInteger: '06' },
+      { monthText: 'July', monthInteger: '07' },
+      { monthText: 'August', monthInteger: '08' },
+      { monthText: 'September', monthInteger: '09' },
+      { monthText: 'October', monthInteger: '10' },
+      { monthText: 'November', monthInteger: '11' },
+      { monthText: 'December', monthInteger: '12' }
+    ];
+    return (
+      monthsArray.map((month, i) =>
+          <option key={i} value={month.monthInteger}>
+            {month.monthText}
+          </option>
+      )
+    );
+  }
+
+  renderDays() {
+    const daysArray = [];
+    const maxDays = 31;
+    for (let i = 1; i <= maxDays; i++) {
+      daysArray.push(i);
+    }
+    return (
+      daysArray.map((day, i) =>
+          <option key={i} value={day}>
+            {day}
+          </option>
+      )
+    );
+  }
+
+  renderHours() {
+    const hoursArray = [];
+    for (let i = 1; i <= 12; i++) {
+      hoursArray.push(i);
+    }
+    return (
+      hoursArray.map((hour, i) =>
+        <option key={i} value={hour}>
+          {hour}
+        </option>
+      )
+    );
+  }
+
+  renderSetDateModal() {
+    const monthOptions = this.renderMonths();
+    const dayOptions = this.renderDays();
+    const hourOptions = this.renderHours();
+    return (
+      <div className="background--modal">
+        <div className="modal border-radius background-white set-date-box--modal">
+          <div className="text-center set-date-text--modal">Make it a Date</div>
+          <form>
+            <div className="set-date-form-row">
+              <div className="set-date-form-section">
+                <label className="form-label">Month
+                  <br />
+                  <select className="border-radius form-select month-select">
+                    {monthOptions}
+                  </select>
+                </label>
+              </div>
+              <div className="set-date-form-section">
+                <label className="form-label">Day
+                  <br />
+                  <select className="border-radius form-select day-select">
+                    {dayOptions}
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div className="set-date-form-row">
+              <div className="set-date-form-section">
+                <label className="form-label">Time
+                  <br />
+                  <select className="border-radius form-select time-select">
+                    {hourOptions}
+                  </select>
+                </label>
+              </div>
+              <div className="set-date-form-section set-date-form-radio-section">
+                <div className="set-date-form-radio-container">
+                  <label className="form-radio-label">
+                    <input type="radio" name="AM/PM" value="AM" className="form-radio-input"/>
+                    AM
+                  </label>
+                </div>
+                <div className="set-date-form-radio-container">
+                  <label className="form-radio-label">
+                    <input type="radio" name="AM/PM" value="PM" className="form-radio-input"/>
+                    PM
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="row set-date-buttons-container--modal">
+              <button className="border-radius button color-pink cancel-button--modal">CANCEL</button>
+              <button className="border-radius button set-date-button--modal">IT&apos;S A DATE</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const ideaElements = this.renderIdeas();
     const ideaModal = this.renderIdeaModal();
+    const setDateModal = this.renderSetDateModal();
     return (
       <div className="ideas-container">
         {ideaElements}
         {ideaModal}
+        {setDateModal}
       </div>
     );
   }
