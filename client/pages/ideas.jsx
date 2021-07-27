@@ -45,30 +45,32 @@ export default class Ideas extends React.Component {
   renderIdeas(props) {
     const ideas = this.props.ideas;
     return (
-      ideas.map(idea =>
-        <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
-          <div className="idea-title color-dark-gray">
-            {idea.title}
-          </div>
-          <div className="idea-address color-medium-gray">
-            <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
-            {idea.address}
-          </div>
-          <div className="idea-description color-medium-gray">
-            {idea.description}
-          </div>
-          <div className="row desktop-idea-buttons">
-            <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="desktop-edit-button-container no-underline">
-              <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
-              <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
-            </a>
-            <span className="desktop-calendar-button-container">
-              <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
-              <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
-            </span>
-          </div>
-        </div>
-      )
+      this.props.ideas.length < 1
+        ? <p className="ideas-empty">You have no date ideas.</p>
+        : ideas.map(idea =>
+            <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
+              <div className="idea-title color-dark-gray">
+                {idea.title}
+              </div>
+              <div className="idea-address color-medium-gray">
+                <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
+                {idea.address}
+              </div>
+              <div className="idea-description color-medium-gray">
+                {idea.description}
+              </div>
+              <div className="row desktop-idea-buttons">
+                <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="desktop-edit-button-container no-underline">
+                  <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
+                  <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
+                </a>
+                <span className="desktop-calendar-button-container">
+                  <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
+                  <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
+                </span>
+              </div>
+            </div>
+        )
     );
   }
 

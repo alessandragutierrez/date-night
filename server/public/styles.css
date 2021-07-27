@@ -36,6 +36,11 @@ body {
 }
 
 /* ideas */
+.ideas-empty {
+  margin: auto;
+  padding: 40px 0;
+}
+
 .idea-title,
 .idea-title--modal {
   font-size: 17px;
