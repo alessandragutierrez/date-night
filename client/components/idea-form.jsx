@@ -15,16 +15,15 @@ export default class IdeaForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.handleModalBackgroundClick = this.handleModalBackgroundClick.bind(this);
+    this.exitModal = this.exitModal.bind(this);
   }
 
-  handleModalBackgroundClick(event) {
-    if (!event.target.className.includes('background--modal')) {
-      return;
+  exitModal(event) {
+    if (event.target.className.includes('background--modal') || event.target.className.includes('cancel-button--modal')) {
+      this.setState({
+        deleteModalOpen: false
+      });
     }
-    this.setState({
-      deleteModalOpen: false
-    });
   }
 
   handleDeleteClick() {
@@ -36,13 +35,13 @@ export default class IdeaForm extends React.Component {
   renderDeleteModal() {
     return (
       this.state.deleteModalOpen
-        ? <div onClick={this.handleModalBackgroundClick} className="background--modal">
+        ? <div onClick={this.exitModal} className="background--modal">
             <div className="modal border-radius delete-box--modal background-white">
               <div className="confirm-delete-text--modal text-center">
                 Are you sure you would like to delete?
               </div>
               <div className="row delete-buttons-container--modal">
-                <button className="button cancel-button--modal color-pink">CANCEL</button>
+                <a onClick={this.exitModal} className="button cancel-button--modal color-pink">CANCEL</a>
                 <button type="submit" className="button border-radius delete-button--modal">DELETE</button>
               </div>
             </div>
