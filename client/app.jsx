@@ -19,12 +19,20 @@ export default class App extends React.Component {
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
+    this.deleteIdea = this.deleteIdea.bind(this);
     this.getTargetIdea = this.getTargetIdea.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('hashchange', () => {
-      this.setState({ route: parseRoute(window.location.hash) });
+      const route = parseRoute(window.location.hash);
+      this.setState({ route });
+      if (route.path === 'add-idea' || route.path === 'upcoming' || route.path === 'my-dates') {
+        this.setState({
+          targetIdea: {},
+          updatedIdea: {}
+        });
+      }
     });
     fetch('/api/ideas')
       .then(res => res.json())
@@ -46,6 +54,8 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(newIdea => {
         this.setState({
+          targetIdea: {},
+          updatedIdea: {},
           ideas: this.state.ideas.concat(newIdea)
         });
       });
@@ -74,6 +84,25 @@ export default class App extends React.Component {
       });
   }
 
+  deleteIdea(ideaToDelete) {
+    fetch(`/api/ideas/${ideaToDelete.locationId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(() => {
+        const allIdeas = this.state.ideas.filter(idea => {
+          return idea.locationId !== ideaToDelete.locationId;
+        });
+        this.setState({
+          targetIdea: {},
+          updatedIdea: {},
+          ideas: allIdeas
+        });
+      });
+  }
+
   getTargetIdea(targetIdea) {
     this.setState({
       targetIdea: {
@@ -82,7 +111,8 @@ export default class App extends React.Component {
         description: targetIdea.description,
         address: targetIdea.address,
         latitude: targetIdea.latitude,
-        longitude: targetIdea.longitude
+        longitude: targetIdea.longitude,
+        locationId: targetIdea.locationId
       },
       updatedIdea: {}
     });
@@ -96,7 +126,7 @@ export default class App extends React.Component {
         : route.path === 'add-idea'
           ? <AddIdea newIdea={this.addIdea}/>
           : route.path === 'edit-idea'
-            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea}/>
+            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea} ideaToDelete={this.deleteIdea}/>
             : route.path === 'upcoming'
               ? <Upcoming />
               : route.path === 'my-dates'

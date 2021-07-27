@@ -20,7 +20,8 @@ app.get('/api/ideas', (req, res, next) => {
            "idea"."ideaId",
            "location"."address",
            "location"."latitude",
-           "location"."longitude"
+           "location"."longitude",
+           "location"."locationId"
     from "ideas" as "idea"
     join "locations" as "location" using ("locationId")
     order by "ideaId"
@@ -117,6 +118,42 @@ app.put('/api/ideas/:ideaId', (req, res, next) => {
             longitude: location.longitude
           };
           res.json(output);
+        });
+    })
+    .catch(err => next(err));
+});
+
+app.delete('/api/ideas/:locationId', (req, res, next) => {
+  const locationId = parseInt(req.params.locationId, 10);
+  if (!Number.isInteger(locationId) || locationId < 1) {
+    throw new ClientError(400, 'locationId must be a positive integer');
+  }
+
+  const ideaSql = `
+    delete from "ideas"
+      where "locationId" = $1
+      returning *
+  `;
+  const locationSql = `
+    delete from "locations"
+      where "locationId" = $1
+      returning *
+  `;
+  const sqlParams = [locationId];
+  db.query(ideaSql, sqlParams)
+    .then(ideaResult => {
+      const idea = ideaResult.rows[0];
+      if (!idea) {
+        throw new ClientError(404, `Cannot find idea with 'locationId' of ${locationId}`);
+      }
+      return db.query(locationSql, sqlParams)
+        .then(locationResult => {
+          const location = locationResult.rows[0];
+          if (!location) {
+            throw new ClientError(404, `Cannot find idea with 'locationId' of ${locationId}`);
+          } else {
+            res.sendStatus(204);
+          }
         });
     })
     .catch(err => next(err));
