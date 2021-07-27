@@ -15,39 +15,8 @@ export default class IdeaForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.exitModal = this.exitModal.bind(this);
-  }
-
-  exitModal(event) {
-    if (event.target.className.includes('background--modal') || event.target.className.includes('cancel-button--modal')) {
-      this.setState({
-        deleteModalOpen: false
-      });
-    }
-  }
-
-  handleDeleteClick() {
-    this.setState({
-      deleteModalOpen: true
-    });
-  }
-
-  renderDeleteModal() {
-    return (
-      this.state.deleteModalOpen
-        ? <div onClick={this.exitModal} className="background--modal">
-            <div className="modal border-radius delete-box--modal background-white">
-              <div className="confirm-delete-text--modal text-center">
-                Are you sure you would like to delete?
-              </div>
-              <div className="row delete-buttons-container--modal">
-                <a onClick={this.exitModal} className="button cancel-button--modal color-pink">CANCEL</a>
-                <button type="submit" className="button border-radius delete-button--modal">DELETE</button>
-              </div>
-            </div>
-          </div>
-        : null
-    );
   }
 
   initialState() {
@@ -70,6 +39,7 @@ export default class IdeaForm extends React.Component {
             address: ideaToEdit.address,
             latitude: ideaToEdit.latitude,
             longitude: ideaToEdit.longitude,
+            locationId: ideaToEdit.locationId,
             deleteModalOpen: false
           }
     );
@@ -125,10 +95,32 @@ export default class IdeaForm extends React.Component {
       description: this.state.description,
       address: this.state.address,
       latitude: this.state.latitude,
-      longitude: this.state.longitude
+      longitude: this.state.longitude,
+      locationId: this.state.locationId
     };
     this.props.updatedIdea(updatedIdea);
     window.location.href = '#';
+  }
+
+  handleDeleteClick() {
+    this.setState({
+      deleteModalOpen: true
+    });
+  }
+
+  handleDelete(event) {
+    event.preventDefault();
+    const ideaToDelete = this.state;
+    this.props.ideaToDelete(ideaToDelete);
+    window.location.href = '#';
+  }
+
+  exitModal(event) {
+    if (event.target.className.includes('background--modal') || event.target.className.includes('cancel-button--modal')) {
+      this.setState({
+        deleteModalOpen: false
+      });
+    }
   }
 
   renderTitleInput() {
@@ -237,6 +229,24 @@ export default class IdeaForm extends React.Component {
         <button onClick={this.handleSubmit} type="submit" className={buttonClasses.addButton}>ADD</button>
         <button onClick={this.handleUpdate} type="submit" className={buttonClasses.updateButton}>UPDATE</button>
       </div>
+    );
+  }
+
+  renderDeleteModal() {
+    return (
+      this.state.deleteModalOpen
+        ? <div onClick={this.exitModal} className="background--modal">
+          <div className="modal border-radius delete-box--modal background-white">
+            <div className="confirm-delete-text--modal text-center">
+              Are you sure you would like to delete?
+            </div>
+            <div className="row delete-buttons-container--modal">
+              <button onClick={this.exitModal} className="button cancel-button--modal color-pink">CANCEL</button>
+              <button onClick={this.handleDelete} type="submit" className="button border-radius delete-button--modal">DELETE</button>
+            </div>
+          </div>
+        </div>
+        : null
     );
   }
 

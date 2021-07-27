@@ -19,7 +19,8 @@ export default class Ideas extends React.Component {
           description: idea.description,
           address: idea.address,
           latitude: idea.latitude,
-          longitude: idea.longitude
+          longitude: idea.longitude,
+          locationId: idea.locationId
         },
         ideaModalOpen: true
       });

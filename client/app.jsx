@@ -19,6 +19,7 @@ export default class App extends React.Component {
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
+    this.deleteIdea = this.deleteIdea.bind(this);
     this.getTargetIdea = this.getTargetIdea.bind(this);
   }
 
@@ -74,6 +75,24 @@ export default class App extends React.Component {
       });
   }
 
+  deleteIdea(ideaToDelete) {
+    fetch(`/api/ideas/${ideaToDelete.locationId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(() => {
+        const allIdeas = this.state.ideas.filter(idea => {
+          return idea.locationId !== ideaToDelete.locationId;
+        });
+        this.setState({
+          targetIdea: {},
+          ideas: allIdeas
+        });
+      });
+  }
+
   getTargetIdea(targetIdea) {
     this.setState({
       targetIdea: {
@@ -82,7 +101,8 @@ export default class App extends React.Component {
         description: targetIdea.description,
         address: targetIdea.address,
         latitude: targetIdea.latitude,
-        longitude: targetIdea.longitude
+        longitude: targetIdea.longitude,
+        locationId: targetIdea.locationId
       },
       updatedIdea: {}
     });
@@ -96,7 +116,7 @@ export default class App extends React.Component {
         : route.path === 'add-idea'
           ? <AddIdea newIdea={this.addIdea}/>
           : route.path === 'edit-idea'
-            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea}/>
+            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea} ideaToDelete={this.deleteIdea}/>
             : route.path === 'upcoming'
               ? <Upcoming />
               : route.path === 'my-dates'
