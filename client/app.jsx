@@ -25,7 +25,14 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.addEventListener('hashchange', () => {
-      this.setState({ route: parseRoute(window.location.hash) });
+      const route = parseRoute(window.location.hash);
+      this.setState({ route });
+      if (route.path === 'add-idea' || route.path === 'upcoming' || route.path === 'my-dates') {
+        this.setState({
+          targetIdea: {},
+          updatedIdea: {}
+        });
+      }
     });
     fetch('/api/ideas')
       .then(res => res.json())
@@ -47,6 +54,8 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(newIdea => {
         this.setState({
+          targetIdea: {},
+          updatedIdea: {},
           ideas: this.state.ideas.concat(newIdea)
         });
       });
@@ -88,6 +97,7 @@ export default class App extends React.Component {
         });
         this.setState({
           targetIdea: {},
+          updatedIdea: {},
           ideas: allIdeas
         });
       });
