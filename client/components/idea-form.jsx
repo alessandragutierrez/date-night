@@ -14,6 +14,31 @@ export default class IdeaForm extends React.Component {
     this.handleLocationSelect = this.handleLocationSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
+  }
+
+  handleDeleteClick() {
+    this.setState({
+      deleteModalOpen: true
+    });
+  }
+
+  renderDeleteModal() {
+    return (
+      this.state.deleteModalOpen
+        ? <div className="background--modal">
+            <div className="modal border-radius delete-box--modal background-white">
+              <div className="confirm-delete-text--modal text-center">
+                Are you sure you would like to delete?
+              </div>
+              <div className="row delete-buttons-container--modal">
+                <button className="button cancel-button--modal color-pink">CANCEL</button>
+                <button type="submit" className="button border-radius delete-button--modal">DELETE</button>
+              </div>
+            </div>
+          </div>
+        : null
+    );
   }
 
   initialState() {
@@ -21,11 +46,13 @@ export default class IdeaForm extends React.Component {
     return (
       this.props.ideaToEdit === undefined
         ? {
+
             title: '',
             description: '',
             address: '',
             latitude: null,
-            longitude: null
+            longitude: null,
+            deleteModalOpen: false
           }
         : {
             ideaId: ideaToEdit.ideaId,
@@ -33,7 +60,8 @@ export default class IdeaForm extends React.Component {
             description: ideaToEdit.description,
             address: ideaToEdit.address,
             latitude: ideaToEdit.latitude,
-            longitude: ideaToEdit.longitude
+            longitude: ideaToEdit.longitude,
+            deleteModalOpen: false
           }
     );
   }
@@ -104,7 +132,7 @@ export default class IdeaForm extends React.Component {
           type="text"
           value={this.state.title}
           placeholder="What should we do?"
-          className="form-input"
+          className="form-input border-radius"
           onChange={this.handleTitleChange} />
       </label>
     );
@@ -133,7 +161,7 @@ export default class IdeaForm extends React.Component {
       <>
         <input
           {...getInputProps({ placeholder: 'Where are we going?' })}
-          className="location-input"
+          className="location-input border-radius"
         />
         <div className="autocomplete-dropdown-container">
           {loading ? <div>...loading</div> : null}
@@ -159,7 +187,7 @@ export default class IdeaForm extends React.Component {
         <textarea
           type="text"
           value={this.state.description}
-          className="form-textarea"
+          className="form-textarea border-radius"
           rows="5"
           onChange={this.handleDescriptionChange} />
       </label>
@@ -170,17 +198,17 @@ export default class IdeaForm extends React.Component {
     return (
       window.location.hash === '#add-idea'
         ? {
-            addButton: 'form-button add-button',
+            addButton: 'button border-radius add-button',
             updateButton: 'hidden',
-            cancelButton: 'form-button cancel-button color-pink no-underline',
+            cancelButton: 'button cancel-button color-pink no-underline',
             deleteButton: 'hidden'
           }
         : window.location.hash === '#edit-idea'
           ? {
               addButton: 'hidden',
-              updateButton: 'form-button update-button',
+              updateButton: 'button border-radius update-button',
               cancelButton: 'hidden',
-              deleteButton: 'form-button delete-button color-pink no-underline'
+              deleteButton: 'button delete-button color-pink no-underline'
             }
           : {
               addButton: '',
@@ -196,7 +224,7 @@ export default class IdeaForm extends React.Component {
     return (
       <div className="row form-buttons-container">
         <a href="#" className={buttonClasses.cancelButton}>CANCEL</a>
-        <a className={buttonClasses.deleteButton}>DELETE</a>
+        <a onClick={this.handleDeleteClick} className={buttonClasses.deleteButton}>DELETE</a>
         <button onClick={this.handleSubmit} type="submit" className={buttonClasses.addButton}>ADD</button>
         <button onClick={this.handleUpdate} type="submit" className={buttonClasses.updateButton}>UPDATE</button>
       </div>
@@ -208,18 +236,22 @@ export default class IdeaForm extends React.Component {
     const placesAutocomplete = this.renderPlacesAutocomplete();
     const descriptionInput = this.renderDescriptionInput();
     const formButtons = this.renderFormButtons();
+    const deleteModal = this.renderDeleteModal();
     return (
-      <div className="idea-form-container">
-        <form>
-          {titleInput}
-          <br />
-          {placesAutocomplete}
-          <br />
-          <br />
-          {descriptionInput}
-          {formButtons}
-        </form>
-      </div>
+      <>
+        <div className="idea-form-container">
+          <form>
+            {titleInput}
+            <br />
+            {placesAutocomplete}
+            <br />
+            <br />
+            {descriptionInput}
+            {formButtons}
+          </form>
+        </div>
+        <>{deleteModal}</>
+      </>
     );
   }
 }

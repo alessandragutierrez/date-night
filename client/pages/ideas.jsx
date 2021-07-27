@@ -32,7 +32,7 @@ export default class Ideas extends React.Component {
   }
 
   handleModalBackgroundClick(event) {
-    if (!event.target.className.includes('idea-background--modal')) {
+    if (!event.target.className.includes('background--modal')) {
       return;
     }
     this.setState({
@@ -87,8 +87,8 @@ export default class Ideas extends React.Component {
     return (
       idea.ideaId === undefined || window.innerWidth > 767 || this.state.ideaModalOpen === false
         ? null
-        : <div onClick={this.handleModalBackgroundClick} className="idea-background--modal">
-            <div className="idea-box--modal">
+        : <div onClick={this.handleModalBackgroundClick} className="background--modal">
+            <div className="modal border-radius idea-box--modal background-white">
               <div className="idea-title--modal">
                 {idea.title}
               </div>
@@ -100,13 +100,13 @@ export default class Ideas extends React.Component {
                 {idea.description}
               </div>
               <div className="edit-button-container--modal">
-              <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="edit-button--modal no-underline text-center">
+              <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="edit-button--modal border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
                 </a>
               </div>
               <div className="calendar-button-container--modal">
-                <a className="calendar-button--modal no-underline text-center">
+                <a className="calendar-button--modal border-radius no-underline text-center">
                   <span className="far fa-calendar-plus idea-calendar-icon--modal color-dark-gray"></span>
                   <span className="idea-calendar-label--modal color-dark-gray">Make It a Date</span>
                 </a>

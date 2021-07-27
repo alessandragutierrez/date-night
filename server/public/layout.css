@@ -1,3 +1,4 @@
+/* general */
 .row {
   display: flex;
   flex-direction: row;
@@ -18,6 +19,7 @@ main {
   margin-top: 50px;
 }
 
+/* header and navbar */
 .header-column-quarter {
   width: 25%;
 }
@@ -63,6 +65,7 @@ main {
   border-top: 0.1px solid #e0e0e0;
 }
 
+/* form and inputs */
 .form-input,
 .form-textarea {
   width: 250px;
@@ -77,6 +80,7 @@ main {
   width: 250px;
 }
 
+/* ideas */
 .ideas-container {
   display: flex;
   flex-direction: row;
@@ -112,7 +116,9 @@ main {
   display: none;
 }
 
-.idea-box--modal {
+/* modals */
+.idea-box--modal,
+.delete-box--modal {
   width: 320px;
 }
 
@@ -121,6 +127,7 @@ main {
     max-width: 900px;
   }
 
+  /* header and navbar */
   .header-column-half {
     width: 40%;
   }
@@ -165,6 +172,7 @@ main {
     justify-content: flex-end;
   }
 
+  /* form and inputs */
   .form-input,
   .form-textarea {
     width: 350px;
@@ -179,6 +187,7 @@ main {
     width: 350px;
   }
 
+  /* ideas */
   .ideas-container {
     width: 85%;
     justify-content: space-between;
@@ -215,6 +224,7 @@ main {
     display: block;
   }
 
+  /* modals */
   .idea-box--modal {
     width: 420px;
   }
