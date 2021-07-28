@@ -9,11 +9,12 @@ export default class Ideas extends React.Component {
       setDateModalOpen: false,
       setDateTargetIdea: {},
       scheduleDetails: {
-        month: null,
-        day: null,
-        hour: null,
-        AMPM: null
-      }
+        month: '',
+        day: '',
+        hour: '',
+        AMPM: ''
+      },
+      errorMessage: ''
     };
     this.handleIdeaModalBackgroundClick = this.handleIdeaModalBackgroundClick.bind(this);
     this.handleSetDateModalBackgroundClick = this.handleSetDateModalBackgroundClick.bind(this);
@@ -21,8 +22,8 @@ export default class Ideas extends React.Component {
     this.handleMonthChange = this.handleMonthChange.bind(this);
     this.handleDayChange = this.handleDayChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
-    this.handleSetDate = this.handleSetDate.bind(this);
     this.handleAMPMChange = this.handleAMPMChange.bind(this);
+    this.handleSetDate = this.handleSetDate.bind(this);
   }
 
   handleIdeaClick(idea) {
@@ -42,11 +43,6 @@ export default class Ideas extends React.Component {
     }
   }
 
-  handleEditButtonClick(idea) {
-    const targetIdea = idea;
-    this.props.targetIdea(targetIdea);
-  }
-
   handleIdeaModalBackgroundClick(event) {
     if (!event.target.className.includes('background--modal')) {
       return;
@@ -55,6 +51,11 @@ export default class Ideas extends React.Component {
       ideaOpen: {},
       ideaModalOpen: false
     });
+  }
+
+  handleEditButtonClick(idea) {
+    const targetIdea = idea;
+    this.props.targetIdea(targetIdea);
   }
 
   openSetDateModal(idea) {
@@ -71,6 +72,28 @@ export default class Ideas extends React.Component {
         locationId: idea.locationId
       }
     });
+  }
+
+  exitSetDateModal() {
+    this.setState({
+      setDateModalOpen: false,
+      ideaModalOpen: true,
+      setDateTargetIdea: {},
+      scheduleDetails: {
+        month: '',
+        day: '',
+        hour: '',
+        AMPM: ''
+      },
+      errorMessage: ''
+    });
+  }
+
+  handleSetDateModalBackgroundClick(event) {
+    if (!event.target.className.includes('background--modal')) {
+      return;
+    }
+    this.exitSetDateModal();
   }
 
   handleMonthChange(event) {
@@ -97,8 +120,27 @@ export default class Ideas extends React.Component {
     this.setState({ scheduleDetails });
   }
 
+  handleSetDateErrors() {
+    const scheduleDetails = this.state.scheduleDetails;
+    const error = scheduleDetails.month === ''
+      ? 'A MONTH'
+      : scheduleDetails.day === ''
+        ? 'A DAY'
+        : scheduleDetails.hour === ''
+          ? 'A TIME'
+          : scheduleDetails.AMPM === ''
+            ? 'AM OR PM'
+            : '';
+    return error;
+  }
+
   handleSetDate() {
     event.preventDefault();
+    const error = this.handleSetDateErrors();
+    if (error !== '') {
+      this.setState({ errorMessage: error });
+      return;
+    }
     const idea = this.state.setDateTargetIdea;
     const scheduleDetails = this.state.scheduleDetails;
     // later change year input to be dynamic depending on current date
@@ -119,21 +161,6 @@ export default class Ideas extends React.Component {
     };
     this.props.scheduledIdea(scheduledIdea);
     window.location.href = '#upcoming';
-  }
-
-  handleSetDateModalBackgroundClick(event) {
-    if (!event.target.className.includes('background--modal')) {
-      return;
-    }
-    this.exitSetDateModal();
-  }
-
-  exitSetDateModal() {
-    this.setState({
-      setDateModalOpen: false,
-      ideaModalOpen: true,
-      setDateTargetIdea: {}
-    });
   }
 
   renderIdeas(props) {
@@ -277,10 +304,33 @@ export default class Ideas extends React.Component {
     );
   }
 
+  renderErrorMessage() {
+    let errorMessage = '';
+    if (this.state.errorMessage !== '') {
+      errorMessage = {
+        value: `* PLEASE SELECT ${this.state.errorMessage} *`,
+        class: 'error-message'
+      };
+    } else {
+      errorMessage = {
+        value: '',
+        class: 'hidden'
+      };
+    }
+    return (
+      <div className="error-message-container">
+        <div className={errorMessage.class}>
+          {errorMessage.value}
+        </div>
+      </div>
+    );
+  }
+
   renderSetDateModal() {
     const monthOptions = this.renderMonths();
     const dayOptions = this.renderDays();
     const hourOptions = this.renderHours();
+    const errorMessage = this.renderErrorMessage();
     return (
       this.state.setDateModalOpen === false
         ? null
@@ -293,6 +343,7 @@ export default class Ideas extends React.Component {
                     <label className="form-label">Month
                       <br />
                       <select onChange={this.handleMonthChange}className="border-radius form-select month-select">
+                        <option value=""></option>
                         {monthOptions}
                       </select>
                     </label>
@@ -301,6 +352,7 @@ export default class Ideas extends React.Component {
                     <label className="form-label">Day
                       <br />
                       <select onChange={this.handleDayChange} className="border-radius form-select day-select">
+                        <option value=""></option>
                         {dayOptions}
                       </select>
                     </label>
@@ -311,6 +363,7 @@ export default class Ideas extends React.Component {
                     <label className="form-label">Time
                       <br />
                       <select onChange={this.handleHourChange} className="border-radius form-select time-select">
+                        <option value=""></option>
                         {hourOptions}
                       </select>
                     </label>
@@ -330,6 +383,7 @@ export default class Ideas extends React.Component {
                     </div>
                   </div>
                 </div>
+                {errorMessage}
                 <div className="row set-date-buttons-container--modal">
                   <a onClick={this.exitSetDateModal} className="border-radius button color-pink cancel-button--modal">CANCEL</a>
                   <button onClick={this.handleSetDate} className="border-radius button set-date-button--modal">IT&apos;S A DATE</button>

@@ -297,7 +297,7 @@ input[type="radio"] {
 }
 
 .set-date-buttons-container--modal {
-  margin-top: 5px;
+  margin-top: 7px;
 }
 
 .background--modal {
@@ -348,6 +348,21 @@ input[type="radio"] {
 
 .font-pacifico {
   font-family: 'Pacifico', cursive;
+}
+
+.error-message-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.error-message {
+  color: #d70000;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  position: absolute;
+  bottom: 0;
 }
 
 .header-icon:hover,
