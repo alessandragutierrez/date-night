@@ -187,6 +187,32 @@ app.post('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/upcoming', (req, res, next) => {
+  const sql = `
+    select "i"."title",
+           "i"."description",
+           "i"."ideaId",
+           "l"."address",
+           "l"."latitude",
+           "l"."longitude",
+           "l"."locationId",
+           "s"."date",
+           "s"."time",
+           "s"."canceled",
+           "s"."scheduleId"
+    from "ideas" as "i"
+    join "locations" as "l" using ("locationId")
+    join "schedule" as "s" using ("ideaId")
+    where "s"."canceled" = false
+    order by "scheduleId"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
