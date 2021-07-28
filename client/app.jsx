@@ -29,6 +29,7 @@ export default class App extends React.Component {
       ],
       ideas: [],
       upcomingDates: [],
+      pastDates: [],
       targetIdea: {},
       updatedIdea: {}
     };
@@ -59,10 +60,15 @@ export default class App extends React.Component {
             for (let i = 0; i < upcomingDates.length; i++) {
               this.formatDateAndTime(upcomingDates[i]);
             }
-            this.setState({
-              ideas: ideas,
-              upcomingDates: upcomingDates
-            });
+            return fetch('/api/past-dates')
+              .then(res => res.json())
+              .then(pastDates => {
+                this.setState({
+                  ideas: ideas,
+                  upcomingDates: upcomingDates,
+                  pastDates: pastDates
+                });
+              });
           });
       });
   }

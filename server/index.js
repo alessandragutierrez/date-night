@@ -17,6 +17,7 @@ app.get('/api/ideas', (req, res, next) => {
   const sql = `
     select "idea"."title",
            "idea"."description",
+           "idea"."scheduled",
            "idea"."ideaId",
            "location"."address",
            "location"."latitude",
@@ -25,6 +26,30 @@ app.get('/api/ideas', (req, res, next) => {
     from "ideas" as "idea"
     join "locations" as "location" using ("locationId")
     where "idea"."scheduled" = false
+    order by "ideaId"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+// change to include ':userId'
+// where "userId" = above param
+app.get('/api/past-dates', (req, res, next) => {
+  const sql = `
+    select "idea"."title",
+           "idea"."description",
+           "idea"."scheduled",
+           "idea"."ideaId",
+           "location"."address",
+           "location"."latitude",
+           "location"."longitude",
+           "location"."locationId"
+    from "ideas" as "idea"
+    join "locations" as "location" using ("locationId")
+    where "idea"."scheduled" = true
     order by "ideaId"
   `;
   db.query(sql)
