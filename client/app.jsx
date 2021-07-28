@@ -156,14 +156,18 @@ export default class App extends React.Component {
             targetIdea={this.getTargetIdea}
             targetedIdea={this.state.targetIdea}
             updatedIdea={this.state.updatedIdea}
-            scheduledIdea={this.scheduleIdea}
-          />
+            scheduledIdea={this.scheduleIdea}/>
         : route.path === 'add-idea'
-          ? <AddIdea newIdea={this.addIdea}/>
+          ? <AddIdea
+              newIdea={this.addIdea}/>
           : route.path === 'edit-idea'
-            ? <EditIdea ideaToEdit={this.state.targetIdea} updatedIdea={this.updateIdea} ideaToDelete={this.deleteIdea}/>
+            ? <EditIdea
+                ideaToEdit={this.state.targetIdea}
+                updatedIdea={this.updateIdea}
+                ideaToDelete={this.deleteIdea}/>
             : route.path === 'upcoming'
-              ? <Upcoming />
+              ? <Upcoming
+                  upcomingDates={this.state.upcomingDates}/>
               : route.path === 'my-dates'
                 ? <MyDates />
                 : null

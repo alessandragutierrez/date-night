@@ -1,8 +1,14 @@
 import React from 'react';
 
-export default function Upcoming(props) {
-  return (
-    <>
-    </>
-  );
+export default class Upcoming extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+
+  render() {
+    return (
+      <>
+      </>
+    );
+  }
 }
