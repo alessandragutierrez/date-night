@@ -10,6 +10,7 @@ CREATE TABLE "ideas" (
 	"ideaId" serial NOT NULL,
 	"title" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
+  "scheduled" BOOLEAN NOT NULL,
 	"locationId" integer NOT NULL,
 	"userId" integer NOT NULL,
 	CONSTRAINT "ideas_pk" PRIMARY KEY ("ideaId")

@@ -13,8 +13,23 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
+      monthsArray: [
+        { monthText: 'January', monthNum: '01' },
+        { monthText: 'February', monthNum: '02' },
+        { monthText: 'March', monthNum: '03' },
+        { monthText: 'April', monthNum: '04' },
+        { monthText: 'May', monthNum: '05' },
+        { monthText: 'June', monthNum: '06' },
+        { monthText: 'July', monthNum: '07' },
+        { monthText: 'August', monthNum: '08' },
+        { monthText: 'September', monthNum: '09' },
+        { monthText: 'October', monthNum: '10' },
+        { monthText: 'November', monthNum: '11' },
+        { monthText: 'December', monthNum: '12' }
+      ],
       ideas: [],
       upcomingDates: [],
+      // newUpcomingDate: {},
       targetIdea: {},
       updatedIdea: {}
     };
@@ -39,17 +54,44 @@ export default class App extends React.Component {
     fetch('/api/ideas')
       .then(res => res.json())
       .then(ideas => {
-        this.setState({
-          ideas: ideas
-        });
+        return fetch('/api/upcoming')
+          .then(res => res.json())
+          .then(upcomingDates => {
+            for (let i = 0; i < upcomingDates.length; i++) {
+              this.formatDateAndTime(upcomingDates[i]);
+            }
+            this.setState({
+              ideas: ideas,
+              upcomingDates: upcomingDates
+            });
+          });
       });
-    fetch('/api/upcoming')
-      .then(res => res.json())
-      .then(upcomingDates => {
-        this.setState({
-          upcomingDates: upcomingDates
-        });
-      });
+  }
+
+  formatDateAndTime(upcoming) {
+    // const year = upcoming[i].date.substring(0, 4);
+    const monthNum = upcoming.date.substring(5, 7);
+    const matchingMonth = this.state.monthsArray.filter(month => {
+      return month.monthNum === monthNum;
+    });
+    const month = matchingMonth[0].monthText;
+    const day = upcoming.date.substring(8, 10);
+    const hourData = upcoming.time.substring(0, 2);
+    let hourDateToNumber = parseInt(hourData);
+    let AMPM = 'AM';
+    if (hourDateToNumber > 12) {
+      hourDateToNumber = hourDateToNumber - 12;
+      AMPM = 'PM';
+    }
+    const hour = hourDateToNumber.toString();
+    const minuteData = upcoming.time.substring(3, 5);
+    let minute = '';
+    if (minuteData.charAt(0) !== '0') {
+      minute = `:${minuteData}`;
+    }
+    const dateAndTimeFormatted = `${month} ${day} at ${hour}${minute} ${AMPM}`;
+    upcoming.dateAndTimeFormatted = dateAndTimeFormatted;
+    return upcoming;
   }
 
   addIdea(newIdea) {
@@ -68,6 +110,7 @@ export default class App extends React.Component {
           ideas: this.state.ideas.concat(newIdea)
         });
       });
+    window.location.href = '#';
   }
 
   updateIdea(updatedIdea) {
@@ -91,6 +134,7 @@ export default class App extends React.Component {
           ideas: allIdeas
         });
       });
+    window.location.href = '#';
   }
 
   deleteIdea(ideaToDelete) {
@@ -110,6 +154,7 @@ export default class App extends React.Component {
           ideas: allIdeas
         });
       });
+    window.location.href = '#';
   }
 
   scheduleIdea(scheduledIdea) {
@@ -121,15 +166,17 @@ export default class App extends React.Component {
       body: JSON.stringify(scheduledIdea)
     })
       .then(res => res.json())
-      .then(newUpcomingDate => {
+      .then(upcomingDate => {
         const allIdeas = this.state.ideas.filter(idea => {
           return idea.ideaId !== scheduledIdea.ideaId;
         });
+        const newUpcomingDate = this.formatDateAndTime(upcomingDate);
         this.setState({
           upcomingDates: this.state.upcomingDates.concat(newUpcomingDate),
           ideas: allIdeas
         });
       });
+    window.location.href = '#upcoming';
   }
 
   getTargetIdea(targetIdea) {
@@ -156,6 +203,7 @@ export default class App extends React.Component {
             targetIdea={this.getTargetIdea}
             targetedIdea={this.state.targetIdea}
             updatedIdea={this.state.updatedIdea}
+            monthsArray={this.state.monthsArray}
             scheduledIdea={this.scheduleIdea}/>
         : route.path === 'add-idea'
           ? <AddIdea

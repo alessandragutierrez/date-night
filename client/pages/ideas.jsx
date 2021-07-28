@@ -160,7 +160,6 @@ export default class Ideas extends React.Component {
       time: time
     };
     this.props.scheduledIdea(scheduledIdea);
-    window.location.href = '#upcoming';
   }
 
   renderIdeas(props) {
@@ -169,7 +168,7 @@ export default class Ideas extends React.Component {
       this.props.ideas.length < 1
         ? <p className="empty-text">You have no date ideas.</p>
         : ideas.map(idea =>
-            <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
+            <div key={'ideas' + idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
               <div className="date-title color-dark-gray">
                 {idea.title}
               </div>
@@ -241,23 +240,10 @@ export default class Ideas extends React.Component {
   }
 
   renderMonths() {
-    const monthsArray = [
-      { monthText: 'January', monthNum: '01' },
-      { monthText: 'February', monthNum: '02' },
-      { monthText: 'March', monthNum: '03' },
-      { monthText: 'April', monthNum: '04' },
-      { monthText: 'May', monthNum: '05' },
-      { monthText: 'June', monthNum: '06' },
-      { monthText: 'July', monthNum: '07' },
-      { monthText: 'August', monthNum: '08' },
-      { monthText: 'September', monthNum: '09' },
-      { monthText: 'October', monthNum: '10' },
-      { monthText: 'November', monthNum: '11' },
-      { monthText: 'December', monthNum: '12' }
-    ];
+    const monthsArray = this.props.monthsArray;
     return (
-      monthsArray.map((month, i) =>
-          <option key={i} value={month.monthNum}>
+      monthsArray.map(month =>
+          <option key={month.monthNum} value={month.monthNum}>
             {month.monthText}
           </option>
       )
@@ -279,8 +265,8 @@ export default class Ideas extends React.Component {
       }
     }
     return (
-      daysArray.map((day, i) =>
-          <option key={i} value={day}>
+      daysArray.map(day =>
+          <option key={day} value={day}>
             {day}
           </option>
       )
@@ -296,8 +282,8 @@ export default class Ideas extends React.Component {
       hoursArray.push(hourFormatted, hourHalfFormatted);
     }
     return (
-      hoursArray.map((hour, i) =>
-        <option key={i} value={hour}>
+      hoursArray.map(hour =>
+        <option key={hour} value={hour}>
           {hour}
         </option>
       )

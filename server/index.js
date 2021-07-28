@@ -24,6 +24,7 @@ app.get('/api/ideas', (req, res, next) => {
            "location"."locationId"
     from "ideas" as "idea"
     join "locations" as "location" using ("locationId")
+    where "idea"."scheduled" = false
     order by "ideaId"
   `;
   db.query(sql)
@@ -51,13 +52,13 @@ app.post('/api/ideas', (req, res, next) => {
       const { title, description } = req.body;
       const ideaSql = `
             insert into "ideas"
-              ("locationId", "title", "description", "userId")
+              ("locationId", "title", "description", "scheduled", "userId")
               values
-                ($1, $2, $3, $4)
+                ($1, $2, $3, $4, $5)
                 returning *
         `;
       // change userId later
-      const ideaParams = [location.locationId, title, description, 1];
+      const ideaParams = [location.locationId, title, description, false, 1];
 
       return db.query(ideaSql, ideaParams)
         .then(ideaResult => {
@@ -179,10 +180,44 @@ app.post('/api/upcoming', (req, res, next) => {
   db.query(scheduleSql, scheduleParams)
     .then(scheduleResult => {
       const [schedule] = scheduleResult.rows;
-      const output = {
-        schedule
-      };
-      res.status(201).json(output);
+      const ideaSql = `
+        update "ideas"
+           set "scheduled" = $1
+         where "ideaId" = $2
+        returning *
+      `;
+      const ideaParams = [true, schedule.ideaId];
+
+      return db.query(ideaSql, ideaParams)
+        .then(ideaResults => {
+          const [idea] = ideaResults.rows;
+          const locationSql = `
+            select "address",
+                   "latitude",
+                   "longitude"
+            from "locations"
+            where "locationId" = $1
+          `;
+          const locationParams = [idea.locationId];
+
+          return db.query(locationSql, locationParams)
+            .then(locationResults => {
+              const [location] = locationResults.rows;
+              const output = {
+                ideaId: idea.ideaId,
+                title: idea.title,
+                description: idea.description,
+                locationId: location.locationId,
+                address: location.address,
+                latitude: location.latitude,
+                longitude: location.longitude,
+                scheduleId: schedule.scheduleId,
+                date: schedule.date,
+                time: schedule.time
+              };
+              res.status(201).json(output);
+            });
+        });
     })
     .catch(err => next(err));
 });
