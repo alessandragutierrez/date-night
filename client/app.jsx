@@ -14,7 +14,7 @@ export default class App extends React.Component {
     this.state = {
       route: parseRoute(window.location.hash),
       ideas: [],
-      upcomingIdeas: [],
+      upcomingDates: [],
       targetIdea: {},
       updatedIdea: {}
     };
@@ -41,6 +41,13 @@ export default class App extends React.Component {
       .then(ideas => {
         this.setState({
           ideas: ideas
+        });
+      });
+    fetch('/api/upcoming')
+      .then(res => res.json())
+      .then(upcomingDates => {
+        this.setState({
+          upcomingDates: upcomingDates
         });
       });
   }
@@ -114,12 +121,12 @@ export default class App extends React.Component {
       body: JSON.stringify(scheduledIdea)
     })
       .then(res => res.json())
-      .then(newUpcomingIdea => {
+      .then(newUpcomingDate => {
         const allIdeas = this.state.ideas.filter(idea => {
           return idea.ideaId !== scheduledIdea.ideaId;
         });
         this.setState({
-          upcomingIdeas: this.state.upcomingIdeas.concat(newUpcomingIdea),
+          upcomingDates: this.state.upcomingDates.concat(newUpcomingDate),
           ideas: allIdeas
         });
       });
