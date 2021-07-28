@@ -222,7 +222,8 @@ export default class App extends React.Component {
               ? <Upcoming
                   upcomingDates={this.state.upcomingDates}/>
               : route.path === 'my-dates'
-                ? <MyDates />
+                ? <MyDates
+                    pastDates={this.state.pastDates}/>
                 : null
     );
   }

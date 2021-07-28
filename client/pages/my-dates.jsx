@@ -1,8 +1,12 @@
 import React from 'react';
 
-export default function MyDates(props) {
-  return (
-    <>
-    </>
-  );
+export default class MyDates extends React.Component {
+  render() {
+    return (
+      <div>
+
+      </div>
+    );
+  }
+
 }
