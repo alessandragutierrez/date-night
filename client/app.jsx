@@ -29,7 +29,6 @@ export default class App extends React.Component {
       ],
       ideas: [],
       upcomingDates: [],
-      // newUpcomingDate: {},
       targetIdea: {},
       updatedIdea: {}
     };
@@ -66,32 +65,6 @@ export default class App extends React.Component {
             });
           });
       });
-  }
-
-  formatDateAndTime(upcoming) {
-    // const year = upcoming[i].date.substring(0, 4);
-    const monthNum = upcoming.date.substring(5, 7);
-    const matchingMonth = this.state.monthsArray.filter(month => {
-      return month.monthNum === monthNum;
-    });
-    const month = matchingMonth[0].monthText;
-    const day = upcoming.date.substring(8, 10);
-    const hourData = upcoming.time.substring(0, 2);
-    let hourDateToNumber = parseInt(hourData);
-    let AMPM = 'AM';
-    if (hourDateToNumber > 12) {
-      hourDateToNumber = hourDateToNumber - 12;
-      AMPM = 'PM';
-    }
-    const hour = hourDateToNumber.toString();
-    const minuteData = upcoming.time.substring(3, 5);
-    let minute = '';
-    if (minuteData.charAt(0) !== '0') {
-      minute = `:${minuteData}`;
-    }
-    const dateAndTimeFormatted = `${month} ${day} at ${hour}${minute} ${AMPM}`;
-    upcoming.dateAndTimeFormatted = dateAndTimeFormatted;
-    return upcoming;
   }
 
   addIdea(newIdea) {
@@ -177,6 +150,32 @@ export default class App extends React.Component {
         });
       });
     window.location.href = '#upcoming';
+  }
+
+  formatDateAndTime(upcoming) {
+    // const year = upcoming[i].date.substring(0, 4);
+    const monthNum = upcoming.date.substring(5, 7);
+    const matchingMonth = this.state.monthsArray.filter(month => {
+      return month.monthNum === monthNum;
+    });
+    const month = matchingMonth[0].monthText;
+    const day = upcoming.date.substring(8, 10);
+    const hourData = upcoming.time.substring(0, 2);
+    let hourDateToNumber = parseInt(hourData);
+    let AMPM = 'AM';
+    if (hourDateToNumber > 12) {
+      hourDateToNumber = hourDateToNumber - 12;
+      AMPM = 'PM';
+    }
+    const hour = hourDateToNumber.toString();
+    const minuteData = upcoming.time.substring(3, 5);
+    let minute = '';
+    if (minuteData.charAt(0) !== '0') {
+      minute = `:${minuteData}`;
+    }
+    const dateAndTimeFormatted = `${month} ${day} at ${hour}${minute} ${AMPM}`;
+    upcoming.dateAndTimeFormatted = dateAndTimeFormatted;
+    return upcoming;
   }
 
   getTargetIdea(targetIdea) {
