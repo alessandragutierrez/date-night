@@ -46,7 +46,8 @@ body {
   font-size: 17px;
 }
 
-.date-address,
+.idea-address,
+.upcoming-address,
 .date-schedule,
 .date-description,
 .date-address--modal,
@@ -71,7 +72,8 @@ body {
   padding-top: 8px;
 }
 
-.desktop-idea-buttons {
+.desktop-idea-buttons,
+.desktop-upcoming-buttons {
   margin-top: 8px;
   position: absolute;
   bottom: 20px;
@@ -84,8 +86,8 @@ body {
   margin-right: 25px;
 }
 
-.desktop-idea-edit-icon,
-.desktop-idea-calendar-icon {
+.desktop-edit-icon,
+.desktop-calendar-icon {
   padding-right: 5px;
   align-self: center;
 }
@@ -119,6 +121,7 @@ body {
   font-size: 16px;
   padding: 5px 12px;
   margin-top: 3px;
+  background-color: white;
 }
 
 .location-input {

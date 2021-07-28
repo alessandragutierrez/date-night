@@ -173,7 +173,7 @@ export default class Ideas extends React.Component {
               <div className="date-title color-dark-gray">
                 {idea.title}
               </div>
-              <div className="date-address color-medium-gray">
+              <div className="idea-address color-medium-gray">
                 <span className="fa fa-map-marker map-marker-icon"></span>
                 {idea.address}
               </div>
@@ -182,12 +182,12 @@ export default class Ideas extends React.Component {
               </div>
               <div className="row desktop-idea-buttons">
                 <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="desktop-edit-button-container no-underline">
-                  <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
-                  <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
+                  <span className="fas fa-edit desktop-edit-icon color-dark-gray"></span>
+                  <span className="desktop-edit-icon-label color-dark-gray">Edit</span>
                 </a>
                 <span onClick={() => this.openSetDateModal(idea)} className="desktop-calendar-button-container">
-                  <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
-                  <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
+                  <span className="far fa-calendar-plus desktop-calendar-icon color-dark-gray"></span>
+                  <span className="desktop-calendar-icon-label color-dark-gray">Make It a Date</span>
                 </span>
               </div>
             </div>

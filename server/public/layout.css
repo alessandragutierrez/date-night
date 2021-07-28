@@ -111,10 +111,10 @@ main {
   padding-bottom: 5px;
 }
 
-.desktop-idea-edit-icon,
-.desktop-idea-edit-label,
-.desktop-idea-calendar-icon,
-.desktop-idea-calendar-label,
+.desktop-edit-icon,
+.desktop-edit-icon-label,
+.desktop-calendar-icon,
+.desktop-calendar-icon-label,
 .date-description {
   display: none;
 }
@@ -218,15 +218,23 @@ main {
   }
 
   .date-title,
-  .date-address,
+  .idea-address,
   .date-description {
     padding-bottom: 8px;
   }
 
-  .desktop-idea-edit-icon,
-  .desktop-idea-edit-label,
-  .desktop-idea-calendar-icon,
-  .desktop-idea-calendar-label,
+  .upcoming-address {
+    padding-bottom: 3px;
+  }
+
+  .date-schedule {
+    padding-bottom: 10px;
+  }
+
+  .desktop-edit-icon,
+  .desktop-edit-icon-label,
+  .desktop-calendar-icon,
+  .desktop-calendar-icon-label,
   .date-description {
     display: block;
   }
