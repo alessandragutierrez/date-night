@@ -159,6 +159,34 @@ app.delete('/api/ideas/:locationId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/upcoming', (req, res, next) => {
+  const { date, time } = req.body;
+  const ideaId = parseInt(req.body.ideaId, 10);
+  if (!date || !time || !ideaId) {
+    throw new ClientError(400, 'date, time, and ideaId are required fields');
+  }
+  if (!Number.isInteger(ideaId) || ideaId < 1) {
+    throw new ClientError(400, 'ideaId must be a positive integer');
+  }
+  const scheduleSql = `
+    insert into "schedule"
+      ("date", "time", "ideaId", "canceled")
+      values
+        ($1, $2, $3, $4)
+        returning *
+  `;
+  const scheduleParams = [date, time, ideaId, false];
+  db.query(scheduleSql, scheduleParams)
+    .then(scheduleResult => {
+      const [schedule] = scheduleResult.rows;
+      const output = {
+        schedule
+      };
+      res.status(201).json(output);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
