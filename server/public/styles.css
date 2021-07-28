@@ -47,6 +47,7 @@ body {
 }
 
 .date-address,
+.date-schedule,
 .date-description,
 .date-address--modal,
 .date-description--modal {
@@ -62,6 +63,12 @@ body {
 .map-marker-icon {
   font-size: 12px;
   padding-right: 7px;
+}
+
+.scheduled-calendar-icon {
+  font-size: 12px;
+  padding-right: 6px;
+  padding-top: 8px;
 }
 
 .desktop-idea-buttons {

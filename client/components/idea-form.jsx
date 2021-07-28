@@ -24,7 +24,6 @@ export default class IdeaForm extends React.Component {
     return (
       this.props.ideaToEdit === undefined
         ? {
-
             title: '',
             description: '',
             address: '',

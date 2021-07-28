@@ -174,7 +174,7 @@ export default class Ideas extends React.Component {
                 {idea.title}
               </div>
               <div className="date-address color-medium-gray">
-                <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
+                <span className="fa fa-map-marker map-marker-icon"></span>
                 {idea.address}
               </div>
               <div className="date-description color-medium-gray">
@@ -242,22 +242,22 @@ export default class Ideas extends React.Component {
 
   renderMonths() {
     const monthsArray = [
-      { monthText: 'January', monthInteger: '01' },
-      { monthText: 'February', monthInteger: '02' },
-      { monthText: 'March', monthInteger: '03' },
-      { monthText: 'April', monthInteger: '04' },
-      { monthText: 'May', monthInteger: '05' },
-      { monthText: 'June', monthInteger: '06' },
-      { monthText: 'July', monthInteger: '07' },
-      { monthText: 'August', monthInteger: '08' },
-      { monthText: 'September', monthInteger: '09' },
-      { monthText: 'October', monthInteger: '10' },
-      { monthText: 'November', monthInteger: '11' },
-      { monthText: 'December', monthInteger: '12' }
+      { monthText: 'January', monthNum: '01' },
+      { monthText: 'February', monthNum: '02' },
+      { monthText: 'March', monthNum: '03' },
+      { monthText: 'April', monthNum: '04' },
+      { monthText: 'May', monthNum: '05' },
+      { monthText: 'June', monthNum: '06' },
+      { monthText: 'July', monthNum: '07' },
+      { monthText: 'August', monthNum: '08' },
+      { monthText: 'September', monthNum: '09' },
+      { monthText: 'October', monthNum: '10' },
+      { monthText: 'November', monthNum: '11' },
+      { monthText: 'December', monthNum: '12' }
     ];
     return (
       monthsArray.map((month, i) =>
-          <option key={i} value={month.monthInteger}>
+          <option key={i} value={month.monthNum}>
             {month.monthText}
           </option>
       )
