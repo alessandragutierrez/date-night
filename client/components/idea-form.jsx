@@ -45,13 +45,13 @@ export default class IdeaForm extends React.Component {
     );
   }
 
-  handleTitleChange() {
+  handleTitleChange(event) {
     this.setState({
       title: event.target.value
     });
   }
 
-  handleDescriptionChange() {
+  handleDescriptionChange(event) {
     this.setState({
       description: event.target.value
     });

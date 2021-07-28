@@ -6,12 +6,23 @@ export default class Ideas extends React.Component {
     this.state = {
       ideaOpen: {},
       ideaModalOpen: null,
-      setDateModalOpen: false
+      setDateModalOpen: false,
+      setDateTargetIdea: {},
+      scheduleDetails: {
+        month: null,
+        day: null,
+        hour: null,
+        AMPM: null
+      }
     };
     this.handleIdeaModalBackgroundClick = this.handleIdeaModalBackgroundClick.bind(this);
     this.handleSetDateModalBackgroundClick = this.handleSetDateModalBackgroundClick.bind(this);
-    // this.openSetDateModal = this.openSetDateModal.bind(this);
     this.exitSetDateModal = this.exitSetDateModal.bind(this);
+    this.handleMonthChange = this.handleMonthChange.bind(this);
+    this.handleDayChange = this.handleDayChange.bind(this);
+    this.handleHourChange = this.handleHourChange.bind(this);
+    this.handleSetDate = this.handleSetDate.bind(this);
+    this.handleAMPMChange = this.handleAMPMChange.bind(this);
   }
 
   handleIdeaClick(idea) {
@@ -48,9 +59,66 @@ export default class Ideas extends React.Component {
 
   openSetDateModal(idea) {
     this.setState({
+      ideaModalOpen: false,
       setDateModalOpen: true,
-      ideaModalOpen: false
+      setDateTargetIdea: {
+        ideaId: idea.ideaId,
+        title: idea.title,
+        description: idea.description,
+        address: idea.address,
+        latitude: idea.latitude,
+        longitude: idea.longitude,
+        locationId: idea.locationId
+      }
     });
+  }
+
+  handleMonthChange(event) {
+    const scheduleDetails = { ...this.state.scheduleDetails };
+    scheduleDetails.month = event.target.value;
+    this.setState({ scheduleDetails });
+  }
+
+  handleDayChange(event) {
+    const scheduleDetails = { ...this.state.scheduleDetails };
+    scheduleDetails.day = event.target.value;
+    this.setState({ scheduleDetails });
+  }
+
+  handleHourChange(event) {
+    const scheduleDetails = { ...this.state.scheduleDetails };
+    scheduleDetails.hour = event.target.value;
+    this.setState({ scheduleDetails });
+  }
+
+  handleAMPMChange(event) {
+    const scheduleDetails = { ...this.state.scheduleDetails };
+    scheduleDetails.AMPM = event.target.value;
+    this.setState({ scheduleDetails });
+  }
+
+  handleSetDate() {
+    event.preventDefault();
+    const idea = this.state.setDateTargetIdea;
+    const scheduleDetails = this.state.scheduleDetails;
+    // later change year input to be dynamic depending on current date
+    // const currentDate = new Date();
+    // if month and day input is already in the past, year should be changed to the next year (2022 as of now)
+    const date = `2021-${scheduleDetails.month}-${scheduleDetails.day}`;
+    const time = `${scheduleDetails.hour} ${scheduleDetails.AMPM}`;
+    const scheduledIdea = {
+      ideaId: idea.ideaId,
+      title: idea.title,
+      description: idea.description,
+      address: idea.address,
+      latitude: idea.latitude,
+      longitude: idea.longitude,
+      locationId: idea.locationId,
+      date: date,
+      time: time
+    };
+    this.props.scheduledIdea(scheduledIdea);
+    window.location.href = '#upcoming';
   }
 
   handleSetDateModalBackgroundClick(event) {
@@ -63,7 +131,8 @@ export default class Ideas extends React.Component {
   exitSetDateModal() {
     this.setState({
       setDateModalOpen: false,
-      ideaModalOpen: true
+      ideaModalOpen: true,
+      setDateTargetIdea: {}
     });
   }
 
@@ -170,9 +239,17 @@ export default class Ideas extends React.Component {
 
   renderDays() {
     const daysArray = [];
+    // make this max number dynamically change depending on the selected month
     const maxDays = 31;
     for (let i = 1; i <= maxDays; i++) {
-      daysArray.push(i);
+      if (i < 10) {
+        const day = i.toString();
+        const dayFormatted = `0${day}`;
+        daysArray.push(dayFormatted);
+      } else {
+        const dayFormatted = i.toString();
+        daysArray.push(dayFormatted);
+      }
     }
     return (
       daysArray.map((day, i) =>
@@ -186,7 +263,10 @@ export default class Ideas extends React.Component {
   renderHours() {
     const hoursArray = [];
     for (let i = 1; i <= 12; i++) {
-      hoursArray.push(i);
+      const hour = i.toString();
+      const hourFormatted = `${hour}:00`;
+      const hourHalfFormatted = `${hour}:30`;
+      hoursArray.push(hourFormatted, hourHalfFormatted);
     }
     return (
       hoursArray.map((hour, i) =>
@@ -212,7 +292,7 @@ export default class Ideas extends React.Component {
                   <div className="set-date-form-section">
                     <label className="form-label">Month
                       <br />
-                      <select className="border-radius form-select month-select">
+                      <select onChange={this.handleMonthChange}className="border-radius form-select month-select">
                         {monthOptions}
                       </select>
                     </label>
@@ -220,7 +300,7 @@ export default class Ideas extends React.Component {
                   <div className="set-date-form-section">
                     <label className="form-label">Day
                       <br />
-                      <select className="border-radius form-select day-select">
+                      <select onChange={this.handleDayChange} className="border-radius form-select day-select">
                         {dayOptions}
                       </select>
                     </label>
@@ -230,12 +310,12 @@ export default class Ideas extends React.Component {
                   <div className="set-date-form-section">
                     <label className="form-label">Time
                       <br />
-                      <select className="border-radius form-select time-select">
+                      <select onChange={this.handleHourChange} className="border-radius form-select time-select">
                         {hourOptions}
                       </select>
                     </label>
                   </div>
-                  <div className="set-date-form-section set-date-form-radio-section">
+                  <div onChange={this.handleAMPMChange} className="set-date-form-section set-date-form-radio-section">
                     <div className="set-date-form-radio-container">
                       <label className="form-radio-label">
                         <input type="radio" name="AM/PM" value="AM" className="form-radio-input" />
@@ -252,7 +332,7 @@ export default class Ideas extends React.Component {
                 </div>
                 <div className="row set-date-buttons-container--modal">
                   <a onClick={this.exitSetDateModal} className="border-radius button color-pink cancel-button--modal">CANCEL</a>
-                  <button className="border-radius button set-date-button--modal">IT&apos;S A DATE</button>
+                  <button onClick={this.handleSetDate} className="border-radius button set-date-button--modal">IT&apos;S A DATE</button>
                 </div>
               </form>
             </div>

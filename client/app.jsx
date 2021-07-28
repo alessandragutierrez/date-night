@@ -14,6 +14,7 @@ export default class App extends React.Component {
     this.state = {
       route: parseRoute(window.location.hash),
       ideas: [],
+      upcomingIdeas: [],
       targetIdea: {},
       updatedIdea: {}
     };
@@ -21,6 +22,7 @@ export default class App extends React.Component {
     this.updateIdea = this.updateIdea.bind(this);
     this.deleteIdea = this.deleteIdea.bind(this);
     this.getTargetIdea = this.getTargetIdea.bind(this);
+    this.scheduleIdea = this.scheduleIdea.bind(this);
   }
 
   componentDidMount() {
@@ -103,6 +105,26 @@ export default class App extends React.Component {
       });
   }
 
+  scheduleIdea(scheduledIdea) {
+    fetch('/api/upcoming', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(scheduledIdea)
+    })
+      .then(res => res.json())
+      .then(newUpcomingIdea => {
+        const allIdeas = this.state.ideas.filter(idea => {
+          return idea.ideaId !== scheduledIdea.ideaId;
+        });
+        this.setState({
+          upcomingIdeas: this.state.upcomingIdeas.concat(newUpcomingIdea),
+          ideas: allIdeas
+        });
+      });
+  }
+
   getTargetIdea(targetIdea) {
     this.setState({
       targetIdea: {
@@ -122,7 +144,13 @@ export default class App extends React.Component {
     const { route } = this.state;
     return (
       route.path === ''
-        ? <Ideas ideas={this.state.ideas} targetIdea={this.getTargetIdea} targetedIdea={this.state.targetIdea} updatedIdea={this.state.updatedIdea}/>
+        ? <Ideas
+            ideas={this.state.ideas}
+            targetIdea={this.getTargetIdea}
+            targetedIdea={this.state.targetIdea}
+            updatedIdea={this.state.updatedIdea}
+            scheduledIdea={this.scheduleIdea}
+          />
         : route.path === 'add-idea'
           ? <AddIdea newIdea={this.addIdea}/>
           : route.path === 'edit-idea'
