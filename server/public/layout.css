@@ -121,6 +121,7 @@ main {
 
 /* modals */
 .idea-box--modal,
+.upcoming-box--modal,
 .delete-box--modal,
 .set-date-box--modal {
   width: 320px;
@@ -240,7 +241,8 @@ main {
   }
 
   /* modals */
-  .idea-box--modal {
+  .idea-box--modal,
+  .upcoming-box--modal {
     width: 420px;
   }
 }

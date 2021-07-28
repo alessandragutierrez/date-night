@@ -35,7 +35,7 @@ body {
   display: inline;
 }
 
-/* ideas */
+/* ideas/upcoming */
 .empty-text {
   margin: auto;
   padding: 40px 0;
@@ -51,12 +51,14 @@ body {
 .date-schedule,
 .date-description,
 .date-address--modal,
+.date-schedule--modal,
 .date-description--modal {
   font-size: 13px;
 }
 
 .date-title--modal,
 .date-address--modal,
+.date-schedule--modal,
 .date-description--modal {
   margin-bottom: 8px;
 }
