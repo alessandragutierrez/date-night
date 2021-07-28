@@ -160,34 +160,33 @@ export default class Ideas extends React.Component {
       time: time
     };
     this.props.scheduledIdea(scheduledIdea);
-    window.location.href = '#upcoming';
   }
 
   renderIdeas(props) {
     const ideas = this.props.ideas;
     return (
       this.props.ideas.length < 1
-        ? <p className="ideas-empty">You have no date ideas.</p>
+        ? <p className="empty-text">You have no date ideas.</p>
         : ideas.map(idea =>
-            <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
-              <div className="idea-title color-dark-gray">
+            <div key={'ideas' + idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
+              <div className="date-title color-dark-gray">
                 {idea.title}
               </div>
               <div className="idea-address color-medium-gray">
-                <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
+                <span className="fa fa-map-marker map-marker-icon"></span>
                 {idea.address}
               </div>
-              <div className="idea-description color-medium-gray">
+              <div className="date-description color-medium-gray">
                 {idea.description}
               </div>
               <div className="row desktop-idea-buttons">
                 <a href="#edit-idea" onClick={() => this.handleEditButtonClick(idea)} className="desktop-edit-button-container no-underline">
-                  <span className="fas fa-edit desktop-idea-edit-icon color-dark-gray"></span>
-                  <span className="desktop-idea-edit-label color-dark-gray">Edit</span>
+                  <span className="fas fa-edit desktop-edit-icon color-dark-gray"></span>
+                  <span className="desktop-edit-icon-label color-dark-gray">Edit</span>
                 </a>
                 <span onClick={() => this.openSetDateModal(idea)} className="desktop-calendar-button-container">
-                  <span className="far fa-calendar-plus desktop-idea-calendar-icon color-dark-gray"></span>
-                  <span className="desktop-idea-calendar-label color-dark-gray">Make It a Date</span>
+                  <span className="far fa-calendar-plus desktop-calendar-icon color-dark-gray"></span>
+                  <span className="desktop-calendar-icon-label color-dark-gray">Make It a Date</span>
                 </span>
               </div>
             </div>
@@ -213,14 +212,14 @@ export default class Ideas extends React.Component {
         ? null
         : <div onClick={this.handleIdeaModalBackgroundClick} className="background--modal">
             <div className="modal border-radius background-white idea-box--modal">
-              <div className="idea-title--modal">
+              <div className="date-title--modal">
                 {idea.title}
               </div>
-              <div className="idea-address--modal color-medium-gray">
+              <div className="date-address--modal color-medium-gray">
                 <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
                 {idea.address}
               </div>
-              <div className="idea-description--modal color-medium-gray">
+              <div className="date-description--modal color-medium-gray">
                 {idea.description}
               </div>
               <div className="edit-button-container--modal">
@@ -241,23 +240,10 @@ export default class Ideas extends React.Component {
   }
 
   renderMonths() {
-    const monthsArray = [
-      { monthText: 'January', monthInteger: '01' },
-      { monthText: 'February', monthInteger: '02' },
-      { monthText: 'March', monthInteger: '03' },
-      { monthText: 'April', monthInteger: '04' },
-      { monthText: 'May', monthInteger: '05' },
-      { monthText: 'June', monthInteger: '06' },
-      { monthText: 'July', monthInteger: '07' },
-      { monthText: 'August', monthInteger: '08' },
-      { monthText: 'September', monthInteger: '09' },
-      { monthText: 'October', monthInteger: '10' },
-      { monthText: 'November', monthInteger: '11' },
-      { monthText: 'December', monthInteger: '12' }
-    ];
+    const monthsArray = this.props.monthsArray;
     return (
-      monthsArray.map((month, i) =>
-          <option key={i} value={month.monthInteger}>
+      monthsArray.map(month =>
+          <option key={month.monthNum} value={month.monthNum}>
             {month.monthText}
           </option>
       )
@@ -279,8 +265,8 @@ export default class Ideas extends React.Component {
       }
     }
     return (
-      daysArray.map((day, i) =>
-          <option key={i} value={day}>
+      daysArray.map(day =>
+          <option key={day} value={day}>
             {day}
           </option>
       )
@@ -296,8 +282,8 @@ export default class Ideas extends React.Component {
       hoursArray.push(hourFormatted, hourHalfFormatted);
     }
     return (
-      hoursArray.map((hour, i) =>
-        <option key={i} value={hour}>
+      hoursArray.map(hour =>
+        <option key={hour} value={hour}>
           {hour}
         </option>
       )

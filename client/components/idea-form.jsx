@@ -12,7 +12,7 @@ export default class IdeaForm extends React.Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleLocationSelect = this.handleLocationSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -24,7 +24,6 @@ export default class IdeaForm extends React.Component {
     return (
       this.props.ideaToEdit === undefined
         ? {
-
             title: '',
             description: '',
             address: '',
@@ -74,7 +73,7 @@ export default class IdeaForm extends React.Component {
       .catch(error => console.error('Error', error));
   }
 
-  handleSubmit(event) {
+  handleAdd(event) {
     event.preventDefault();
     const newIdea = {
       title: this.state.title,
@@ -84,7 +83,6 @@ export default class IdeaForm extends React.Component {
       longitude: this.state.longitude
     };
     this.props.newIdea(newIdea);
-    window.location.href = '#';
   }
 
   handleUpdate(event) {
@@ -99,7 +97,6 @@ export default class IdeaForm extends React.Component {
       locationId: this.state.locationId
     };
     this.props.updatedIdea(updatedIdea);
-    window.location.href = '#';
   }
 
   handleDeleteClick() {
@@ -112,7 +109,6 @@ export default class IdeaForm extends React.Component {
     event.preventDefault();
     const ideaToDelete = this.state;
     this.props.ideaToDelete(ideaToDelete);
-    window.location.href = '#';
   }
 
   exitModal(event) {
@@ -226,7 +222,7 @@ export default class IdeaForm extends React.Component {
       <div className="row form-buttons-container">
         <a href="#" className={buttonClasses.cancelButton}>CANCEL</a>
         <a onClick={this.handleDeleteClick} className={buttonClasses.deleteButton}>DELETE</a>
-        <button onClick={this.handleSubmit} type="submit" className={buttonClasses.addButton}>ADD</button>
+        <button onClick={this.handleAdd} type="submit" className={buttonClasses.addButton}>ADD</button>
         <button onClick={this.handleUpdate} type="submit" className={buttonClasses.updateButton}>UPDATE</button>
       </div>
     );

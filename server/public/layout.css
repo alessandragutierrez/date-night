@@ -80,8 +80,9 @@ main {
   width: 250px;
 }
 
-/* ideas */
-.ideas-container {
+/* ideas/upcoming */
+.ideas-container,
+.upcoming-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -91,7 +92,8 @@ main {
   padding-bottom: 70px;
 }
 
-.idea-item {
+.idea-item,
+.upcoming-item {
   flex-basis: 100%;
   margin: 10px 0;
   background-color: white;
@@ -100,24 +102,26 @@ main {
   padding: 15px 20px;
 }
 
-.idea-item:hover {
+.idea-item:hover,
+.upcoming-item:hover {
   cursor: pointer;
 }
 
-.idea-title {
+.date-title {
   padding-bottom: 5px;
 }
 
-.desktop-idea-edit-icon,
-.desktop-idea-edit-label,
-.desktop-idea-calendar-icon,
-.desktop-idea-calendar-label,
-.idea-description {
+.desktop-edit-icon,
+.desktop-edit-icon-label,
+.desktop-calendar-icon,
+.desktop-calendar-icon-label,
+.date-description {
   display: none;
 }
 
 /* modals */
 .idea-box--modal,
+.upcoming-box--modal,
 .delete-box--modal,
 .set-date-box--modal {
   width: 320px;
@@ -188,15 +192,17 @@ main {
     width: 350px;
   }
 
-  /* ideas */
-  .ideas-container {
+  /* ideas/upcoming */
+  .ideas-container,
+  .upcoming-container {
     width: 85%;
     justify-content: space-between;
     padding-top: 30px;
     padding-bottom: 40px;
   }
 
-  .idea-item {
+  .idea-item,
+  .upcoming-item {
     flex-basis: 45%;
     margin-left: 30px;
     margin-bottom: 20px;
@@ -207,26 +213,36 @@ main {
     min-height: 180px;
   }
 
-  .idea-item:hover {
+  .idea-item:hover,
+  .upcoming-item:hover {
     cursor: auto;
   }
 
-  .idea-title,
+  .date-title,
   .idea-address,
-  .idea-description {
+  .date-description {
     padding-bottom: 8px;
   }
 
-  .desktop-idea-edit-icon,
-  .desktop-idea-edit-label,
-  .desktop-idea-calendar-icon,
-  .desktop-idea-calendar-label,
-  .idea-description {
+  .upcoming-address {
+    padding-bottom: 3px;
+  }
+
+  .date-schedule {
+    padding-bottom: 10px;
+  }
+
+  .desktop-edit-icon,
+  .desktop-edit-icon-label,
+  .desktop-calendar-icon,
+  .desktop-calendar-icon-label,
+  .date-description {
     display: block;
   }
 
   /* modals */
-  .idea-box--modal {
+  .idea-box--modal,
+  .upcoming-box--modal {
     width: 420px;
   }
 }
