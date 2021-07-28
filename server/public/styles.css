@@ -36,26 +36,26 @@ body {
 }
 
 /* ideas */
-.ideas-empty {
+.empty-text {
   margin: auto;
   padding: 40px 0;
 }
 
-.idea-title,
-.idea-title--modal {
+.date-title,
+.date-title--modal {
   font-size: 17px;
 }
 
-.idea-address,
-.idea-description,
-.idea-address--modal,
-.idea-description--modal {
+.date-address,
+.date-description,
+.date-address--modal,
+.date-description--modal {
   font-size: 13px;
 }
 
-.idea-title--modal,
-.idea-address--modal,
-.idea-description--modal {
+.date-title--modal,
+.date-address--modal,
+.date-description--modal {
   margin-bottom: 8px;
 }
 

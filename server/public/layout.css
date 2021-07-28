@@ -80,8 +80,9 @@ main {
   width: 250px;
 }
 
-/* ideas */
-.ideas-container {
+/* ideas/upcoming */
+.ideas-container,
+.upcoming-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -91,7 +92,8 @@ main {
   padding-bottom: 70px;
 }
 
-.idea-item {
+.idea-item,
+.upcoming-item {
   flex-basis: 100%;
   margin: 10px 0;
   background-color: white;
@@ -100,11 +102,12 @@ main {
   padding: 15px 20px;
 }
 
-.idea-item:hover {
+.idea-item:hover,
+.upcoming-item:hover {
   cursor: pointer;
 }
 
-.idea-title {
+.date-title {
   padding-bottom: 5px;
 }
 
@@ -112,7 +115,7 @@ main {
 .desktop-idea-edit-label,
 .desktop-idea-calendar-icon,
 .desktop-idea-calendar-label,
-.idea-description {
+.date-description {
   display: none;
 }
 
@@ -188,15 +191,17 @@ main {
     width: 350px;
   }
 
-  /* ideas */
-  .ideas-container {
+  /* ideas/upcoming */
+  .ideas-container,
+  .upcoming-container {
     width: 85%;
     justify-content: space-between;
     padding-top: 30px;
     padding-bottom: 40px;
   }
 
-  .idea-item {
+  .idea-item,
+  .upcoming-item {
     flex-basis: 45%;
     margin-left: 30px;
     margin-bottom: 20px;
@@ -207,13 +212,14 @@ main {
     min-height: 180px;
   }
 
-  .idea-item:hover {
+  .idea-item:hover,
+  .upcoming-item:hover {
     cursor: auto;
   }
 
-  .idea-title,
-  .idea-address,
-  .idea-description {
+  .date-title,
+  .date-address,
+  .date-description {
     padding-bottom: 8px;
   }
 
@@ -221,7 +227,7 @@ main {
   .desktop-idea-edit-label,
   .desktop-idea-calendar-icon,
   .desktop-idea-calendar-label,
-  .idea-description {
+  .date-description {
     display: block;
   }
 

@@ -167,17 +167,17 @@ export default class Ideas extends React.Component {
     const ideas = this.props.ideas;
     return (
       this.props.ideas.length < 1
-        ? <p className="ideas-empty">You have no date ideas.</p>
+        ? <p className="empty-text">You have no date ideas.</p>
         : ideas.map(idea =>
             <div key={idea.ideaId} onClick={() => this.handleIdeaClick(idea)} className="idea-item">
-              <div className="idea-title color-dark-gray">
+              <div className="date-title color-dark-gray">
                 {idea.title}
               </div>
-              <div className="idea-address color-medium-gray">
+              <div className="date-address color-medium-gray">
                 <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
                 {idea.address}
               </div>
-              <div className="idea-description color-medium-gray">
+              <div className="date-description color-medium-gray">
                 {idea.description}
               </div>
               <div className="row desktop-idea-buttons">
@@ -213,14 +213,14 @@ export default class Ideas extends React.Component {
         ? null
         : <div onClick={this.handleIdeaModalBackgroundClick} className="background--modal">
             <div className="modal border-radius background-white idea-box--modal">
-              <div className="idea-title--modal">
+              <div className="date-title--modal">
                 {idea.title}
               </div>
-              <div className="idea-address--modal color-medium-gray">
+              <div className="date-address--modal color-medium-gray">
                 <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
                 {idea.address}
               </div>
-              <div className="idea-description--modal color-medium-gray">
+              <div className="date-description--modal color-medium-gray">
                 {idea.description}
               </div>
               <div className="edit-button-container--modal">
