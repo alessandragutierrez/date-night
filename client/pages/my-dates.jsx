@@ -5,29 +5,33 @@ export default class MyDates extends React.Component {
     super(props);
     this.state = {
       dateOpen: {},
-      dateModalOpen: null
+      dateModalOpenDesktop: null
     };
     this.handleDateModalBackgroundClick = this.handleDateModalBackgroundClick.bind(this);
   }
 
   handleDateClick(date) {
+    const dateOpen = {
+      ideaId: date.ideaId,
+      title: date.title,
+      description: date.description,
+      locationId: date.locationId,
+      address: date.address,
+      latitude: date.latitude,
+      longitude: date.longitude,
+      scheduleId: date.scheduleId,
+      date: date.date,
+      time: date.time,
+      dateAndTimeFormatted: date.dateAndTimeFormatted
+    };
     if (window.innerWidth > 767) {
       this.setState({
-        dateOpen: {
-          ideaId: date.ideaId,
-          title: date.title,
-          description: date.description,
-          locationId: date.locationId,
-          address: date.address,
-          latitude: date.latitude,
-          longitude: date.longitude,
-          scheduleId: date.scheduleId,
-          date: date.date,
-          time: date.time,
-          dateAndTimeFormatted: date.dateAndTimeFormatted
-        },
-        dateModalOpen: true
+        dateOpen: dateOpen,
+        dateModalOpenDesktop: true
       });
+    } else if (window.innerWidth < 768) {
+      this.props.dateOpen(dateOpen);
+      window.location.href = '#view-date-mobile';
     }
   }
 
@@ -37,7 +41,7 @@ export default class MyDates extends React.Component {
     }
     this.setState({
       dateOpen: {},
-      dateModalOpen: false
+      dateModalOpenDesktop: false
     });
   }
 
@@ -62,21 +66,15 @@ export default class MyDates extends React.Component {
             <div className="date-description color-medium-gray">
               {date.description}
             </div>
-            <div className="row desktop-date-button-div">
-              <span className="desktop-edit-button-container no-underline">
-                <span className="fas fa-edit desktop-edit-icon color-dark-gray"></span>
-                <span className="desktop-edit-icon-label color-dark-gray">Edit</span>
-              </span>
-            </div>
           </div>
         )
     );
   }
 
-  renderDateModal() {
+  renderDateModalDesktop() {
     const date = this.state.dateOpen;
     return (
-      date.ideaId === undefined || window.innerWidth < 767 || this.state.upcomingDateModalOpen === false
+      date.ideaId === undefined || window.innerWidth < 767 || this.state.upcomingdateModalOpenDesktop === false
         ? null
         : <div onClick={this.handleDateModalBackgroundClick} className="background--modal">
             <div className="modal border-radius background-white date-box--modal">
@@ -95,7 +93,7 @@ export default class MyDates extends React.Component {
                 {date.description}
               </div>
               <div className="edit-button-container--modal">
-                <a href="#edit-idea" className="edit-button--modal border-radius no-underline text-center">
+                <a className="edit-button--modal border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
                 </a>
@@ -107,11 +105,11 @@ export default class MyDates extends React.Component {
 
   render() {
     const dateElements = this.renderPastDates();
-    const dateModal = this.renderDateModal();
+    const dateModalDesktop = this.renderDateModalDesktop();
     return (
       <div className="past-dates-container">
         {dateElements}
-        {dateModal}
+        {dateModalDesktop}
       </div>
     );
   }

@@ -211,10 +211,18 @@ main {
     margin-left: 30px;
     margin-bottom: 20px;
     padding-top: 20px;
-    padding-bottom: 50px;
     padding-inline: 35px;
     position: relative;
     min-height: 180px;
+  }
+
+  .idea-item,
+  .upcoming-item {
+    padding-bottom: 50px;
+  }
+
+  .date-item {
+    padding-bottom: 20px;
   }
 
   .idea-item:hover,
@@ -225,12 +233,16 @@ main {
   .date-title,
   .idea-address,
   .date-description {
-    padding-bottom: 8px;
+    margin-bottom: 8px;
   }
 
   .upcoming-address,
   .date-address {
-    padding-bottom: 3px;
+    margin-bottom: 3px;
+  }
+
+  .date-schedule {
+    margin-bottom: 8px;
   }
 
   .desktop-edit-icon,

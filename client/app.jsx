@@ -6,6 +6,7 @@ import AddIdea from './pages/add-idea';
 import EditIdea from './pages/edit-idea';
 import Upcoming from './pages/upcoming';
 import MyDates from './pages/my-dates';
+import ViewDateMobile from './pages/view-date-mobile';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -31,13 +32,15 @@ export default class App extends React.Component {
       upcomingDates: [],
       pastDates: [],
       targetIdea: {},
-      updatedIdea: {}
+      updatedIdea: {},
+      dateOpen: {}
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
     this.deleteIdea = this.deleteIdea.bind(this);
     this.getTargetIdea = this.getTargetIdea.bind(this);
     this.scheduleIdea = this.scheduleIdea.bind(this);
+    this.getDateOpen = this.getDateOpen.bind(this);
   }
 
   componentDidMount() {
@@ -202,6 +205,12 @@ export default class App extends React.Component {
     });
   }
 
+  getDateOpen(dateOpen) {
+    this.setState({
+      dateOpen: dateOpen
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     return (
@@ -226,8 +235,13 @@ export default class App extends React.Component {
                   upcomingDates={this.state.upcomingDates}/>
               : route.path === 'my-dates'
                 ? <MyDates
-                    pastDates={this.state.pastDates}/>
-                : null
+                    pastDates={this.state.pastDates}
+                    dateOpen={this.getDateOpen} />
+                : route.path === 'view-date-mobile'
+                  ? <ViewDateMobile
+                      dateOpen={this.state.dateOpen}
+                    />
+                  : null
     );
   }
 

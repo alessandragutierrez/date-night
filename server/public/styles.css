@@ -13,6 +13,10 @@ body {
   font-size: 28px;
 }
 
+.header-map {
+  font-size: 26px;
+}
+
 .header-title {
   font-size: 24px;
   margin-bottom: 5px;
@@ -53,23 +57,30 @@ body {
 .date-description,
 .date-address--modal,
 .date-schedule--modal,
-.date-description--modal {
+.date-description--modal,
+.date-schedule--mobile,
+.date-description--mobile {
   font-size: 13px;
 }
 
 .date-title--modal,
 .date-schedule--modal,
-.date-description--modal {
+.date-description--modal,
+.date-schedule--mobile {
   margin-bottom: 8px;
+}
+
+.upcoming-address,
+.date-address {
+  margin-bottom: 3px;
 }
 
 .date-address--modal {
   margin-bottom: 5px;
 }
 
-.upcoming-address,
-.date-address {
-  padding-bottom: 3px;
+.date-description--mobile {
+  margin-bottom: 17px;
 }
 
 .map-marker-icon {
@@ -84,8 +95,7 @@ body {
 }
 
 .desktop-idea-buttons,
-.desktop-upcoming-buttons,
-.desktop-date-button-div {
+.desktop-upcoming-buttons {
   margin-top: 8px;
   position: absolute;
   bottom: 20px;
@@ -282,13 +292,15 @@ input[type="radio"] {
 }
 
 .edit-button-container--modal,
-.calendar-button-container--modal {
+.calendar-button-container--modal,
+.edit-button-container--mobile {
   display: flex;
   justify-content: center;
 }
 
 .edit-button--modal,
-.calendar-button--modal {
+.calendar-button--modal,
+.edit-button--mobile {
   width: 190px;
   border: none;
   padding: 8px 0;
@@ -302,13 +314,15 @@ input[type="radio"] {
 }
 
 .idea-edit-icon--modal,
-.idea-calendar-icon--modal {
+.idea-calendar-icon--modal,
+.idea-edit-icon--mobile {
   padding-right: 5px;
   font-size: 13px;
 }
 
 .idea-edit-label--modal,
-.idea-calendar-label--modal {
+.idea-calendar-label--modal,
+.idea-edit-label--mobile {
   font-size: 14px;
 }
 
@@ -396,6 +410,26 @@ input[type="radio"] {
 .calendar-button--modal:hover,
 .form-select:hover,
 .form-radio-input:hover,
-.date-item:hover {
+.date-item:hover,
+.edit-button--mobile:hover {
   cursor: pointer;
+}
+
+.view-date-container--mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+.date-item--mobile {
+  padding-top: 75px;
+  padding-inline: 40px;
+
+  /* margin: auto; */
 }

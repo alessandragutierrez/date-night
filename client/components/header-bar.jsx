@@ -9,15 +9,20 @@ export default class HeaderBar extends React.Component {
             icon1: '',
             icon2: 'fas fa-plus header-icon'
           }
-        : this.props.page === 'add-idea' || this.props.page === 'edit-idea'
+        : this.props.page === 'add-idea' || this.props.page === 'edit-idea' || this.props.page === 'view-date-mobile'
           ? {
               icon1: 'fas fa-arrow-left header-icon',
               icon2: ''
             }
-          : {
-              icon1: 'header-icon',
-              icon2: 'header-icon'
-            }
+          : this.props.page === 'my-dates'
+            ? {
+                icon1: 'fas fa-map-marked-alt header-map',
+                icon2: ''
+              }
+            : {
+                icon1: 'header-icon',
+                icon2: 'header-icon'
+              }
     );
   }
 

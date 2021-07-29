@@ -20,7 +20,7 @@ export default class NavBar extends React.Component {
               upcoming: 'fas fa-calendar-check nav-icon',
               myDates: 'far fa-heart nav-icon'
             }
-          : this.props.page === 'my-dates'
+          : this.props.page === 'my-dates' || this.props.page === 'view-date-mobile'
             ? {
                 ideas: 'far fa-lightbulb nav-icon',
                 upcoming: 'far fa-calendar-check nav-icon',
