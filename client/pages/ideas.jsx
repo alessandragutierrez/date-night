@@ -319,7 +319,7 @@ export default class Ideas extends React.Component {
     if (this.state.errorMessage !== '') {
       errorMessage = {
         value: `* PLEASE SELECT ${this.state.errorMessage} *`,
-        class: 'error-message'
+        class: 'error-message date-error'
       };
     } else {
       errorMessage = {
@@ -328,7 +328,7 @@ export default class Ideas extends React.Component {
       };
     }
     return (
-      <div className="error-message-container">
+      <div className="date-error-message-container">
         <div className={errorMessage.class}>
           {errorMessage.value}
         </div>

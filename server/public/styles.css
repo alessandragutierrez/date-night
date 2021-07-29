@@ -386,7 +386,7 @@ input[type="radio"] {
   font-family: 'Pacifico', cursive;
 }
 
-.error-message-container {
+.date-error-message-container {
   display: flex;
   justify-content: center;
   position: relative;
@@ -397,8 +397,19 @@ input[type="radio"] {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.3px;
+}
+
+.date-error {
+  color: #d70000;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
   position: absolute;
   bottom: 0;
+}
+
+.add-edit-error {
+  margin-left: 5px;
 }
 
 .header-icon:hover,
