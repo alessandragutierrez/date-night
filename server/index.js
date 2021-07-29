@@ -252,7 +252,7 @@ app.get('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.put('/api/my-dates:ideaId', uploadsMiddleware, (req, res, next) => {
+app.put('/api/my-dates/:ideaId', uploadsMiddleware, (req, res, next) => {
   const ideaId = parseInt(req.params.ideaId, 10);
   if (!Number.isInteger(ideaId) || ideaId < 1) {
     throw new ClientError(400, 'ideaId must be a positive integer');
@@ -320,7 +320,7 @@ app.put('/api/my-dates:ideaId', uploadsMiddleware, (req, res, next) => {
               return db.query(notesSql, notesParams)
                 .then(notesResult => {
                   const [note] = notesResult.rows;
-                  const { url } = '/images/$req.file.filename}';
+                  const url = `/images/${req.file.filename}`;
                   const imageSql = `
                     insert into "images"
                       ("url", "scheduleId", "userId")
