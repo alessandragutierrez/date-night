@@ -251,6 +251,113 @@ app.get('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.put('/api/my-dates:ideaId', (req, res, next) => {
+  const ideaId = parseInt(req.params.ideaId, 10);
+  if (!Number.isInteger(ideaId) || ideaId < 1) {
+    throw new ClientError(400, 'ideaId must be a positive integer');
+  }
+  if (!ideaId) {
+    throw new ClientError(400, 'ideaId is a required field');
+  }
+
+  const { title, description } = req.body;
+  const ideaSql = `
+    update "ideas"
+       set "title" = $1,
+           "description" = $2
+     where "ideaId" = $3
+    returning *
+  `;
+  const ideaParams = [title, description, ideaId];
+
+  db.query(ideaSql, ideaParams)
+    .then(ideaResult => {
+      const [idea] = ideaResult.rows;
+      const { address, latitude, longitude } = req.body;
+      if (!address) {
+        throw new ClientError(400, 'address is a required field');
+      }
+      const locationSql = `
+        update "locations"
+           set "address" = $1,
+               "latitude" = $2,
+               "longitude" = $3
+         where "locationId" = $4
+        returning *
+      `;
+      const locationParams = [address, latitude, longitude, idea.locationId];
+
+      return db.query(locationSql, locationParams)
+        .then(locationResult => {
+          const [location] = locationResult.rows;
+          const { date, time } = req.body;
+          if (!date || !time) {
+            throw new ClientError(400, 'date and time are required fields');
+          }
+          const scheduleSql = `
+            update "schedule"
+               set "date" = $1,
+                   "time" = $2
+             where "ideaId" = $3
+            returning *
+          `;
+          const scheduleParams = [date, time, idea.ideaId];
+
+          return db.query(scheduleSql, scheduleParams)
+            .then(scheduleResult => {
+              const [schedule] = scheduleResult.rows;
+              const { note } = req.body;
+              const notesSql = `
+                insert into "notes"
+                  ("note", "scheduleId", "userId")
+                  values
+                    ($1, $2, $3)
+                    returning *
+              `;
+              const notesParams = [note, schedule.scheduleId, 1];
+
+              return db.query(notesSql, notesParams)
+                .then(notesResult => {
+                  const [note] = notesResult.rows;
+                  const { url } = '/images/$req.file.filename}';
+                  const imageSql = `
+                    insert into "images"
+                      ("url", "scheduleId", "userId")
+                      values
+                        ($1, $2, $3)
+                        returning *
+                  `;
+                  const imageParams = [url, schedule.scheduleId, 1];
+
+                  return db.query(imageSql, imageParams)
+                    .then(imageResults => {
+                      const [image] = imageResults.rows;
+                      const output = {
+                        title: idea.title,
+                        description: idea.description,
+                        ideaId: idea.ideaId,
+                        locationId: location.locationId,
+                        address: location.address,
+                        latitude: location.latitude,
+                        longitude: location.longitude,
+                        scheduleId: schedule.scheduleId,
+                        date: schedule.date,
+                        time: schedule.time,
+                        canceled: schedule.canceled,
+                        noteId: note.noteId,
+                        note: note.note,
+                        imageId: image.imageId,
+                        url: image.url
+                      };
+                      res.json(output);
+                    });
+                });
+            });
+        });
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
