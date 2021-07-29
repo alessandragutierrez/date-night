@@ -22,7 +22,9 @@ export default class MyDates extends React.Component {
       scheduleId: date.scheduleId,
       date: date.date,
       time: date.time,
-      dateAndTimeFormatted: date.dateAndTimeFormatted
+      dateTimeFormat: date.dateTimeFormat,
+      dateTimeYearFormat: date.dateTimeYearFormat,
+      dateYearFormat: date.dateYearFormat
     };
     if (window.innerWidth > 767) {
       this.setState({
@@ -61,7 +63,7 @@ export default class MyDates extends React.Component {
             </div>
             <div className="date-schedule color-medium-gray">
               <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-              {date.dateAndTimeFormatted}
+              {date.dateYearFormat}
             </div>
             <div className="date-description color-medium-gray">
               {date.description}
@@ -87,7 +89,7 @@ export default class MyDates extends React.Component {
               </div>
               <div className="date-schedule--modal color-medium-gray">
                 <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-                {date.dateAndTimeFormatted}
+                {date.dateTimeYearFormat}
               </div>
               <div className="date-description--modal color-medium-gray">
                 {date.description}

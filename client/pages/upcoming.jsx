@@ -24,7 +24,9 @@ export default class Upcoming extends React.Component {
           scheduleId: date.scheduleId,
           date: date.date,
           time: date.time,
-          dateAndTimeFormatted: date.dateAndTimeFormatted
+          dateTimeFormat: date.dateTimeFormat,
+          dateTimeYearFormat: date.dateTimeYearFormat,
+          dateYearFormat: date.dateYearFormat
         },
         upcomingDateModalOpen: true
       });
@@ -57,7 +59,7 @@ export default class Upcoming extends React.Component {
             </div>
             <div className="date-schedule color-medium-gray">
               <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-              {date.dateAndTimeFormatted}
+              {date.dateTimeYearFormat}
             </div>
             <div className="date-description color-medium-gray">
               {date.description}
@@ -93,7 +95,7 @@ export default class Upcoming extends React.Component {
               </div>
               <div className="date-schedule--modal color-medium-gray">
                 <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-                {date.dateAndTimeFormatted}
+                {date.dateTimeYearFormat}
               </div>
               <div className="date-description--modal color-medium-gray">
                 {date.description}

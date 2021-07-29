@@ -13,7 +13,7 @@ body {
   font-size: 28px;
 }
 
-.header-map {
+.header-map-icon {
   font-size: 26px;
 }
 
@@ -402,6 +402,7 @@ input[type="radio"] {
 }
 
 .header-icon:hover,
+.header-map-icon:hover,
 .nav-option-container:hover,
 .button:hover,
 .desktop-edit-button-container:hover,

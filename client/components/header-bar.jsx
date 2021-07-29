@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class HeaderBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleIcon1Click = this.handleIcon1Click.bind(this);
+  }
 
   renderIconClasses() {
     return (
@@ -11,12 +15,12 @@ export default class HeaderBar extends React.Component {
           }
         : this.props.page === 'add-idea' || this.props.page === 'edit-idea' || this.props.page === 'view-date-mobile'
           ? {
-              icon1: 'fas fa-arrow-left header-icon',
+              icon1: 'fas fa-arrow-left back-arrow header-icon',
               icon2: ''
             }
           : this.props.page === 'my-dates'
             ? {
-                icon1: 'fas fa-map-marked-alt header-map',
+                icon1: 'fas fa-map-marked-alt header-map-icon',
                 icon2: ''
               }
             : {
@@ -26,13 +30,25 @@ export default class HeaderBar extends React.Component {
     );
   }
 
+  handleIcon1Click(event) {
+    if (event.target.className.includes('back-arrow')) {
+      return (
+        history.back()
+      );
+    } else if (event.target.className.includes('header-map-icon')) {
+      return (
+        null
+      );
+    }
+  }
+
   render() {
     const iconClasses = this.renderIconClasses();
     return (
       <div className="header-bar-container background-white">
         <div className="row text-center header-bar">
           <div className="header-column-quarter header-column">
-            <a onClick={() => history.back()} className="color-pink">
+            <a onClick={this.handleIcon1Click} className="color-pink">
               <span className={iconClasses.icon1}></span>
             </a>
           </div>

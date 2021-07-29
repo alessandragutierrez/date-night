@@ -22,7 +22,7 @@ export default class ViewDateMobile extends React.Component {
               </div>
               <div className="date-schedule--mobile color-medium-gray">
                 <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-                {date.dateAndTimeFormatted}
+                {date.dateTimeYearFormat}
               </div>
               <div className="date-description--mobile color-medium-gray">
                 {date.description}
