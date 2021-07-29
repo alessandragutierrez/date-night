@@ -40,7 +40,7 @@ export default class DateForm extends React.Component {
         AMPM: '',
         note: '',
         id: 'abcdefg',
-        imageURI: null
+        imageURL: null
         // deleteModalOpen: false
       }
     );
@@ -76,64 +76,6 @@ export default class DateForm extends React.Component {
     this.setState({
       description: event.target.value
     });
-  }
-
-  handleNoteChange(event) {
-    this.setState({
-      note: event.target.value
-    });
-  }
-
-  buildingTag() {
-    let imgTag = null;
-    if (this.state.imageURI !== null) {
-      imgTag = (
-      <div className="row">
-        <div>
-          <img src={this.state.imageURI}/>
-        </div>
-      </div>
-      );
-    }
-    return imgTag;
-  }
-
-  readURI(event) {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        this.setState({
-          imageURI: event.target.result
-        });
-      }.bind(this);
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
-
-  handleImageChange(event) {
-    this.readURI(event);
-    if (this.props.onChange !== undefined) {
-      this.props.onChange(event);
-    }
-  }
-
-  renderImageInput() {
-    const imgTag = this.buildingTag();
-
-    return (
-      <>
-        <label className="form-label">Images
-          <br />
-          <input
-            id={this.state.id}
-            type="file"
-            name="image"
-            multiple
-            onChange={this.handleImageChange.bind(this)} />
-        </label>
-        {imgTag}
-      </>
-    );
   }
 
   handleLocationChange(address) {
@@ -176,6 +118,73 @@ export default class DateForm extends React.Component {
   handleAMPMChange(event) {
     const AMPM = event.target.value;
     this.setState({ AMPM });
+  }
+
+  handleNoteChange(event) {
+    this.setState({
+      note: event.target.value
+    });
+  }
+
+  buildingTag() {
+    let imgTag = null;
+    if (this.state.imageURL !== null) {
+      imgTag = (
+        <div className="row">
+          <div>
+            <img src={this.state.imageURL} />
+          </div>
+        </div>
+      );
+    }
+    return imgTag;
+  }
+
+  readURL(event) {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        this.setState({
+          imageURL: event.target.result
+        });
+      }.bind(this);
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  handleImageChange(event) {
+    this.readURL(event);
+    if (this.props.onChange !== undefined) {
+      this.props.onChange(event);
+    }
+  }
+
+  renderImageInput() {
+    const imgTag = this.buildingTag();
+
+    return (
+      <>
+        <div className="form-label">Images</div>
+        <div className="file-uploads-container">
+        <label className="border-radius file-upload file-upload-box">
+          <span className="fas fa-plus image-add-icon"></span>
+          <input
+            className="hidden"
+            id={this.state.id}
+            type="file"
+            name="image"
+            multiple
+            onChange={this.handleImageChange.bind(this)} />
+        </label>
+        <span className="border-radius file-upload file-upload-preview"></span>
+        <span className="border-radius file-upload file-upload-preview"></span>
+        <span className="border-radius file-upload file-upload-preview"></span>
+        <span className="border-radius file-upload file-upload-preview"></span>
+        <span className="border-radius file-upload file-upload-preview"></span>
+        {imgTag}
+        </div>
+      </>
+    );
   }
 
   handleUpdate(event) {

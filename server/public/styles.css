@@ -39,7 +39,7 @@ body {
   display: inline;
 }
 
-/* ideas/upcoming */
+/* ideas/upcoming/my-dates */
 .empty-text {
   margin: auto;
   padding: 40px 0;
@@ -112,6 +112,23 @@ body {
 .desktop-calendar-icon {
   padding-right: 5px;
   align-self: center;
+}
+
+.view-date-container--mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+.date-item--mobile {
+  padding-top: 75px;
+  padding-inline: 40px;
 }
 
 /* form and inputs */
@@ -241,6 +258,35 @@ input[type="radio"] {
   box-shadow: inset 0 0 0 3px white;
 }
 
+.file-uploads-container {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-basis: calc(100% / 2);
+}
+
+.file-upload {
+  width: 120px;
+  height: 120px;
+  display: inline-flex;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  background-color: white;
+  margin-block: 5px;
+}
+
+.image-add-icon {
+  margin: auto;
+  color: #b1b1b1;
+  font-size: 24px;
+}
+
+/* .file-upload-preview {
+
+} */
+
 .form-input:focus,
 .form-input:hover,
 .location-input:focus,
@@ -248,7 +294,9 @@ input[type="radio"] {
 .form-textarea:focus,
 .form-textarea:hover,
 .form-select:focus,
-.form-select:hover {
+.form-select:hover,
+.file-upload-box:focus,
+.file-upload-box:hover {
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -262,7 +310,7 @@ input[type="radio"] {
 }
 
 .date-form-buttons {
-  margin-top: 10px;
+  margin-top: 25px;
 }
 
 .cancel-button,
@@ -435,25 +483,7 @@ input[type="radio"] {
 .form-select:hover,
 .form-radio-input:hover,
 .date-item:hover,
-.edit-button--mobile:hover {
+.edit-button--mobile:hover,
+.file-upload-box:hover {
   cursor: pointer;
-}
-
-.view-date-container--mobile {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  z-index: 5;
-}
-
-.date-item--mobile {
-  padding-top: 75px;
-  padding-inline: 40px;
-
-  /* margin: auto; */
 }
