@@ -5,6 +5,7 @@ const db = require('./db');
 const errorMiddleware = require('./error-middleware');
 const jsonMiddleware = express.json();
 const staticMiddleware = require('./static-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
 
 const app = express();
 
@@ -251,7 +252,7 @@ app.get('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.put('/api/my-dates:ideaId', (req, res, next) => {
+app.put('/api/my-dates:ideaId', uploadsMiddleware, (req, res, next) => {
   const ideaId = parseInt(req.params.ideaId, 10);
   if (!Number.isInteger(ideaId) || ideaId < 1) {
     throw new ClientError(400, 'ideaId must be a positive integer');
