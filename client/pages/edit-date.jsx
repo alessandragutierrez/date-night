@@ -7,7 +7,7 @@ export default class EditDate extends React.Component {
     return (
       <>
         <h1 className="text-center date-form-title">Edit Date</h1>
-        <DateForm />
+        <DateForm monthsArray={this.props.monthsArray}/>
       </>
     );
   }

@@ -281,7 +281,9 @@ export default class App extends React.Component {
                       dateOpen={this.state.dateOpen}
                     />
                   : route.path === 'edit-date'
-                    ? <EditDate />
+                    ? <EditDate
+                        monthsArray={this.state.monthsArray}
+                      />
                     : null
     );
   }

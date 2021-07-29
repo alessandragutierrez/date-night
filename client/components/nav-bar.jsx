@@ -1,10 +1,6 @@
 import React from 'react';
 
 export default class NavBar extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {};
-  // }
 
   renderIconClasses() {
     return (
@@ -66,13 +62,3 @@ export default class NavBar extends React.Component {
     );
   }
 }
-
-// empty icons
-// <div className="far fa-lightbulb"></div>
-// <div className="far fa-calendar-check"></div>
-// <div className="far fa-heart"></div>
-
-// solid icons
-// <div className="fas fa-lightbulb"></div>
-// <div className="fas fa-calendar-check"></div>
-// <div className="fas fa-heart"></div>

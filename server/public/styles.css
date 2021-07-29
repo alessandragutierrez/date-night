@@ -122,12 +122,18 @@ body {
   padding-top: 20px;
 }
 
-.idea-form-container {
+.idea-form-container,
+.date-form-container {
   display: flex;
   justify-content: center;
   margin: auto;
   margin-top: 10px;
   position: relative;
+}
+
+.date-form-container {
+  margin-bottom: 90px;
+  min-height: fit-content;
 }
 
 .form-label {
@@ -187,7 +193,8 @@ body {
   padding-right: 5px;
 }
 
-.month-select {
+.month-select,
+.year-select {
   width: 140px;
 }
 
@@ -252,6 +259,10 @@ input[type="radio"] {
   display: flex;
   justify-content: space-between;
   margin: auto;
+}
+
+.date-form-buttons {
+  margin-top: 10px;
 }
 
 .cancel-button,

@@ -27,8 +27,8 @@ export default class IdeaForm extends React.Component {
             title: '',
             description: '',
             address: '',
-            latitude: null,
-            longitude: null,
+            latitude: '',
+            longitude: '',
             deleteModalOpen: false,
             errorMessage: ''
           }
