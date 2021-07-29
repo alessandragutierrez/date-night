@@ -442,13 +442,24 @@ export default class DateForm extends React.Component {
     const dayOptions = this.renderDays();
     const yearOptions = this.renderYears();
     const hourOptions = this.renderHours();
+
+    // const yearClass = window.innerWidth > 767
+    //   ? {
+    //       desktop: 'set-date-form-section',
+    //       mobile: 'hidden'
+    //     }
+    //   : {
+    //       desktop: 'hidden',
+    //       mobile: 'set-date-form-row'
+    //     };
+
     return (
       <>
-        <div className="set-date-form-row">
+        <div className="mdy-row">
           <div className="set-date-form-section">
             <label className="form-label">Month
               <br />
-              <select onChange={this.handleMonthChange} className="border-radius form-select month-select">
+              <select onChange={this.handleMonthChange} className="border-radius form-select edit-date-month-select">
                 <option value=""></option>
                 {monthOptions}
               </select>
@@ -457,18 +468,16 @@ export default class DateForm extends React.Component {
           <div className="set-date-form-section">
             <label className="form-label">Day
               <br />
-              <select onChange={this.handleDayChange} className="border-radius form-select day-select">
+              <select onChange={this.handleDayChange} className="border-radius form-select edit-date-day-select">
                 <option value=""></option>
                 {dayOptions}
               </select>
             </label>
           </div>
-        </div>
-        <div className="set-date-form-row">
           <div className="set-date-form-section">
             <label className="form-label">Year
               <br />
-              <select onChange={this.handleYearChange} className="border-radius form-select year-select">
+              <select onChange={this.handleYearChange} className="border-radius form-select edit-date-year-select">
                 <option value=""></option>
                 {yearOptions}
               </select>
@@ -479,7 +488,7 @@ export default class DateForm extends React.Component {
           <div className="set-date-form-section">
             <label className="form-label">Time
               <br />
-              <select onChange={this.handleHourChange} className="border-radius form-select time-select">
+              <select onChange={this.handleHourChange} className="border-radius form-select edit-date-time-select">
                 <option value=""></option>
                 {hourOptions}
               </select>

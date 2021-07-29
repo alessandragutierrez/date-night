@@ -205,11 +205,6 @@ body {
   margin-bottom: 20px;
 }
 
-.set-date-form-radio-section {
-  padding-top: 33px;
-  padding-right: 5px;
-}
-
 .month-select,
 .year-select {
   width: 140px;
@@ -256,25 +251,6 @@ input[type="radio"] {
   background-color: #ff9fc2;
   border: 1px solid #ff9fc2;
   box-shadow: inset 0 0 0 3px white;
-}
-
-.file-uploads-container {
-  width: 250px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  flex-basis: calc(100% / 2);
-}
-
-.file-upload {
-  width: 120px;
-  height: 120px;
-  display: inline-flex;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  outline: none;
-  background-color: white;
-  margin-block: 5px;
 }
 
 .image-add-icon {
