@@ -29,7 +29,8 @@ export default class IdeaForm extends React.Component {
             address: '',
             latitude: null,
             longitude: null,
-            deleteModalOpen: false
+            deleteModalOpen: false,
+            errorMessage: ''
           }
         : {
             ideaId: ideaToEdit.ideaId,
@@ -39,7 +40,8 @@ export default class IdeaForm extends React.Component {
             latitude: ideaToEdit.latitude,
             longitude: ideaToEdit.longitude,
             locationId: ideaToEdit.locationId,
-            deleteModalOpen: false
+            deleteModalOpen: false,
+            errorMessage: ''
           }
     );
   }
@@ -73,8 +75,23 @@ export default class IdeaForm extends React.Component {
       .catch(error => console.error('Error', error));
   }
 
+  handleAddEditErrors() {
+    const error = this.state.title === ''
+      ? 'TITLE'
+      : this.state.address === ''
+        ? 'LOCATION'
+        : '';
+    return error;
+  }
+
   handleAdd(event) {
     event.preventDefault();
+    const error = this.handleAddEditErrors();
+    if (error !== '') {
+      this.setState({ errorMessage: error });
+      return;
+    }
+
     const newIdea = {
       title: this.state.title,
       description: this.state.description,
@@ -87,6 +104,12 @@ export default class IdeaForm extends React.Component {
 
   handleUpdate(event) {
     event.preventDefault();
+    const error = this.handleAddEditErrors();
+    if (error.title !== '' || error.location !== '') {
+      this.setState({ errorMessage: error });
+      return;
+    }
+
     const updatedIdea = {
       ideaId: this.state.ideaId,
       title: this.state.title,
@@ -119,9 +142,39 @@ export default class IdeaForm extends React.Component {
     }
   }
 
+  renderErrorMessage() {
+    let errorMessage;
+    if (this.state.errorMessage === '') {
+      errorMessage = {
+        titleError: '',
+        locationError: '',
+        titleClass: 'hidden',
+        locationClass: 'hidden'
+      };
+    } else if (this.state.errorMessage === 'TITLE') {
+      errorMessage = {
+        titleError: `* PLEASE INPUT A ${this.state.errorMessage} *`,
+        locationError: '',
+        titleClass: 'error-message add-edit-error',
+        locationClass: ''
+      };
+    } else if (this.state.errorMessage === 'LOCATION') {
+      errorMessage = {
+        titleError: '',
+        locationError: `* PLEASE INPUT A ${this.state.errorMessage} *`,
+        titleClass: 'hidden',
+        locationClass: 'error-message add-edit-error'
+      };
+    }
+
+    return errorMessage;
+  }
+
   renderTitleInput() {
+    const error = this.renderErrorMessage();
     return (
       <label className="form-label">Title
+        <span className={error.titleClass}>{error.titleError}</span>
         <br />
         <input
           required
@@ -136,8 +189,10 @@ export default class IdeaForm extends React.Component {
   }
 
   renderPlacesAutocomplete() {
+    const error = this.renderErrorMessage();
     return (
       <label className="form-label">Location
+        <span className={error.locationClass}>{error.locationError}</span>
         <br />
 
         <PlacesAutocomplete

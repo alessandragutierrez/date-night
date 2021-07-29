@@ -1,6 +1,10 @@
 import React from 'react';
 
 export default class HeaderBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleIcon1Click = this.handleIcon1Click.bind(this);
+  }
 
   renderIconClasses() {
     return (
@@ -9,16 +13,33 @@ export default class HeaderBar extends React.Component {
             icon1: '',
             icon2: 'fas fa-plus header-icon'
           }
-        : this.props.page === 'add-idea' || this.props.page === 'edit-idea'
+        : this.props.page === 'add-idea' || this.props.page === 'edit-idea' || this.props.page === 'view-date-mobile'
           ? {
-              icon1: 'fas fa-arrow-left header-icon',
+              icon1: 'fas fa-arrow-left back-arrow header-icon',
               icon2: ''
             }
-          : {
-              icon1: 'header-icon',
-              icon2: 'header-icon'
-            }
+          : this.props.page === 'my-dates'
+            ? {
+                icon1: 'fas fa-map-marked-alt header-map-icon',
+                icon2: ''
+              }
+            : {
+                icon1: 'header-icon',
+                icon2: 'header-icon'
+              }
     );
+  }
+
+  handleIcon1Click(event) {
+    if (event.target.className.includes('back-arrow')) {
+      return (
+        history.back()
+      );
+    } else if (event.target.className.includes('header-map-icon')) {
+      return (
+        null
+      );
+    }
   }
 
   render() {
@@ -27,7 +48,7 @@ export default class HeaderBar extends React.Component {
       <div className="header-bar-container background-white">
         <div className="row text-center header-bar">
           <div className="header-column-quarter header-column">
-            <a onClick={() => history.back()} className="color-pink">
+            <a onClick={this.handleIcon1Click} className="color-pink">
               <span className={iconClasses.icon1}></span>
             </a>
           </div>

@@ -17,6 +17,7 @@ app.get('/api/ideas', (req, res, next) => {
   const sql = `
     select "idea"."title",
            "idea"."description",
+           "idea"."scheduled",
            "idea"."ideaId",
            "location"."address",
            "location"."latitude",
@@ -222,6 +223,8 @@ app.post('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// change to include ':userId'
+// where "userId" = above param
 app.get('/api/upcoming', (req, res, next) => {
   const sql = `
     select "i"."title",
@@ -239,7 +242,7 @@ app.get('/api/upcoming', (req, res, next) => {
     join "locations" as "l" using ("locationId")
     join "schedule" as "s" using ("ideaId")
     where "s"."canceled" = false
-    order by "scheduleId"
+    order by "s"."date" asc
   `;
   db.query(sql)
     .then(result => {

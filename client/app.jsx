@@ -6,6 +6,7 @@ import AddIdea from './pages/add-idea';
 import EditIdea from './pages/edit-idea';
 import Upcoming from './pages/upcoming';
 import MyDates from './pages/my-dates';
+import ViewDateMobile from './pages/view-date-mobile';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -29,14 +30,17 @@ export default class App extends React.Component {
       ],
       ideas: [],
       upcomingDates: [],
+      pastDates: [],
       targetIdea: {},
-      updatedIdea: {}
+      updatedIdea: {},
+      dateOpen: {}
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
     this.deleteIdea = this.deleteIdea.bind(this);
     this.getTargetIdea = this.getTargetIdea.bind(this);
     this.scheduleIdea = this.scheduleIdea.bind(this);
+    this.getDateOpen = this.getDateOpen.bind(this);
   }
 
   componentDidMount() {
@@ -55,13 +59,20 @@ export default class App extends React.Component {
       .then(ideas => {
         return fetch('/api/upcoming')
           .then(res => res.json())
-          .then(upcomingDates => {
+          .then(scheduledDates => {
+            const datesVerified = this.checkIfPastOrUpcoming(scheduledDates);
+            const upcomingDates = datesVerified.upcomingDates;
+            const pastDates = datesVerified.pastDates;
             for (let i = 0; i < upcomingDates.length; i++) {
-              this.formatDateAndTime(upcomingDates[i]);
+              this.formatDateTimeYear(upcomingDates[i]);
+            }
+            for (let i = 0; i < pastDates.length; i++) {
+              this.formatDateTimeYear(pastDates[i]);
             }
             this.setState({
               ideas: ideas,
-              upcomingDates: upcomingDates
+              upcomingDates: upcomingDates,
+              pastDates: pastDates
             });
           });
       });
@@ -143,7 +154,7 @@ export default class App extends React.Component {
         const allIdeas = this.state.ideas.filter(idea => {
           return idea.ideaId !== scheduledIdea.ideaId;
         });
-        const newUpcomingDate = this.formatDateAndTime(upcomingDate);
+        const newUpcomingDate = this.formatDateTimeYear(upcomingDate);
         this.setState({
           upcomingDates: this.state.upcomingDates.concat(newUpcomingDate),
           ideas: allIdeas
@@ -152,8 +163,8 @@ export default class App extends React.Component {
     window.location.href = '#upcoming';
   }
 
-  formatDateAndTime(upcoming) {
-    // const year = upcoming[i].date.substring(0, 4);
+  formatDateTimeYear(upcoming) {
+    const year = upcoming.date.substring(0, 4);
     const monthNum = upcoming.date.substring(5, 7);
     const matchingMonth = this.state.monthsArray.filter(month => {
       return month.monthNum === monthNum;
@@ -173,9 +184,48 @@ export default class App extends React.Component {
     if (minuteData.charAt(0) !== '0') {
       minute = `:${minuteData}`;
     }
-    const dateAndTimeFormatted = `${month} ${day} at ${hour}${minute} ${AMPM}`;
-    upcoming.dateAndTimeFormatted = dateAndTimeFormatted;
+    const dateTimeFormat = `${month} ${day} at ${hour}${minute} ${AMPM}`;
+    const dateTimeYearFormat = `${month} ${day}, ${year} at ${hour}${minute} ${AMPM}`;
+    const dateYearFormat = `${month} ${day}, ${year}`;
+    upcoming.dateTimeFormat = dateTimeFormat;
+    upcoming.dateTimeYearFormat = dateTimeYearFormat;
+    upcoming.dateYearFormat = dateYearFormat;
     return upcoming;
+  }
+
+  checkIfPastOrUpcoming(date) {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+    const currentHour = currentDate.getHours();
+    const currentMinutes = currentDate.getMinutes();
+    const pastDates = [];
+    const upcomingDates = [];
+    for (let i = 0; i < date.length; i++) {
+      const month = parseInt(date[i].date.substring(5, 7));
+      const day = parseInt(date[i].date.substring(8, 10));
+      const year = parseInt(date[i].date.substring(0, 4));
+      const hour = parseInt(date[i].time.substring(0, 2));
+      const minutes = parseInt(date[i].time.substring(3, 5));
+      if (year < currentYear) {
+        pastDates.push(date[i]);
+      } else if (year === currentYear && month < currentMonth) {
+        pastDates.push(date[i]);
+      } else if (month === currentMonth && day < currentDay) {
+        pastDates.push(date[i]);
+      } else if (day === currentDay && hour < currentHour) {
+        pastDates.push(date[i]);
+      } else if (hour === currentHour && minutes < currentMinutes) {
+        pastDates.push(date[i]);
+      } else {
+        upcomingDates.push(date[i]);
+      }
+    }
+    return ({
+      pastDates: pastDates,
+      upcomingDates: upcomingDates
+    });
   }
 
   getTargetIdea(targetIdea) {
@@ -190,6 +240,12 @@ export default class App extends React.Component {
         locationId: targetIdea.locationId
       },
       updatedIdea: {}
+    });
+  }
+
+  getDateOpen(dateOpen) {
+    this.setState({
+      dateOpen: dateOpen
     });
   }
 
@@ -216,8 +272,14 @@ export default class App extends React.Component {
               ? <Upcoming
                   upcomingDates={this.state.upcomingDates}/>
               : route.path === 'my-dates'
-                ? <MyDates />
-                : null
+                ? <MyDates
+                    pastDates={this.state.pastDates}
+                    dateOpen={this.getDateOpen} />
+                : route.path === 'view-date-mobile'
+                  ? <ViewDateMobile
+                      dateOpen={this.state.dateOpen}
+                    />
+                  : null
     );
   }
 

@@ -141,12 +141,36 @@ export default class Ideas extends React.Component {
       this.setState({ errorMessage: error });
       return;
     }
-    const idea = this.state.setDateTargetIdea;
+
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentDay = currentDate.getDate();
+    const currentHour = currentDate.getHours();
+
     const scheduleDetails = this.state.scheduleDetails;
-    // later change year input to be dynamic depending on current date
-    // const currentDate = new Date();
-    // if month and day input is already in the past, year should be changed to the next year (2022 as of now)
-    const date = `2021-${scheduleDetails.month}-${scheduleDetails.day}`;
+    const monthInput = parseInt(scheduleDetails.month);
+    const dayInput = parseInt(scheduleDetails.day);
+    const timeInput = scheduleDetails.hour;
+
+    const hourString = timeInput.charAt(1) === ':'
+      ? timeInput.slice(0, 1)
+      : timeInput.slice(0, 2);
+    const hourNumber = parseInt(hourString);
+    const hourMilitary = scheduleDetails.AMPM === 'AM'
+      ? hourNumber
+      : hourNumber + 12;
+
+    const year = monthInput > currentMonth
+      ? currentYear
+      : monthInput === currentMonth && dayInput > currentDay
+        ? currentYear
+        : dayInput === currentDay && hourMilitary > currentHour
+          ? currentYear
+          : currentYear + 1;
+
+    const idea = this.state.setDateTargetIdea;
+    const date = `${year}-${scheduleDetails.month}-${scheduleDetails.day}`;
     const time = `${scheduleDetails.hour} ${scheduleDetails.AMPM}`;
     const scheduledIdea = {
       ideaId: idea.ideaId,
@@ -295,7 +319,7 @@ export default class Ideas extends React.Component {
     if (this.state.errorMessage !== '') {
       errorMessage = {
         value: `* PLEASE SELECT ${this.state.errorMessage} *`,
-        class: 'error-message'
+        class: 'error-message date-error'
       };
     } else {
       errorMessage = {
@@ -304,7 +328,7 @@ export default class Ideas extends React.Component {
       };
     }
     return (
-      <div className="error-message-container">
+      <div className="date-error-message-container">
         <div className={errorMessage.class}>
           {errorMessage.value}
         </div>

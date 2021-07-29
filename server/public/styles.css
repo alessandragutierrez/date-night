@@ -13,6 +13,10 @@ body {
   font-size: 28px;
 }
 
+.header-map-icon {
+  font-size: 26px;
+}
+
 .header-title {
   font-size: 24px;
   margin-bottom: 5px;
@@ -48,19 +52,35 @@ body {
 
 .idea-address,
 .upcoming-address,
+.date-address,
 .date-schedule,
 .date-description,
 .date-address--modal,
 .date-schedule--modal,
-.date-description--modal {
+.date-description--modal,
+.date-schedule--mobile,
+.date-description--mobile {
   font-size: 13px;
 }
 
 .date-title--modal,
-.date-address--modal,
 .date-schedule--modal,
-.date-description--modal {
+.date-description--modal,
+.date-schedule--mobile {
   margin-bottom: 8px;
+}
+
+.upcoming-address,
+.date-address {
+  margin-bottom: 3px;
+}
+
+.date-address--modal {
+  margin-bottom: 5px;
+}
+
+.date-description--mobile {
+  margin-bottom: 17px;
 }
 
 .map-marker-icon {
@@ -272,13 +292,15 @@ input[type="radio"] {
 }
 
 .edit-button-container--modal,
-.calendar-button-container--modal {
+.calendar-button-container--modal,
+.edit-button-container--mobile {
   display: flex;
   justify-content: center;
 }
 
 .edit-button--modal,
-.calendar-button--modal {
+.calendar-button--modal,
+.edit-button--mobile {
   width: 190px;
   border: none;
   padding: 8px 0;
@@ -292,13 +314,15 @@ input[type="radio"] {
 }
 
 .idea-edit-icon--modal,
-.idea-calendar-icon--modal {
+.idea-calendar-icon--modal,
+.idea-edit-icon--mobile {
   padding-right: 5px;
   font-size: 13px;
 }
 
 .idea-edit-label--modal,
-.idea-calendar-label--modal {
+.idea-calendar-label--modal,
+.idea-edit-label--mobile {
   font-size: 14px;
 }
 
@@ -362,7 +386,7 @@ input[type="radio"] {
   font-family: 'Pacifico', cursive;
 }
 
-.error-message-container {
+.date-error-message-container {
   display: flex;
   justify-content: center;
   position: relative;
@@ -373,11 +397,23 @@ input[type="radio"] {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.3px;
+}
+
+.date-error {
+  color: #d70000;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
   position: absolute;
   bottom: 0;
 }
 
+.add-edit-error {
+  margin-left: 5px;
+}
+
 .header-icon:hover,
+.header-map-icon:hover,
 .nav-option-container:hover,
 .button:hover,
 .desktop-edit-button-container:hover,
@@ -385,6 +421,27 @@ input[type="radio"] {
 .edit-button--modal:hover,
 .calendar-button--modal:hover,
 .form-select:hover,
-.form-radio-input:hover {
+.form-radio-input:hover,
+.date-item:hover,
+.edit-button--mobile:hover {
   cursor: pointer;
+}
+
+.view-date-container--mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+}
+
+.date-item--mobile {
+  padding-top: 75px;
+  padding-inline: 40px;
+
+  /* margin: auto; */
 }
