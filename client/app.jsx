@@ -63,6 +63,9 @@ export default class App extends React.Component {
             return fetch('/api/past-dates')
               .then(res => res.json())
               .then(pastDates => {
+                for (let i = 0; i < pastDates.length; i++) {
+                  this.formatDateAndTime(pastDates[i]);
+                }
                 this.setState({
                   ideas: ideas,
                   upcomingDates: upcomingDates,

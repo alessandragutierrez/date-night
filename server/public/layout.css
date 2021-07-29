@@ -82,7 +82,8 @@ main {
 
 /* ideas/upcoming */
 .ideas-container,
-.upcoming-container {
+.upcoming-container,
+.past-dates-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -93,7 +94,8 @@ main {
 }
 
 .idea-item,
-.upcoming-item {
+.upcoming-item,
+.date-item {
   flex-basis: 100%;
   margin: 10px 0;
   background-color: white;
@@ -194,7 +196,8 @@ main {
 
   /* ideas/upcoming */
   .ideas-container,
-  .upcoming-container {
+  .upcoming-container,
+  .past-dates-container {
     width: 85%;
     justify-content: space-between;
     padding-top: 30px;
@@ -202,7 +205,8 @@ main {
   }
 
   .idea-item,
-  .upcoming-item {
+  .upcoming-item,
+  .date-item {
     flex-basis: 45%;
     margin-left: 30px;
     margin-bottom: 20px;
@@ -224,12 +228,9 @@ main {
     padding-bottom: 8px;
   }
 
-  .upcoming-address {
+  .upcoming-address,
+  .date-address {
     padding-bottom: 3px;
-  }
-
-  .date-schedule {
-    padding-bottom: 10px;
   }
 
   .desktop-edit-icon,
@@ -244,5 +245,9 @@ main {
   .idea-box--modal,
   .upcoming-box--modal {
     width: 420px;
+  }
+
+  .date-box--modal {
+    width: 500px;
   }
 }

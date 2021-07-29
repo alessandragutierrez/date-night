@@ -48,6 +48,7 @@ body {
 
 .idea-address,
 .upcoming-address,
+.date-address,
 .date-schedule,
 .date-description,
 .date-address--modal,
@@ -57,10 +58,18 @@ body {
 }
 
 .date-title--modal,
-.date-address--modal,
 .date-schedule--modal,
 .date-description--modal {
   margin-bottom: 8px;
+}
+
+.date-address--modal {
+  margin-bottom: 5px;
+}
+
+.upcoming-address,
+.date-address {
+  padding-bottom: 3px;
 }
 
 .map-marker-icon {
@@ -75,7 +84,8 @@ body {
 }
 
 .desktop-idea-buttons,
-.desktop-upcoming-buttons {
+.desktop-upcoming-buttons,
+.desktop-date-button-div {
   margin-top: 8px;
   position: absolute;
   bottom: 20px;
@@ -385,6 +395,7 @@ input[type="radio"] {
 .edit-button--modal:hover,
 .calendar-button--modal:hover,
 .form-select:hover,
-.form-radio-input:hover {
+.form-radio-input:hover,
+.date-item:hover {
   cursor: pointer;
 }

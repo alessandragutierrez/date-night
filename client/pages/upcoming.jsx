@@ -83,35 +83,35 @@ export default class Upcoming extends React.Component {
       date.ideaId === undefined || window.innerWidth > 767 || this.state.upcomingDateModalOpen === false
         ? null
         : <div onClick={this.handleUpcomingDateModalBackgroundClick} className="background--modal">
-          <div className="modal border-radius background-white upcoming-box--modal">
-            <div className="date-title--modal">
-              {date.title}
-            </div>
-            <div className="date-address--modal color-medium-gray">
-              <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
-              {date.address}
-            </div>
-            <div className="date-schedule--modal color-medium-gray">
-              <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-              {date.dateAndTimeFormatted}
-            </div>
-            <div className="date-description--modal color-medium-gray">
-              {date.description}
-            </div>
-            <div className="edit-button-container--modal">
-              <a href="#edit-idea" className="edit-button--modal border-radius no-underline text-center">
-                <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
-                <span className="idea-edit-label--modal color-dark-gray">Edit</span>
-              </a>
-            </div>
-            <div className="calendar-button-container--modal">
-              <a className="calendar-button--modal border-radius no-underline text-center">
-                <span className="far fa-calendar-times idea-calendar-icon--modal color-dark-gray"></span>
-                <span className="idea-calendar-label--modal color-dark-gray">Cancel Date</span>
-              </a>
+            <div className="modal border-radius background-white upcoming-box--modal">
+              <div className="date-title--modal">
+                {date.title}
+              </div>
+              <div className="date-address--modal color-medium-gray">
+                <span className="fa fa-map-marker map-marker-icon color-medium-gray"></span>
+                {date.address}
+              </div>
+              <div className="date-schedule--modal color-medium-gray">
+                <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
+                {date.dateAndTimeFormatted}
+              </div>
+              <div className="date-description--modal color-medium-gray">
+                {date.description}
+              </div>
+              <div className="edit-button-container--modal">
+                <a href="#edit-idea" className="edit-button--modal border-radius no-underline text-center">
+                  <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
+                  <span className="idea-edit-label--modal color-dark-gray">Edit</span>
+                </a>
+              </div>
+              <div className="calendar-button-container--modal">
+                <a className="calendar-button--modal border-radius no-underline text-center">
+                  <span className="far fa-calendar-times idea-calendar-icon--modal color-dark-gray"></span>
+                  <span className="idea-calendar-label--modal color-dark-gray">Cancel Date</span>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
     );
   }
 

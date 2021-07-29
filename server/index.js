@@ -35,30 +35,6 @@ app.get('/api/ideas', (req, res, next) => {
     .catch(err => next(err));
 });
 
-// change to include ':userId'
-// where "userId" = above param
-app.get('/api/past-dates', (req, res, next) => {
-  const sql = `
-    select "idea"."title",
-           "idea"."description",
-           "idea"."scheduled",
-           "idea"."ideaId",
-           "location"."address",
-           "location"."latitude",
-           "location"."longitude",
-           "location"."locationId"
-    from "ideas" as "idea"
-    join "locations" as "location" using ("locationId")
-    where "idea"."scheduled" = true
-    order by "ideaId"
-  `;
-  db.query(sql)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => next(err));
-});
-
 app.post('/api/ideas', (req, res, next) => {
   const { address, latitude, longitude } = req.body;
   const locationSql = `
@@ -247,6 +223,8 @@ app.post('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// change to include ':userId'
+// where "userId" = above param
 app.get('/api/upcoming', (req, res, next) => {
   const sql = `
     select "i"."title",
@@ -264,7 +242,35 @@ app.get('/api/upcoming', (req, res, next) => {
     join "locations" as "l" using ("locationId")
     join "schedule" as "s" using ("ideaId")
     where "s"."canceled" = false
-    order by "scheduleId"
+    order by "s"."date" asc
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+// change to include ':userId'
+// where "userId" = above param
+app.get('/api/past-dates', (req, res, next) => {
+  const sql = `
+    select "i"."title",
+           "i"."description",
+           "i"."ideaId",
+           "l"."address",
+           "l"."latitude",
+           "l"."longitude",
+           "l"."locationId",
+           "s"."date",
+           "s"."time",
+           "s"."canceled",
+           "s"."scheduleId"
+    from "ideas" as "i"
+    join "locations" as "l" using ("locationId")
+    join "schedule" as "s" using ("ideaId")
+    where "i"."scheduled" = true
+    order by "s"."date" desc
   `;
   db.query(sql)
     .then(result => {
