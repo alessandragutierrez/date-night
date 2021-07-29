@@ -7,6 +7,7 @@ import EditIdea from './pages/edit-idea';
 import Upcoming from './pages/upcoming';
 import MyDates from './pages/my-dates';
 import ViewDateMobile from './pages/view-date-mobile';
+import EditDate from './pages/edit-date';
 import { parseRoute } from './lib';
 
 export default class App extends React.Component {
@@ -279,7 +280,9 @@ export default class App extends React.Component {
                   ? <ViewDateMobile
                       dateOpen={this.state.dateOpen}
                     />
-                  : null
+                  : route.path === 'edit-date'
+                    ? <EditDate />
+                    : null
     );
   }
 

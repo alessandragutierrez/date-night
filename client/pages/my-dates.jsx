@@ -95,7 +95,7 @@ export default class MyDates extends React.Component {
                 {date.description}
               </div>
               <div className="edit-button-container--modal">
-                <a className="edit-button--modal border-radius no-underline text-center">
+                <a href="#edit-date" className="edit-button--modal border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
                 </a>

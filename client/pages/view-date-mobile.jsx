@@ -28,7 +28,7 @@ export default class ViewDateMobile extends React.Component {
                 {date.description}
               </div>
               <div className="edit-button-container--mobile">
-                <a className="edit-button--mobile border-radius no-underline text-center">
+                <a href="#edit-date" className="edit-button--mobile border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--mobile color-dark-gray"></span>
                   <span className="idea-edit-label--mobile color-dark-gray">Edit</span>
                 </a>

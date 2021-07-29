@@ -8,7 +8,9 @@ export default class NavBar extends React.Component {
 
   renderIconClasses() {
     return (
-      this.props.page === '' || this.props.page === 'add-idea' || this.props.page === 'edit-idea'
+      this.props.page === '' ||
+      this.props.page === 'add-idea' ||
+      this.props.page === 'edit-idea'
         ? {
             ideas: 'fas fa-lightbulb nav-icon',
             upcoming: 'far fa-calendar-check nav-icon',
@@ -20,7 +22,9 @@ export default class NavBar extends React.Component {
               upcoming: 'fas fa-calendar-check nav-icon',
               myDates: 'far fa-heart nav-icon'
             }
-          : this.props.page === 'my-dates' || this.props.page === 'view-date-mobile'
+          : this.props.page === 'my-dates' ||
+            this.props.page === 'view-date-mobile' ||
+            this.props.page === 'edit-date'
             ? {
                 ideas: 'far fa-lightbulb nav-icon',
                 upcoming: 'far fa-calendar-check nav-icon',

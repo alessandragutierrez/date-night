@@ -13,7 +13,10 @@ export default class HeaderBar extends React.Component {
             icon1: '',
             icon2: 'fas fa-plus header-icon'
           }
-        : this.props.page === 'add-idea' || this.props.page === 'edit-idea' || this.props.page === 'view-date-mobile'
+        : this.props.page === 'add-idea' ||
+          this.props.page === 'edit-idea' ||
+          this.props.page === 'view-date-mobile' ||
+          this.props.page === 'edit-date'
           ? {
               icon1: 'fas fa-arrow-left back-arrow header-icon',
               icon2: ''
