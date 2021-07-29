@@ -153,7 +153,7 @@ export default class Ideas extends React.Component {
     const dayInput = parseInt(scheduleDetails.day);
     const timeInput = scheduleDetails.hour;
 
-    const hourString = timeInput.charAt(1) === ';'
+    const hourString = timeInput.charAt(1) === ':'
       ? timeInput.slice(0, 1)
       : timeInput.slice(0, 2);
     const hourNumber = parseInt(hourString);
