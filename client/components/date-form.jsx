@@ -18,9 +18,8 @@ export default class DateForm extends React.Component {
     this.handleYearChange = this.handleYearChange.bind(this);
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleAMPMChange = this.handleAMPMChange.bind(this);
-    // this.handleImageChange = this.handleImageChange.bind(this);
+    this.handleImageChange = this.handleImageChange.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
-    // this.handleSetDate = this.handleSetDate.bind(this);
     // this.handleDeleteClick = this.handleDeleteClick.bind(this);
     // this.handleDelete = this.handleDelete.bind(this);
   }
@@ -40,7 +39,7 @@ export default class DateForm extends React.Component {
         AMPM: '',
         note: '',
         id: 'abcdefg',
-        imageURL: null
+        file: []
         // deleteModalOpen: false
       }
     );
@@ -126,65 +125,10 @@ export default class DateForm extends React.Component {
     });
   }
 
-  buildingTag() {
-    let imgTag = null;
-    if (this.state.imageURL !== null) {
-      imgTag = (
-        <div className="row">
-          <div>
-            <img src={this.state.imageURL} />
-          </div>
-        </div>
-      );
-    }
-    return imgTag;
-  }
-
-  readURL(event) {
-    if (event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        this.setState({
-          imageURL: event.target.result
-        });
-      }.bind(this);
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  }
-
   handleImageChange(event) {
-    this.readURL(event);
-    if (this.props.onChange !== undefined) {
-      this.props.onChange(event);
-    }
-  }
-
-  renderImageInput() {
-    const imgTag = this.buildingTag();
-
-    return (
-      <>
-        <div className="form-label">Images</div>
-        <div className="file-uploads-container">
-        <label className="border-radius file-upload file-upload-box">
-          <span className="fas fa-plus image-add-icon"></span>
-          <input
-            className="hidden"
-            id={this.state.id}
-            type="file"
-            name="image"
-            multiple
-            onChange={this.handleImageChange.bind(this)} />
-        </label>
-        <span className="border-radius file-upload file-upload-preview"></span>
-        <span className="border-radius file-upload file-upload-preview"></span>
-        <span className="border-radius file-upload file-upload-preview"></span>
-        <span className="border-radius file-upload file-upload-preview"></span>
-        <span className="border-radius file-upload file-upload-preview"></span>
-        {imgTag}
-        </div>
-      </>
-    );
+    this.setState({
+      imgs: event.target.files
+    });
   }
 
   handleUpdate(event) {
@@ -352,21 +296,30 @@ export default class DateForm extends React.Component {
     );
   }
 
-  // renderImageInput() {
-  //   return (
-  //     <>
-  //       <label className="form-label">Images
-  //         <br />
-  //         <input
-  //           type="file"
-  //           name="image"
-  //           multiple
-  //           onChange={this.handleImageChange}/>
-  //       </label>
-  //       {imgTag}
-  //     </>
-  //   );
-  // }
+  renderImageInput() {
+    return (
+      <>
+        <div className="form-label">Images</div>
+        <div className="file-uploads-container">
+          <label className="border-radius file-box-style file-input-box">
+            <span className="fas fa-plus file-add-icon"></span>
+            <input
+              className="hidden"
+              // ref="file"
+              type="file"
+              name="image"
+              multiple
+              onChange={this.handleImageChange} />
+          </label>
+          {this.state.imgs && [...this.state.imgs].map((file, i) => (
+            <span key={i} className="border-radius file-box-style">
+              <img className="border-radius image-preview" src={URL.createObjectURL(file)} />
+            </span>
+          ))}
+        </div>
+      </>
+    );
+  }
 
   renderMonths() {
     const monthsArray = this.props.monthsArray;

@@ -253,15 +253,20 @@ input[type="radio"] {
   box-shadow: inset 0 0 0 3px white;
 }
 
-.image-add-icon {
+.file-input-box {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.file-add-icon {
   margin: auto;
   color: #b1b1b1;
   font-size: 24px;
 }
 
-/* .file-upload-preview {
-
-} */
+.image-preview {
+  object-fit: cover;
+  overflow: auto;
+}
 
 .form-input:focus,
 .form-input:hover,
@@ -271,8 +276,8 @@ input[type="radio"] {
 .form-textarea:hover,
 .form-select:focus,
 .form-select:hover,
-.file-upload-box:focus,
-.file-upload-box:hover {
+.file-input-box:focus,
+.file-input-box:hover {
   box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -460,6 +465,6 @@ input[type="radio"] {
 .form-radio-input:hover,
 .date-item:hover,
 .edit-button--mobile:hover,
-.file-upload-box:hover {
+.file-input-box:hover {
   cursor: pointer;
 }
