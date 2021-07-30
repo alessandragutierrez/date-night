@@ -63,7 +63,8 @@ export default class App extends React.Component {
       if (route.path === '' || route.path === 'upcoming') {
         this.setState({
           dateOpen: {},
-          targetDate: {}
+          targetDate: {},
+          updatedDate: {}
         });
       }
     });
@@ -209,6 +210,7 @@ export default class App extends React.Component {
         this.setState({
           updatedDate: updatedDate,
           targetDate: {},
+          dateOpen: {},
           pastDates: allPastDates
         });
       })
