@@ -56,6 +56,12 @@ export default class App extends React.Component {
           updatedIdea: {}
         });
       }
+      if (route.path === '' || route.path === 'upcoming') {
+        this.setState({
+          dateOpen: {},
+          targetDate: {}
+        });
+      }
     });
     fetch('/api/ideas')
       .then(res => res.json())
