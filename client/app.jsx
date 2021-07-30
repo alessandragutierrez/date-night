@@ -44,6 +44,7 @@ export default class App extends React.Component {
     this.scheduleIdea = this.scheduleIdea.bind(this);
     this.getDateOpen = this.getDateOpen.bind(this);
     this.getTargetDate = this.getTargetDate.bind(this);
+    this.updateDate = this.updateDate.bind(this);
   }
 
   componentDidMount() {
@@ -188,6 +189,10 @@ export default class App extends React.Component {
     window.location.href = '#upcoming';
   }
 
+  updateDate(updatedDate) {
+    // console.log(updatedDate);
+  }
+
   formatDateTimeYear(upcoming) {
     const year = upcoming.date.substring(0, 4);
     const monthNum = upcoming.date.substring(5, 7);
@@ -246,19 +251,6 @@ export default class App extends React.Component {
       } else {
         pastDates.push(date[i]);
       }
-      // if (year < currentYear) {
-      //   pastDates.push(date[i]);
-      // } else if (year === currentYear && month < currentMonth) {
-      //   pastDates.push(date[i]);
-      // } else if (month === currentMonth && day < currentDay) {
-      //   pastDates.push(date[i]);
-      // } else if (day === currentDay && hour < currentHour) {
-      //   pastDates.push(date[i]);
-      // } else if (hour === currentHour && minutes < currentMinutes) {
-      //   pastDates.push(date[i]);
-      // } else {
-      //   upcomingDates.push(date[i]);
-      // }
     }
     return ({
       pastDates: pastDates,
@@ -320,6 +312,7 @@ export default class App extends React.Component {
                     ? <EditDate
                         monthsArray={this.state.monthsArray}
                         dateToEdit={this.state.targetDate}
+                        updatedDate={this.updateDate}
                       />
                     : null
     );

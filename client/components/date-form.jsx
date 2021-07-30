@@ -19,9 +19,7 @@ export default class DateForm extends React.Component {
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleAMPMChange = this.handleAMPMChange.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
-    // this.handleUpdate = this.handleUpdate.bind(this);
-    // this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    // this.handleDelete = this.handleDelete.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
   initialState() {
@@ -46,9 +44,8 @@ export default class DateForm extends React.Component {
         hour: dateTimeValues.hour,
         AMPM: dateTimeValues.AMPM,
         note: '',
-        file: []
-        // deleteModalOpen: false,
-        // errorMessage: ''
+        file: [],
+        imgArray: []
       }
     );
   }
@@ -81,6 +78,27 @@ export default class DateForm extends React.Component {
         AMPM: AMPM
       }
     );
+  }
+
+  handleUpdate(event) {
+    event.preventDefault();
+    const date = this.state;
+    const dateInput = `${date.year}-${date.month}-${date.day}`;
+    const timeInput = `${date.hour} ${date.AMPM}`;
+
+    const updatedDate = {
+      ideaId: date.ideaId,
+      title: date.title,
+      description: date.description,
+      address: date.address,
+      latitude: date.latitude,
+      longitude: date.longitude,
+      date: dateInput,
+      time: timeInput,
+      note: date.note,
+      url: date.imgArray
+    };
+    this.props.updatedDate(updatedDate);
   }
 
   handleTitleChange(event) {
@@ -144,89 +162,13 @@ export default class DateForm extends React.Component {
   }
 
   handleImageChange(event) {
+    const imgArray = [];
+    Array.from(event.target.files).forEach(file => imgArray.push(file.name));
     this.setState({
-      imgs: event.target.files
+      imgs: event.target.files,
+      imgArray: imgArray
     });
   }
-
-  // handleUpdate(event) {
-  //   event.preventDefault();
-
-  //   // const updatedIdea = {
-  //   //   ideaId: this.state.ideaId,
-  //   //   title: this.state.title,
-  //   //   description: this.state.description,
-  //   //   address: this.state.address,
-  //   //   latitude: this.state.latitude,
-  //   //   longitude: this.state.longitude,
-  //   //   locationId: this.state.locationId
-  //   // };
-  //   // this.props.updatedIdea(updatedIdea);
-  // }
-
-  // handleSetDate() {
-  //   event.preventDefault();
-  //   const error = this.handleSetDateErrors();
-  //   if (error !== '') {
-  //     this.setState({ errorMessage: error });
-  //     return;
-  //   }
-
-  //   const currentDate = new Date();
-  //   const currentYear = currentDate.getFullYear();
-  //   const currentMonth = currentDate.getMonth() + 1;
-  //   const currentDay = currentDate.getDate();
-  //   const currentHour = currentDate.getHours();
-
-  //   const scheduleDetails = this.state.scheduleDetails;
-  //   const monthInput = parseInt(scheduleDetails.month);
-  //   const dayInput = parseInt(scheduleDetails.day);
-  //   const timeInput = scheduleDetails.hour;
-
-  //   const hourString = timeInput.charAt(1) === ':'
-  //     ? timeInput.slice(0, 1)
-  //     : timeInput.slice(0, 2);
-  //   const hourNumber = parseInt(hourString);
-  //   const hourMilitary = scheduleDetails.AMPM === 'AM'
-  //     ? hourNumber
-  //     : hourNumber + 12;
-
-  //   const year = monthInput > currentMonth
-  //     ? currentYear
-  //     : monthInput === currentMonth && dayInput > currentDay
-  //       ? currentYear
-  //       : dayInput === currentDay && hourMilitary > currentHour
-  //         ? currentYear
-  //         : currentYear + 1;
-
-  //   const idea = this.state.setDateTargetIdea;
-  //   const date = `${year}-${scheduleDetails.month}-${scheduleDetails.day}`;
-  //   const time = `${scheduleDetails.hour} ${scheduleDetails.AMPM}`;
-  //   const scheduledIdea = {
-  //     ideaId: idea.ideaId,
-  //     title: idea.title,
-  //     description: idea.description,
-  //     address: idea.address,
-  //     latitude: idea.latitude,
-  //     longitude: idea.longitude,
-  //     locationId: idea.locationId,
-  //     date: date,
-  //     time: time
-  //   };
-  //   this.props.scheduledIdea(scheduledIdea);
-  // }
-
-  // handleDeleteClick() {
-  //   this.setState({
-  //     deleteModalOpen: true
-  //   });
-  // }
-
-  // handleDelete(event) {
-  //   event.preventDefault();
-  //   const ideaToDelete = this.state;
-  //   this.props.ideaToDelete(ideaToDelete);
-  // }
 
   renderTitleInput() {
     return (
@@ -487,14 +429,12 @@ export default class DateForm extends React.Component {
           <div onChange={this.handleAMPMChange} checked className="edit-date-form-radio-section set-date-form-radio-section">
             <div className="set-date-form-radio-container">
               <label className="form-radio-label">
-                {/* <input type="radio" name="AM/PM" value="AM" className="form-radio-input" /> */}
                 {AMPMValue.AM}
                 AM
               </label>
             </div>
             <div className="set-date-form-radio-container">
               <label className="form-radio-label">
-                {/* <input type="radio" name="AM/PM" value="PM" className="form-radio-input" /> */}
                 {AMPMValue.PM}
                 PM
               </label>
@@ -508,37 +448,13 @@ export default class DateForm extends React.Component {
   renderFormButtons() {
     return (
       <div className="row form-buttons-container date-form-buttons">
-        <a onClick={this.handleDeleteClick} className="button delete-button color-pink no-underline">DELETE</a>
-        <button type="submit" className="button border-radius update-button">UPDATE</button>
+        <a className="button delete-button color-pink no-underline">DELETE</a>
+        <button onClick={this.handleUpdate} type="submit" className="button border-radius update-button">UPDATE</button>
       </div>
     );
   }
 
-  // renderDeleteModal() {
-  //   return (
-  //     this.state.deleteModalOpen
-  //       ? <div onClick={this.exitModal} className="background--modal">
-  //         <div className="modal border-radius delete-box--modal background-white">
-  //           <div className="confirm-delete-text--modal text-center">
-  //             Are you sure you would like to delete?
-  //           </div>
-  //           <div className="row delete-buttons-container--modal">
-  //             <button onClick={this.exitModal} className="button cancel-button--modal color-pink">CANCEL</button>
-  //             <button onClick={this.handleDelete} type="submit" className="button border-radius delete-button--modal">DELETE</button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       : null
-  //   );
-  // }
-
   render() {
-    // console.log(this.state.imgs);
-    // if (this.state.imgs) {
-    //   console.log('yes');
-    // } else {
-    //   console.log('no');
-    // }
     const titleInput = this.renderTitleInput();
     const placesAutocomplete = this.renderPlacesAutocomplete();
     const descriptionInput = this.renderDescriptionInput();
@@ -546,8 +462,6 @@ export default class DateForm extends React.Component {
     const noteInput = this.renderNoteInput();
     const imageInput = this.renderImageInput();
     const formButtons = this.renderFormButtons();
-
-    // const deleteModal = this.renderDeleteModal();
     return (
       <>
         <div className="date-form-container">
@@ -565,7 +479,6 @@ export default class DateForm extends React.Component {
             {formButtons}
           </form>
         </div>
-        {/* <>{deleteModal}</> */}
       </>
     );
   }

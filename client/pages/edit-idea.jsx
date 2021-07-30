@@ -20,7 +20,10 @@ export default class EditIdea extends React.Component {
     return (
       <>
         <h1 className="text-center idea-form-title">Edit Idea</h1>
-        <IdeaForm ideaToEdit={this.props.ideaToEdit} updatedIdea={this.getUpdatedIdea} ideaToDelete={this.getIdeaToDelete}/>
+        <IdeaForm
+          ideaToEdit={this.props.ideaToEdit}
+          updatedIdea={this.getUpdatedIdea}
+          ideaToDelete={this.getIdeaToDelete} />
       </>
     );
   }

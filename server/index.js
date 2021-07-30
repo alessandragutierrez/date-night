@@ -5,7 +5,6 @@ const db = require('./db');
 const errorMiddleware = require('./error-middleware');
 const jsonMiddleware = express.json();
 const staticMiddleware = require('./static-middleware');
-const uploadsMiddleware = require('./uploads-middleware');
 
 const app = express();
 
@@ -252,7 +251,7 @@ app.get('/api/upcoming', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.put('/api/my-dates/:ideaId', uploadsMiddleware, (req, res, next) => {
+app.put('/api/my-dates/:ideaId', (req, res, next) => {
   const ideaId = parseInt(req.params.ideaId, 10);
   if (!Number.isInteger(ideaId) || ideaId < 1) {
     throw new ClientError(400, 'ideaId must be a positive integer');
@@ -320,15 +319,15 @@ app.put('/api/my-dates/:ideaId', uploadsMiddleware, (req, res, next) => {
               return db.query(notesSql, notesParams)
                 .then(notesResult => {
                   const [note] = notesResult.rows;
-                  const url = `/images/${req.file.filename}`;
+                  const url = req.body;
                   const imageSql = `
                     insert into "images"
-                      ("url", "scheduleId", "userId")
+                      ("userId", "scheduleId", "url")
                       values
-                        ($1, $2, $3)
+                        ($1, $2, unnest(array$3));
                         returning *
                   `;
-                  const imageParams = [url, schedule.scheduleId, 1];
+                  const imageParams = [1, schedule.scheduleId, url];
 
                   return db.query(imageSql, imageParams)
                     .then(imageResults => {
