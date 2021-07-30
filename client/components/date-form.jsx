@@ -297,6 +297,10 @@ export default class DateForm extends React.Component {
   }
 
   renderImageInput() {
+    const imgPlaceholder = this.state.imgs
+      ? 'hidden'
+      : 'border-radius file-box-style file-input-placeholder';
+
     return (
       <>
         <div className="form-label">Images</div>
@@ -311,6 +315,9 @@ export default class DateForm extends React.Component {
               multiple
               onChange={this.handleImageChange} />
           </label>
+          <span className={imgPlaceholder}>
+            <span className="far fa-images file-image-icon"></span>
+          </span>
           {this.state.imgs && [...this.state.imgs].map((file, i) => (
             <span key={i} className="border-radius file-box-style">
               <img className="border-radius image-preview" src={URL.createObjectURL(file)} />
@@ -494,6 +501,12 @@ export default class DateForm extends React.Component {
   // }
 
   render() {
+    // console.log(this.state.imgs);
+    // if (this.state.imgs) {
+    //   console.log('yes');
+    // } else {
+    //   console.log('no');
+    // }
     const titleInput = this.renderTitleInput();
     const placesAutocomplete = this.renderPlacesAutocomplete();
     const descriptionInput = this.renderDescriptionInput();
