@@ -19,50 +19,68 @@ export default class DateForm extends React.Component {
     this.handleHourChange = this.handleHourChange.bind(this);
     this.handleAMPMChange = this.handleAMPMChange.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+    // this.handleUpdate = this.handleUpdate.bind(this);
     // this.handleDeleteClick = this.handleDeleteClick.bind(this);
     // this.handleDelete = this.handleDelete.bind(this);
   }
 
   initialState() {
+    const dateToEdit = this.props.dateToEdit;
+    const dateTimeValues = this.findDateAndTime(dateToEdit);
+
     return (
       {
-        title: '',
-        description: '',
-        address: '',
-        latitude: '',
-        longitude: '',
-        month: '',
-        day: '',
-        year: '',
-        hour: '',
-        AMPM: '',
+        ideaId: dateToEdit.ideaId,
+        title: dateToEdit.title,
+        description: dateToEdit.description,
+        address: dateToEdit.address,
+        latitude: dateToEdit.latitude,
+        longitude: dateToEdit.longitude,
+        locationId: dateToEdit.locationId,
+        data: dateToEdit.date,
+        time: dateToEdit.time,
+        scheduleId: dateToEdit.scheduleId,
+        month: dateTimeValues.month,
+        day: dateTimeValues.day,
+        year: dateTimeValues.year,
+        hour: dateTimeValues.hour,
+        AMPM: dateTimeValues.AMPM,
         note: '',
-        id: 'abcdefg',
         file: []
-        // deleteModalOpen: false
+        // deleteModalOpen: false,
+        // errorMessage: ''
       }
     );
+  }
 
-    // const dateToEdit = this.props.dateToEdit;
-    // return (
-    //   {
-    //     ideaId: dateToEdit.ideaId,
-    //     title: dateToEdit.title,
-    //     description: dateToEdit.description,
-    //     address: dateToEdit.address,
-    //     latitude: dateToEdit.latitude,
-    //     longitude: dateToEdit.longitude,
-    //     locationId: dateToEdit.locationId,
-    //     month: dateToEdit.month,
-    //     day: dateToEdit.day,
-    //     year: dateToEdit.year,
-    //     hour: dateToEdit.hour,
-    //     AMPM: dateToEdit.AMPM,
-    //     deleteModalOpen: false,
-    //     errorMessage: ''
-    //   }
-    // );
+  findDateAndTime(dateToEdit) {
+    const date = dateToEdit.date;
+    const time = dateToEdit.time;
+
+    const month = date.substring(5, 7);
+    const day = date.substring(8, 10);
+    const year = date.substring(0, 4);
+
+    const hourData = time.substring(0, 2);
+    let hourDateToNumber = parseInt(hourData);
+    let AMPM = 'AM';
+    if (hourDateToNumber > 12) {
+      hourDateToNumber = hourDateToNumber - 12;
+      AMPM = 'PM';
+    }
+    const hourOnly = hourDateToNumber.toString();
+    const minuteOnly = time.substring(3, 5);
+    const hour = `${hourOnly}:${minuteOnly}`;
+
+    return (
+      {
+        month: month,
+        day: day,
+        year: year,
+        hour: hour,
+        AMPM: AMPM
+      }
+    );
   }
 
   handleTitleChange(event) {
@@ -131,20 +149,20 @@ export default class DateForm extends React.Component {
     });
   }
 
-  handleUpdate(event) {
-    event.preventDefault();
+  // handleUpdate(event) {
+  //   event.preventDefault();
 
-    // const updatedIdea = {
-    //   ideaId: this.state.ideaId,
-    //   title: this.state.title,
-    //   description: this.state.description,
-    //   address: this.state.address,
-    //   latitude: this.state.latitude,
-    //   longitude: this.state.longitude,
-    //   locationId: this.state.locationId
-    // };
-    // this.props.updatedIdea(updatedIdea);
-  }
+  //   // const updatedIdea = {
+  //   //   ideaId: this.state.ideaId,
+  //   //   title: this.state.title,
+  //   //   description: this.state.description,
+  //   //   address: this.state.address,
+  //   //   latitude: this.state.latitude,
+  //   //   longitude: this.state.longitude,
+  //   //   locationId: this.state.locationId
+  //   // };
+  //   // this.props.updatedIdea(updatedIdea);
+  // }
 
   // handleSetDate() {
   //   event.preventDefault();
@@ -403,15 +421,15 @@ export default class DateForm extends React.Component {
     const yearOptions = this.renderYears();
     const hourOptions = this.renderHours();
 
-    // const yearClass = window.innerWidth > 767
-    //   ? {
-    //       desktop: 'set-date-form-section',
-    //       mobile: 'hidden'
-    //     }
-    //   : {
-    //       desktop: 'hidden',
-    //       mobile: 'set-date-form-row'
-    //     };
+    const AMPMValue = this.state.AMPM === 'AM'
+      ? {
+          AM: <input type="radio" name="AM/PM" value="AM" className="form-radio-input" defaultChecked />,
+          PM: <input type="radio" name="AM/PM" value="PM" className="form-radio-input" />
+        }
+      : {
+          AM: <input type="radio" name="AM/PM" value="AM" className="form-radio-input" />,
+          PM: <input type="radio" name="AM/PM" value="PM" className="form-radio-input" defaultChecked />
+        };
 
     return (
       <>
@@ -419,8 +437,11 @@ export default class DateForm extends React.Component {
           <div className="set-date-form-section">
             <label className="form-label">Month
               <br />
-              <select onChange={this.handleMonthChange} className="border-radius form-select edit-date-month-select">
-                <option value=""></option>
+              <select
+                defaultValue={this.state.month}
+                onChange={this.handleMonthChange}
+                className="border-radius form-select edit-date-month-select">
+                <option value=''></option>
                 {monthOptions}
               </select>
             </label>
@@ -428,7 +449,10 @@ export default class DateForm extends React.Component {
           <div className="set-date-form-section">
             <label className="form-label">Day
               <br />
-              <select onChange={this.handleDayChange} className="border-radius form-select edit-date-day-select">
+              <select
+                defaultValue={this.state.day}
+                onChange={this.handleDayChange}
+                className="border-radius form-select edit-date-day-select">
                 <option value=""></option>
                 {dayOptions}
               </select>
@@ -437,7 +461,10 @@ export default class DateForm extends React.Component {
           <div className="set-date-form-section">
             <label className="form-label">Year
               <br />
-              <select onChange={this.handleYearChange} className="border-radius form-select edit-date-year-select">
+              <select
+                defaultValue={this.state.year}
+                onChange={this.handleYearChange}
+                className="border-radius form-select edit-date-year-select">
                 <option value=""></option>
                 {yearOptions}
               </select>
@@ -448,22 +475,27 @@ export default class DateForm extends React.Component {
           <div className="set-date-form-section">
             <label className="form-label">Time
               <br />
-              <select onChange={this.handleHourChange} className="border-radius form-select edit-date-time-select">
+              <select
+                defaultValue={this.state.hour}
+                onChange={this.handleHourChange}
+                className="border-radius form-select edit-date-time-select">
                 <option value=""></option>
                 {hourOptions}
               </select>
             </label>
           </div>
-          <div onChange={this.handleAMPMChange} className="set-date-form-section set-date-form-radio-section">
+          <div onChange={this.handleAMPMChange} checked className="edit-date-form-radio-section set-date-form-radio-section">
             <div className="set-date-form-radio-container">
               <label className="form-radio-label">
-                <input type="radio" name="AM/PM" value="AM" className="form-radio-input" />
+                {/* <input type="radio" name="AM/PM" value="AM" className="form-radio-input" /> */}
+                {AMPMValue.AM}
                 AM
               </label>
             </div>
             <div className="set-date-form-radio-container">
               <label className="form-radio-label">
-                <input type="radio" name="AM/PM" value="PM" className="form-radio-input" />
+                {/* <input type="radio" name="AM/PM" value="PM" className="form-radio-input" /> */}
+                {AMPMValue.PM}
                 PM
               </label>
             </div>
@@ -477,7 +509,7 @@ export default class DateForm extends React.Component {
     return (
       <div className="row form-buttons-container date-form-buttons">
         <a onClick={this.handleDeleteClick} className="button delete-button color-pink no-underline">DELETE</a>
-        <button onClick={this.handleUpdate} type="submit" className="button border-radius update-button">UPDATE</button>
+        <button type="submit" className="button border-radius update-button">UPDATE</button>
       </div>
     );
   }

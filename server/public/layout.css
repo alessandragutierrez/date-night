@@ -97,7 +97,8 @@ main {
   max-width: 250px;
 }
 
-.set-date-form-radio-section {
+.set-date-form-radio-section,
+.edit-date-form-radio-section {
   padding-top: 33px;
   padding-right: 5px;
 }
@@ -251,7 +252,7 @@ main {
     max-width: 350px;
   }
 
-  .set-date-form-radio-section {
+  .edit-date-form-radio-section {
     padding-right: 50px;
   }
 

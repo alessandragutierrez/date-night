@@ -105,7 +105,7 @@ export default class IdeaForm extends React.Component {
   handleUpdate(event) {
     event.preventDefault();
     const error = this.handleAddEditErrors();
-    if (error.title !== '' || error.location !== '') {
+    if (error !== '') {
       this.setState({ errorMessage: error });
       return;
     }

@@ -34,7 +34,8 @@ export default class App extends React.Component {
       pastDates: [],
       targetIdea: {},
       updatedIdea: {},
-      dateOpen: {}
+      dateOpen: {},
+      targetDate: {}
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
@@ -42,6 +43,7 @@ export default class App extends React.Component {
     this.getTargetIdea = this.getTargetIdea.bind(this);
     this.scheduleIdea = this.scheduleIdea.bind(this);
     this.getDateOpen = this.getDateOpen.bind(this);
+    this.getTargetDate = this.getTargetDate.bind(this);
   }
 
   componentDidMount() {
@@ -76,6 +78,9 @@ export default class App extends React.Component {
               pastDates: pastDates
             });
           });
+      })
+      .catch(err => {
+        console.error('Error:', err);
       });
   }
 
@@ -94,6 +99,9 @@ export default class App extends React.Component {
           updatedIdea: {},
           ideas: this.state.ideas.concat(newIdea)
         });
+      })
+      .catch(err => {
+        console.error('Error:', err);
       });
     window.location.href = '#';
   }
@@ -118,6 +126,10 @@ export default class App extends React.Component {
           targetIdea: {},
           ideas: allIdeas
         });
+
+      })
+      .catch(err => {
+        console.error('Error:', err);
       });
     window.location.href = '#';
   }
@@ -138,6 +150,9 @@ export default class App extends React.Component {
           updatedIdea: {},
           ideas: allIdeas
         });
+      })
+      .catch(err => {
+        console.error('Error:', err);
       });
     window.location.href = '#';
   }
@@ -160,6 +175,9 @@ export default class App extends React.Component {
           upcomingDates: this.state.upcomingDates.concat(newUpcomingDate),
           ideas: allIdeas
         });
+      })
+      .catch(err => {
+        console.error('Error:', err);
       });
     window.location.href = '#upcoming';
   }
@@ -209,19 +227,32 @@ export default class App extends React.Component {
       const year = parseInt(date[i].date.substring(0, 4));
       const hour = parseInt(date[i].time.substring(0, 2));
       const minutes = parseInt(date[i].time.substring(3, 5));
-      if (year < currentYear) {
-        pastDates.push(date[i]);
-      } else if (year === currentYear && month < currentMonth) {
-        pastDates.push(date[i]);
-      } else if (month === currentMonth && day < currentDay) {
-        pastDates.push(date[i]);
-      } else if (day === currentDay && hour < currentHour) {
-        pastDates.push(date[i]);
-      } else if (hour === currentHour && minutes < currentMinutes) {
-        pastDates.push(date[i]);
-      } else {
+      if (year > currentYear) {
         upcomingDates.push(date[i]);
+      } else if (year === currentYear && month > currentMonth) {
+        upcomingDates.push(date[i]);
+      } else if (month === currentMonth && day > currentDay) {
+        upcomingDates.push(date[i]);
+      } else if (day === currentDay && hour > currentHour) {
+        upcomingDates.push(date[i]);
+      } else if (hour === currentHour && minutes > currentMinutes) {
+        upcomingDates.push(date[i]);
+      } else {
+        pastDates.push(date[i]);
       }
+      // if (year < currentYear) {
+      //   pastDates.push(date[i]);
+      // } else if (year === currentYear && month < currentMonth) {
+      //   pastDates.push(date[i]);
+      // } else if (month === currentMonth && day < currentDay) {
+      //   pastDates.push(date[i]);
+      // } else if (day === currentDay && hour < currentHour) {
+      //   pastDates.push(date[i]);
+      // } else if (hour === currentHour && minutes < currentMinutes) {
+      //   pastDates.push(date[i]);
+      // } else {
+      //   upcomingDates.push(date[i]);
+      // }
     }
     return ({
       pastDates: pastDates,
@@ -231,23 +262,19 @@ export default class App extends React.Component {
 
   getTargetIdea(targetIdea) {
     this.setState({
-      targetIdea: {
-        ideaId: targetIdea.ideaId,
-        title: targetIdea.title,
-        description: targetIdea.description,
-        address: targetIdea.address,
-        latitude: targetIdea.latitude,
-        longitude: targetIdea.longitude,
-        locationId: targetIdea.locationId
-      },
+      targetIdea: targetIdea,
       updatedIdea: {}
     });
   }
 
-  getDateOpen(dateOpen) {
+  getTargetDate(targetDate) {
     this.setState({
-      dateOpen: dateOpen
+      targetDate
     });
+  }
+
+  getDateOpen(dateOpen) {
+    this.setState({ dateOpen });
   }
 
   renderPage() {
@@ -275,7 +302,8 @@ export default class App extends React.Component {
               : route.path === 'my-dates'
                 ? <MyDates
                     pastDates={this.state.pastDates}
-                    dateOpen={this.getDateOpen} />
+                    dateOpen={this.getDateOpen}
+                    targetDate={this.getTargetDate} />
                 : route.path === 'view-date-mobile'
                   ? <ViewDateMobile
                       dateOpen={this.state.dateOpen}
@@ -283,6 +311,7 @@ export default class App extends React.Component {
                   : route.path === 'edit-date'
                     ? <EditDate
                         monthsArray={this.state.monthsArray}
+                        dateToEdit={this.state.targetDate}
                       />
                     : null
     );
