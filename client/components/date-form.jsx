@@ -95,10 +95,14 @@ export default class DateForm extends React.Component {
       longitude: date.longitude,
       date: dateInput,
       time: timeInput,
-      note: date.note,
-      url: date.imgArray
+      note: date.note
+    };
+    const dateImgs = {
+      imgs: date.imgArray,
+      scheduleId: date.scheduleId
     };
     this.props.updatedDate(updatedDate);
+    this.props.dateImgs(dateImgs);
   }
 
   handleTitleChange(event) {

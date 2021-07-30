@@ -12,7 +12,14 @@ export default class ViewDateMobile extends React.Component {
   }
 
   renderDate() {
-    const date = this.props.dateOpen;
+    const updatedDate = this.props.updatedDate;
+    let date;
+    if (updatedDate.ideaId !== undefined) {
+      date = updatedDate;
+    } else if (this.props.dateOpen.ideaId !== undefined) {
+      date = this.props.dateOpen;
+    }
+
     return (
       date.ideaId === undefined || window.innerWidth > 767 || this.state.viewDatePageMobile === false
         ? null

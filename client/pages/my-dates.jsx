@@ -79,10 +79,13 @@ export default class MyDates extends React.Component {
   }
 
   renderDateModalDesktop() {
+    const updatedDate = this.props.updatedDate;
     const targetedDate = this.props.targetedDate;
     let date;
     if (this.state.dateOpen.ideaId !== undefined) {
       date = this.state.dateOpen;
+    } else if (updatedDate.ideaId !== undefined) {
+      date = updatedDate;
     } else if (targetedDate.ideaId !== undefined) {
       date = targetedDate;
     } else {

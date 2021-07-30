@@ -319,41 +319,57 @@ app.put('/api/my-dates/:ideaId', (req, res, next) => {
               return db.query(notesSql, notesParams)
                 .then(notesResult => {
                   const [note] = notesResult.rows;
-                  const url = req.body;
-                  const imageSql = `
-                    insert into "images"
-                      ("userId", "scheduleId", "url")
-                      values
-                        ($1, $2, unnest(array$3));
-                        returning *
-                  `;
-                  const imageParams = [1, schedule.scheduleId, url];
-
-                  return db.query(imageSql, imageParams)
-                    .then(imageResults => {
-                      const [image] = imageResults.rows;
-                      const output = {
-                        title: idea.title,
-                        description: idea.description,
-                        ideaId: idea.ideaId,
-                        locationId: location.locationId,
-                        address: location.address,
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                        scheduleId: schedule.scheduleId,
-                        date: schedule.date,
-                        time: schedule.time,
-                        canceled: schedule.canceled,
-                        noteId: note.noteId,
-                        note: note.note,
-                        imageId: image.imageId,
-                        url: image.url
-                      };
-                      res.json(output);
-                    });
+                  const output = {
+                    title: idea.title,
+                    description: idea.description,
+                    ideaId: idea.ideaId,
+                    locationId: location.locationId,
+                    address: location.address,
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    scheduleId: schedule.scheduleId,
+                    date: schedule.date,
+                    time: schedule.time,
+                    canceled: schedule.canceled,
+                    noteId: note.noteId,
+                    note: note.note
+                  };
+                  res.json(output);
                 });
             });
         });
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/images/:scheduleId', (req, res, next) => {
+  const scheduleId = parseInt(req.params.scheduleId, 10);
+  if (!Number.isInteger(scheduleId) || scheduleId < 1) {
+    throw new ClientError(400, 'ideaId must be a positive integer');
+  }
+  if (!scheduleId) {
+    throw new ClientError(400, 'ideaId is a required field');
+  }
+
+  const { url } = req.body;
+  const imageSql = `
+    insert into "images"
+      ("url", "scheduleId", "userId")
+      values
+        ($1, $2, $3)
+        returning *
+  `;
+  // change userId later
+  const imageParams = [url, scheduleId, 1];
+  db.query(imageSql, imageParams)
+    .then(imageResult => {
+      const [image] = imageResult.rows;
+      const output = {
+        url: image.url,
+        imageId: image.imageId,
+        scheduleId: image.scheduleId
+      };
+      res.status(201).json(output);
     })
     .catch(err => next(err));
 });

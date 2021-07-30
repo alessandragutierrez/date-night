@@ -35,7 +35,9 @@ export default class App extends React.Component {
       targetIdea: {},
       updatedIdea: {},
       dateOpen: {},
-      targetDate: {}
+      targetDate: {},
+      updatedDate: {},
+      imgs: []
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
@@ -45,6 +47,7 @@ export default class App extends React.Component {
     this.getDateOpen = this.getDateOpen.bind(this);
     this.getTargetDate = this.getTargetDate.bind(this);
     this.updateDate = this.updateDate.bind(this);
+    this.postImgs = this.postImgs.bind(this);
   }
 
   componentDidMount() {
@@ -133,7 +136,6 @@ export default class App extends React.Component {
           targetIdea: {},
           ideas: allIdeas
         });
-
       })
       .catch(err => {
         console.error('Error:', err);
@@ -190,7 +192,65 @@ export default class App extends React.Component {
   }
 
   updateDate(updatedDate) {
-    // console.log(updatedDate);
+    fetch(`/api/my-dates/${updatedDate.ideaId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedDate)
+    })
+      .then(res => res.json())
+      .then(updatedDate => {
+        const allPastDates = this.state.pastDates.map(originalDate => {
+          return originalDate.ideaId === updatedDate.ideaId
+            ? updatedDate
+            : originalDate;
+        });
+        this.setState({
+          updatedDate: updatedDate,
+          targetDate: {},
+          pastDates: allPastDates
+        });
+      })
+      .catch(err => {
+        console.error('Error:', err);
+      });
+    history.back();
+  }
+
+  postImgs(dateImgs) {
+    const imgArray = [];
+    for (let i = 0; i < dateImgs.imgs.length; i++) {
+      const url = dateImgs.imgs[i];
+      const image = { url: url };
+      fetch(`/api/images/${dateImgs.scheduleId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(image)
+      })
+        .then(res => res.json())
+        .then(newImg => {
+          imgArray.push({ url: newImg.url, imageId: newImg.imageId });
+        })
+        .catch(err => {
+          console.error('Error:', err);
+        });
+    }
+
+    const newImgUpload = {
+      scheduleId: dateImgs.scheduleId,
+      imgs: imgArray
+    };
+    const allImgs = this.state.imgs.map(index => {
+      return index.scheduleId === newImgUpload.scheduleId
+        ? newImgUpload
+        : index;
+    });
+    this.setState({
+      imgs: allImgs
+    });
   }
 
   formatDateTimeYear(upcoming) {
@@ -285,35 +345,36 @@ export default class App extends React.Component {
             targetedIdea={this.state.targetIdea}
             updatedIdea={this.state.updatedIdea}
             monthsArray={this.state.monthsArray}
-            scheduledIdea={this.scheduleIdea}/>
+            scheduledIdea={this.scheduleIdea} />
         : route.path === 'add-idea'
           ? <AddIdea
-              newIdea={this.addIdea}/>
+              newIdea={this.addIdea} />
           : route.path === 'edit-idea'
             ? <EditIdea
                 ideaToEdit={this.state.targetIdea}
                 updatedIdea={this.updateIdea}
-                ideaToDelete={this.deleteIdea}/>
+                ideaToDelete={this.deleteIdea} />
             : route.path === 'upcoming'
               ? <Upcoming
-                  upcomingDates={this.state.upcomingDates}/>
+                  upcomingDates={this.state.upcomingDates} />
               : route.path === 'my-dates'
                 ? <MyDates
                     pastDates={this.state.pastDates}
                     dateOpen={this.getDateOpen}
                     targetDate={this.getTargetDate}
-                    targetedDate={this.state.targetDate} />
+                    targetedDate={this.state.targetDate}
+                    updatedDate={this.state.updatedDate} />
                 : route.path === 'view-date-mobile'
                   ? <ViewDateMobile
                       dateOpen={this.state.dateOpen}
                       targetDate={this.getTargetDate}
-                    />
+                      updatedDate={this.state.updatedDate} />
                   : route.path === 'edit-date'
                     ? <EditDate
                         monthsArray={this.state.monthsArray}
                         dateToEdit={this.state.targetDate}
                         updatedDate={this.updateDate}
-                      />
+                        dateImgs={this.postImgs} />
                     : null
     );
   }
