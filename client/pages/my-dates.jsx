@@ -37,6 +37,11 @@ export default class MyDates extends React.Component {
     }
   }
 
+  handleEditButtonClick(date) {
+    const targetDate = date;
+    this.props.targetDate(targetDate);
+  }
+
   handleDateModalBackgroundClick(event) {
     if (!event.target.className.includes('background--modal')) {
       return;
@@ -95,7 +100,7 @@ export default class MyDates extends React.Component {
                 {date.description}
               </div>
               <div className="edit-button-container--modal">
-                <a href="#edit-date" className="edit-button--modal border-radius no-underline text-center">
+                <a href="#edit-date" onClick={() => this.handleEditButtonClick(date)} className="edit-button--modal border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
                   <span className="idea-edit-label--modal color-dark-gray">Edit</span>
                 </a>
