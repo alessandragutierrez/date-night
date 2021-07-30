@@ -221,38 +221,44 @@ export default class App extends React.Component {
   }
 
   postImgs(dateImgs) {
+    const requests = [];
     const imgArray = [];
     for (let i = 0; i < dateImgs.imgs.length; i++) {
-      const url = dateImgs.imgs[i];
-      const image = { url: url };
-      fetch(`/api/images/${dateImgs.scheduleId}`, {
+      const url = { url: dateImgs.imgs[i] };
+      requests.push(fetch(`/api/images/${dateImgs.scheduleId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(image)
+        body: JSON.stringify(url)
       })
         .then(res => res.json())
         .then(newImg => {
           imgArray.push({ url: newImg.url, imageId: newImg.imageId });
         })
-        .catch(err => {
-          console.error('Error:', err);
-        });
+      );
     }
 
-    const newImgUpload = {
-      scheduleId: dateImgs.scheduleId,
-      imgs: imgArray
-    };
-    const allImgs = this.state.imgs.map(index => {
-      return index.scheduleId === newImgUpload.scheduleId
-        ? newImgUpload
-        : index;
-    });
+    Promise.all(requests)
+      .catch(err => console.error('Error:', err));
+
+    // console.log('imgArray:', imgArray);
     this.setState({
-      imgs: allImgs
+      imgs: imgArray
     });
+
+    // const newImgUpload = {
+    //   scheduleId: dateImgs.scheduleId,
+    //   imgs: imgArray
+    // };
+    // const allImgs = this.state.imgs.map(index => {
+    //   return index.scheduleId === newImgUpload.scheduleId
+    //     ? newImgUpload
+    //     : index;
+    // });
+    // this.setState({
+    //   imgs: allImgs
+    // });
   }
 
   formatDateTimeYear(upcoming) {
