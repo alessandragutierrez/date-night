@@ -231,6 +231,7 @@ export default class Ideas extends React.Component {
     } else {
       idea = {};
     }
+
     return (
       idea.ideaId === undefined || window.innerWidth > 767 || this.state.ideaModalOpen === false
         ? null

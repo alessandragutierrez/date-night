@@ -37,11 +37,6 @@ export default class MyDates extends React.Component {
     }
   }
 
-  handleEditButtonClick(date) {
-    const targetDate = date;
-    this.props.targetDate(targetDate);
-  }
-
   handleDateModalBackgroundClick(event) {
     if (!event.target.className.includes('background--modal')) {
       return;
@@ -50,6 +45,11 @@ export default class MyDates extends React.Component {
       dateOpen: {},
       dateModalOpenDesktop: false
     });
+  }
+
+  handleEditButtonClick(date) {
+    const targetDate = date;
+    this.props.targetDate(targetDate);
   }
 
   renderPastDates() {
@@ -79,9 +79,18 @@ export default class MyDates extends React.Component {
   }
 
   renderDateModalDesktop() {
-    const date = this.state.dateOpen;
+    const targetedDate = this.props.targetedDate;
+    let date;
+    if (this.state.dateOpen.ideaId !== undefined) {
+      date = this.state.dateOpen;
+    } else if (targetedDate.ideaId !== undefined) {
+      date = targetedDate;
+    } else {
+      date = {};
+    }
+
     return (
-      date.ideaId === undefined || window.innerWidth < 767 || this.state.upcomingdateModalOpenDesktop === false
+      date.ideaId === undefined || window.innerWidth < 767 || this.state.dateModalOpenDesktop === false
         ? null
         : <div onClick={this.handleDateModalBackgroundClick} className="background--modal">
             <div className="modal border-radius background-white date-box--modal">

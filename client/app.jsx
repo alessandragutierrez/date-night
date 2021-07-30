@@ -303,10 +303,12 @@ export default class App extends React.Component {
                 ? <MyDates
                     pastDates={this.state.pastDates}
                     dateOpen={this.getDateOpen}
-                    targetDate={this.getTargetDate} />
+                    targetDate={this.getTargetDate}
+                    targetedDate={this.state.targetDate} />
                 : route.path === 'view-date-mobile'
                   ? <ViewDateMobile
                       dateOpen={this.state.dateOpen}
+                      targetDate={this.getTargetDate}
                     />
                   : route.path === 'edit-date'
                     ? <EditDate

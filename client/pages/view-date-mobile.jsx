@@ -6,6 +6,11 @@ export default class ViewDateMobile extends React.Component {
     this.state = {};
   }
 
+  handleEditButtonClick(date) {
+    const targetDate = date;
+    this.props.targetDate(targetDate);
+  }
+
   renderDate() {
     const date = this.props.dateOpen;
     return (
@@ -28,7 +33,7 @@ export default class ViewDateMobile extends React.Component {
                 {date.description}
               </div>
               <div className="edit-button-container--mobile">
-                <a href="#edit-date" className="edit-button--mobile border-radius no-underline text-center">
+                <a href="#edit-date" onClick={() => this.handleEditButtonClick(date)} className="edit-button--mobile border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--mobile color-dark-gray"></span>
                   <span className="idea-edit-label--mobile color-dark-gray">Edit</span>
                 </a>
