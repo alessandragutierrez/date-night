@@ -202,9 +202,10 @@ export default class App extends React.Component {
     })
       .then(res => res.json())
       .then(updatedDate => {
+        const newUpdatedDate = this.formatDateTimeYear(updatedDate);
         const allPastDates = this.state.pastDates.map(originalDate => {
-          return originalDate.ideaId === updatedDate.ideaId
-            ? updatedDate
+          return originalDate.ideaId === newUpdatedDate.ideaId
+            ? newUpdatedDate
             : originalDate;
         });
         this.setState({
@@ -261,15 +262,15 @@ export default class App extends React.Component {
     // });
   }
 
-  formatDateTimeYear(upcoming) {
-    const year = upcoming.date.substring(0, 4);
-    const monthNum = upcoming.date.substring(5, 7);
+  formatDateTimeYear(date) {
+    const year = date.date.substring(0, 4);
+    const monthNum = date.date.substring(5, 7);
     const matchingMonth = this.state.monthsArray.filter(month => {
       return month.monthNum === monthNum;
     });
     const month = matchingMonth[0].monthText;
-    const day = upcoming.date.substring(8, 10);
-    const hourData = upcoming.time.substring(0, 2);
+    const day = date.date.substring(8, 10);
+    const hourData = date.time.substring(0, 2);
     let hourDateToNumber = parseInt(hourData);
     let AMPM = 'AM';
     if (hourDateToNumber > 12) {
@@ -277,7 +278,7 @@ export default class App extends React.Component {
       AMPM = 'PM';
     }
     const hour = hourDateToNumber.toString();
-    const minuteData = upcoming.time.substring(3, 5);
+    const minuteData = date.time.substring(3, 5);
     let minute = '';
     if (minuteData.charAt(0) !== '0') {
       minute = `:${minuteData}`;
@@ -285,10 +286,10 @@ export default class App extends React.Component {
     const dateTimeFormat = `${month} ${day} at ${hour}${minute} ${AMPM}`;
     const dateTimeYearFormat = `${month} ${day}, ${year} at ${hour}${minute} ${AMPM}`;
     const dateYearFormat = `${month} ${day}, ${year}`;
-    upcoming.dateTimeFormat = dateTimeFormat;
-    upcoming.dateTimeYearFormat = dateTimeYearFormat;
-    upcoming.dateYearFormat = dateYearFormat;
-    return upcoming;
+    date.dateTimeFormat = dateTimeFormat;
+    date.dateTimeYearFormat = dateTimeYearFormat;
+    date.dateYearFormat = dateYearFormat;
+    return date;
   }
 
   checkIfPastOrUpcoming(date) {
