@@ -5,6 +5,7 @@ const db = require('./db');
 const errorMiddleware = require('./error-middleware');
 const jsonMiddleware = express.json();
 const staticMiddleware = require('./static-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
 
 const app = express();
 
@@ -342,7 +343,7 @@ app.put('/api/my-dates/:ideaId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/images/:scheduleId', (req, res, next) => {
+app.post('/api/images/:scheduleId', uploadsMiddleware, (req, res, next) => {
   const scheduleId = parseInt(req.params.scheduleId, 10);
   if (!Number.isInteger(scheduleId) || scheduleId < 1) {
     throw new ClientError(400, 'ideaId must be a positive integer');
@@ -351,7 +352,7 @@ app.post('/api/images/:scheduleId', (req, res, next) => {
     throw new ClientError(400, 'ideaId is a required field');
   }
 
-  const { url } = req.body;
+  const url = `/images/${req.body.url}`;
   const imageSql = `
     insert into "images"
       ("url", "scheduleId", "userId")
@@ -370,6 +371,18 @@ app.post('/api/images/:scheduleId', (req, res, next) => {
         scheduleId: image.scheduleId
       };
       res.status(201).json(output);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/images', (req, res, next) => {
+  const sql = `
+    select *
+      from "images"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
     })
     .catch(err => next(err));
 });
