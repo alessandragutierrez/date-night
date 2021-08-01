@@ -83,11 +83,16 @@ export default class App extends React.Component {
             for (let i = 0; i < pastDates.length; i++) {
               this.formatDateTimeYear(pastDates[i]);
             }
-            this.setState({
-              ideas: ideas,
-              upcomingDates: upcomingDates,
-              pastDates: pastDates
-            });
+            return fetch('/api/images')
+              .then(res => res.json())
+              .then(images => {
+                this.setState({
+                  ideas: ideas,
+                  upcomingDates: upcomingDates,
+                  pastDates: pastDates,
+                  images: images
+                });
+              });
           });
       })
       .catch(err => {
@@ -358,7 +363,8 @@ export default class App extends React.Component {
                     dateOpen={this.getDateOpen}
                     targetDate={this.getTargetDate}
                     targetedDate={this.state.targetDate}
-                    updatedDate={this.state.updatedDate} />
+                    updatedDate={this.state.updatedDate}
+                    images={this.state.images} />
                 : route.path === 'view-date-mobile'
                   ? <ViewDateMobile
                       dateOpen={this.state.dateOpen}

@@ -5,7 +5,8 @@ export default class MyDates extends React.Component {
     super(props);
     this.state = {
       dateOpen: {},
-      dateModalOpenDesktop: null
+      dateModalOpenDesktop: null,
+      images: this.props.images
     };
     this.handleDateModalBackgroundClick = this.handleDateModalBackgroundClick.bind(this);
   }
@@ -52,28 +53,61 @@ export default class MyDates extends React.Component {
     this.props.targetDate(targetDate);
   }
 
-  renderPastDates() {
+  renderImages() {
     const pastDates = this.props.pastDates;
+    const images = this.props.images;
+    for (let i = 0; i < pastDates.length; i++) {
+      for (let j = 0; j < this.props.images.length; j++) {
+        if (images[j].scheduleId === pastDates[i].scheduleId) {
+          pastDates[i].image = images[j];
+        }
+      }
+    }
+    return pastDates;
+  }
+
+  renderPastDates() {
+    const pastDates = this.renderImages();
     return (
       pastDates < 1
         ? <p className="empty-text">You have no dates to display.</p>
         : pastDates.map(date =>
-          <div key={'past-date' + date.ideaId} onClick={() => this.handleDateClick(date)} className="date-item">
-            <div className="date-title color-dark-gray">
-              {date.title}
+          date.image
+            ? <div key={'past-date' + date.ideaId} onClick={() => this.handleDateClick(date)} className="date-item date-item-with-image">
+              <div className="image-container">
+                <img src={`http://localhost:3000${date.image.url}`} className='image' />
+              </div>
+              <div className="date-title color-dark-gray">
+                {date.title}
+              </div>
+              <div className="date-address color-medium-gray">
+                <span className="fa fa-map-marker map-marker-icon"></span>
+                {date.address}
+              </div>
+              <div className="date-schedule color-medium-gray">
+                <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
+                {date.dateYearFormat}
+              </div>
+              <div className="date-description color-medium-gray">
+                {date.description}
+              </div>
             </div>
-            <div className="date-address color-medium-gray">
-              <span className="fa fa-map-marker map-marker-icon"></span>
-              {date.address}
+            : <div key={'past-date' + date.ideaId} onClick={() => this.handleDateClick(date)} className="date-item">
+              <div className="date-title color-dark-gray">
+                {date.title}
+              </div>
+              <div className="date-address color-medium-gray">
+                <span className="fa fa-map-marker map-marker-icon"></span>
+                {date.address}
+              </div>
+              <div className="date-schedule color-medium-gray">
+                <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
+                {date.dateYearFormat}
+              </div>
+              <div className="date-description color-medium-gray">
+                {date.description}
+              </div>
             </div>
-            <div className="date-schedule color-medium-gray">
-              <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-              {date.dateYearFormat}
-            </div>
-            <div className="date-description color-medium-gray">
-              {date.description}
-            </div>
-          </div>
         )
     );
   }
