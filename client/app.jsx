@@ -47,7 +47,7 @@ export default class App extends React.Component {
     this.getDateOpen = this.getDateOpen.bind(this);
     this.getTargetDate = this.getTargetDate.bind(this);
     this.updateDate = this.updateDate.bind(this);
-    this.postImgs = this.postImgs.bind(this);
+    // this.postImgs = this.postImgs.bind(this);
   }
 
   componentDidMount() {
@@ -382,8 +382,8 @@ export default class App extends React.Component {
                     ? <EditDate
                         monthsArray={this.state.monthsArray}
                         dateToEdit={this.state.targetDate}
-                        updatedDate={this.updateDate}
-                        dateImgs={this.postImgs} />
+                        updatedDate={this.updateDate} />
+                        // dateImgs={this.postImgs} />
                     : null
     );
   }

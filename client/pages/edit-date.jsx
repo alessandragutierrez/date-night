@@ -5,16 +5,16 @@ export default class EditDate extends React.Component {
   constructor(props) {
     super(props);
     this.getUpdatedDate = this.getUpdatedDate.bind(this);
-    this.getDateImgs = this.getDateImgs.bind(this);
+    // this.getDateImgs = this.getDateImgs.bind(this);
   }
 
   getUpdatedDate(updatedDate) {
     this.props.updatedDate(updatedDate);
   }
 
-  getDateImgs(dateImgs) {
-    this.props.dateImgs(dateImgs);
-  }
+  // getDateImgs(dateImgs) {
+  //   this.props.dateImgs(dateImgs);
+  // }
 
   render() {
     return (
@@ -23,8 +23,8 @@ export default class EditDate extends React.Component {
         <DateForm
           monthsArray={this.props.monthsArray}
           dateToEdit={this.props.dateToEdit}
-          updatedDate={this.getUpdatedDate}
-          dateImgs={this.getDateImgs} />
+          updatedDate={this.getUpdatedDate} />
+          {/* dateImgs={this.getDateImgs} /> */}
       </>
     );
   }

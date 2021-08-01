@@ -97,12 +97,12 @@ export default class DateForm extends React.Component {
       time: timeInput,
       note: date.note
     };
-    const dateImgs = {
-      imgs: date.imgArray,
-      scheduleId: date.scheduleId
-    };
+    // const dateImgs = {
+    //   imgs: date.imgArray,
+    //   scheduleId: date.scheduleId
+    // };
     this.props.updatedDate(updatedDate);
-    this.props.dateImgs(dateImgs);
+    // this.props.dateImgs(dateImgs);
   }
 
   handleTitleChange(event) {
@@ -172,6 +172,21 @@ export default class DateForm extends React.Component {
       imgs: event.target.files,
       imgArray: imgArray
     });
+
+    const form = event.target.closest('form');
+    const formData = new FormData(form);
+
+    fetch(`/api/images/${this.state.scheduleId}`, {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(newImg => {
+        console.log(newImg);
+      })
+      .catch(err => {
+        console.error('Error:', err);
+      });
   }
 
   renderTitleInput() {
@@ -276,7 +291,7 @@ export default class DateForm extends React.Component {
               // ref="file"
               type="file"
               name="image"
-              multiple
+              // multiple
               onChange={this.handleImageChange} />
           </label>
           <span className={imgPlaceholder}>

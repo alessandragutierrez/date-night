@@ -352,7 +352,7 @@ app.post('/api/images/:scheduleId', uploadsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'ideaId is a required field');
   }
 
-  const url = `/images/${req.body.url}`;
+  const url = `/images/${req.file.filename}`;
   const imageSql = `
     insert into "images"
       ("url", "scheduleId", "userId")
