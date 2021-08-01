@@ -44,8 +44,8 @@ export default class DateForm extends React.Component {
         hour: dateTimeValues.hour,
         AMPM: dateTimeValues.AMPM,
         note: '',
-        file: [],
-        imgArray: []
+        imgs: [],
+        formData: {}
       }
     );
   }
@@ -97,12 +97,12 @@ export default class DateForm extends React.Component {
       time: timeInput,
       note: date.note
     };
-    // const dateImgs = {
-    //   imgs: date.imgArray,
-    //   scheduleId: date.scheduleId
-    // };
+
     this.props.updatedDate(updatedDate);
-    // this.props.dateImgs(dateImgs);
+    this.props.formData({
+      formData: this.state.formData,
+      scheduleId: this.state.scheduleId
+    });
   }
 
   handleTitleChange(event) {
@@ -166,27 +166,12 @@ export default class DateForm extends React.Component {
   }
 
   handleImageChange(event) {
-    const imgArray = [];
-    Array.from(event.target.files).forEach(file => imgArray.push(file.name));
-    this.setState({
-      imgs: event.target.files,
-      imgArray: imgArray
-    });
-
     const form = event.target.closest('form');
     const formData = new FormData(form);
-
-    fetch(`/api/images/${this.state.scheduleId}`, {
-      method: 'POST',
-      body: formData
-    })
-      .then(res => res.json())
-      .then(newImg => {
-        console.log(newImg);
-      })
-      .catch(err => {
-        console.error('Error:', err);
-      });
+    this.setState({
+      imgs: event.target.files,
+      formData: formData
+    });
   }
 
   renderTitleInput() {
@@ -276,9 +261,9 @@ export default class DateForm extends React.Component {
   }
 
   renderImageInput() {
-    const imgPlaceholder = this.state.imgs
-      ? 'hidden'
-      : 'border-radius file-box-style file-input-placeholder';
+    const imgPlaceholder = this.state.imgs.length < 1
+      ? 'border-radius file-box-style file-input-placeholder'
+      : 'hidden';
 
     return (
       <>
@@ -288,7 +273,6 @@ export default class DateForm extends React.Component {
             <span className="fas fa-plus file-add-icon"></span>
             <input
               className="hidden"
-              // ref="file"
               type="file"
               name="image"
               // multiple

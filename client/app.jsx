@@ -37,7 +37,7 @@ export default class App extends React.Component {
       dateOpen: {},
       targetDate: {},
       updatedDate: {},
-      imgs: []
+      images: []
     };
     this.addIdea = this.addIdea.bind(this);
     this.updateIdea = this.updateIdea.bind(this);
@@ -47,7 +47,7 @@ export default class App extends React.Component {
     this.getDateOpen = this.getDateOpen.bind(this);
     this.getTargetDate = this.getTargetDate.bind(this);
     this.updateDate = this.updateDate.bind(this);
-    // this.postImgs = this.postImgs.bind(this);
+    this.postImage = this.postImage.bind(this);
   }
 
   componentDidMount() {
@@ -221,45 +221,31 @@ export default class App extends React.Component {
     history.back();
   }
 
-  postImgs(dateImgs) {
-    const requests = [];
-    const imgArray = [];
-    for (let i = 0; i < dateImgs.imgs.length; i++) {
-      const url = { url: dateImgs.imgs[i] };
-      requests.push(fetch(`/api/images/${dateImgs.scheduleId}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(url)
+  postImage(formData) {
+    fetch(`/api/images/${formData.scheduleId}`, {
+      method: 'POST',
+      body: formData.formData
+    })
+      .then(res => res.json())
+      .then(newImage => {
+        if (this.state.images.length < 1) {
+          this.setState({
+            images: this.state.images.concat(newImage)
+          });
+        } else {
+          const allImages = this.state.images.map(index => {
+            return index.scheduleId === newImage.scheduleId
+              ? newImage
+              : index;
+          });
+          this.setState({
+            images: allImages
+          });
+        }
       })
-        .then(res => res.json())
-        .then(newImg => {
-          imgArray.push({ url: newImg.url, imageId: newImg.imageId });
-        })
-      );
-    }
-
-    Promise.all(requests)
-      .catch(err => console.error('Error:', err));
-
-    // console.log('imgArray:', imgArray);
-    this.setState({
-      imgs: imgArray
-    });
-
-    // const newImgUpload = {
-    //   scheduleId: dateImgs.scheduleId,
-    //   imgs: imgArray
-    // };
-    // const allImgs = this.state.imgs.map(index => {
-    //   return index.scheduleId === newImgUpload.scheduleId
-    //     ? newImgUpload
-    //     : index;
-    // });
-    // this.setState({
-    //   imgs: allImgs
-    // });
+      .catch(err => {
+        console.error('Error:', err);
+      });
   }
 
   formatDateTimeYear(date) {
@@ -382,8 +368,8 @@ export default class App extends React.Component {
                     ? <EditDate
                         monthsArray={this.state.monthsArray}
                         dateToEdit={this.state.targetDate}
-                        updatedDate={this.updateDate} />
-                        // dateImgs={this.postImgs} />
+                        updatedDate={this.updateDate}
+                        formData={this.postImage} />
                     : null
     );
   }
