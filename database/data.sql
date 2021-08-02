@@ -30,7 +30,7 @@ insert into "schedule"
   ('2021-08-15', '7:00 PM', 3, 'false'),
   ('2021-08-29', '5:30 PM', 4, 'false'),
   ('2021-02-10', '1:30 PM', 5, 'false'),
-  ('2021-04-07', '11:00 AM', 6, 'false');
+  ('2021-10-07', '11:00 AM', 6, 'false');
 
 insert into "notes"
   ("note", "scheduleId", "userId")

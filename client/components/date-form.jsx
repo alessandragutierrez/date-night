@@ -276,7 +276,6 @@ export default class DateForm extends React.Component {
                   className="hidden"
                   type="file"
                   name="image"
-                  // multiple
                   onChange={this.handleImageChange} />
               </label>
               <span className="border-radius file-box-style">
@@ -293,7 +292,6 @@ export default class DateForm extends React.Component {
                   className="hidden"
                   type="file"
                   name="image"
-                  // multiple
                   onChange={this.handleImageChange} />
               </label>
               <span className={imgPlaceholder}>

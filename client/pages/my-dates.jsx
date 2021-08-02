@@ -92,34 +92,31 @@ export default class MyDates extends React.Component {
                     <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
                     {date.dateYearFormat}
                   </div>
-                  <div className="date-description color-medium-gray">
-                    {date.description}
-                  </div>
-                  <div className="date-description color-medium-gray">
+                  <div className={date.note === '' ? 'hidden' : 'date-note'}>
                     {date.note}
                   </div>
                 </div>
               </div>
             </div>
             : <div key={'past-date' + date.ideaId} onClick={() => this.handleDateClick(date)} className="date-item date-item-without-image" role="dialog">
-              <div className="date-title color-dark-gray">
-                {date.title}
+                <div className="date-title color-dark-gray">
+                  {date.title}
+                </div>
+                <div className="date-address color-medium-gray">
+                  <span className="fa fa-map-marker map-marker-icon"></span>
+                  {date.address}
+                </div>
+                <div className="date-schedule color-medium-gray">
+                  <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
+                  {date.dateYearFormat}
+                </div>
+                <div className="date-description color-medium-gray">
+                  {date.description}
+                </div>
+                <div className={date.note === '' ? 'hidden' : 'date-note'}>
+                  {date.note}
+                </div>
               </div>
-              <div className="date-address color-medium-gray">
-                <span className="fa fa-map-marker map-marker-icon"></span>
-                {date.address}
-              </div>
-              <div className="date-schedule color-medium-gray">
-                <span className="far fa-calendar-alt scheduled-calendar-icon"></span>
-                {date.dateYearFormat}
-              </div>
-              <div className="date-description color-medium-gray">
-                {date.description}
-              </div>
-              <div className="date-description color-medium-gray">
-                {date.note}
-              </div>
-            </div>
         )
     );
   }
@@ -162,7 +159,7 @@ export default class MyDates extends React.Component {
                   <div className="date-description--modal color-medium-gray">
                     {date.description}
                   </div>
-                  <div className="date-description--modal color-medium-gray">
+                  <div className={date.note === '' ? 'hidden' : 'date-note'}>
                     {date.note}
                   </div>
                   <div className="edit-button-container--modal">
@@ -191,7 +188,7 @@ export default class MyDates extends React.Component {
                   <div className="date-description--modal color-medium-gray">
                     {date.description}
                   </div>
-                  <div className="date-description--modal color-medium-gray">
+                  <div className={date.note === '' ? 'hidden' : 'date-note'}>
                     {date.note}
                   </div>
                   <div className="edit-button-container--modal">
