@@ -24,11 +24,18 @@ insert into "ideas"
   ('Geocaching', 'Mumblecore occupy, williamsburg gochujang cred yuccie etsy art party. DIY lyft hella irony intelligentsia.', true, 5, 1),
   ('Rock Climbing', '8-bit enamel pin brunch, fixie food truck portland kogi pinterest. Freegan goth typewriter distillery.', true, 6, 1);
 
-
 insert into "schedule"
   ("date", "time", "ideaId", "canceled")
   values
-  ('2021-08-15', '7:00 PM', '3', 'false'),
-  ('2021-08-29', '5:30 PM', '4', 'false'),
-  ('2021-02-10', '1:30 PM', '5', 'false'),
-  ('2021-04-07', '11:00 AM', '6', 'false');
+  ('2021-08-15', '7:00 PM', 3, 'false'),
+  ('2021-08-29', '5:30 PM', 4, 'false'),
+  ('2021-02-10', '1:30 PM', 5, 'false'),
+  ('2021-04-07', '11:00 AM', 6, 'false');
+
+insert into "notes"
+  ("note", "scheduleId", "userId")
+  values
+  ('', 1, 1),
+  ('', 2, 1),
+  ('', 3, 1),
+  ('', 4, 1);

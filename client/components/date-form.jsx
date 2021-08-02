@@ -31,6 +31,7 @@ export default class DateForm extends React.Component {
         ideaId: dateToEdit.ideaId,
         title: dateToEdit.title,
         description: dateToEdit.description,
+        note: dateToEdit.note,
         locationId: dateToEdit.locationId,
         address: dateToEdit.address,
         latitude: dateToEdit.latitude,
@@ -43,7 +44,6 @@ export default class DateForm extends React.Component {
         year: dateTimeValues.year,
         hour: dateTimeValues.hour,
         AMPM: dateTimeValues.AMPM,
-        note: '',
         imgs: [],
         formData: {}
       }
@@ -90,12 +90,12 @@ export default class DateForm extends React.Component {
       ideaId: date.ideaId,
       title: date.title,
       description: date.description,
+      note: date.note,
       address: date.address,
       latitude: date.latitude,
       longitude: date.longitude,
       date: dateInput,
-      time: timeInput,
-      note: date.note
+      time: timeInput
     };
 
     this.props.updatedDate(updatedDate);

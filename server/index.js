@@ -205,19 +205,37 @@ app.post('/api/upcoming', (req, res, next) => {
           return db.query(locationSql, locationParams)
             .then(locationResults => {
               const [location] = locationResults.rows;
-              const output = {
-                ideaId: idea.ideaId,
-                title: idea.title,
-                description: idea.description,
-                locationId: location.locationId,
-                address: location.address,
-                latitude: location.latitude,
-                longitude: location.longitude,
-                scheduleId: schedule.scheduleId,
-                date: schedule.date,
-                time: schedule.time
-              };
-              res.status(201).json(output);
+              const note = '';
+              // change userId later
+              const noteSql = `
+                insert into "notes"
+                ("note", "scheduleId", "userId")
+                values
+                  ($1, $2, $3)
+                  returning *
+              `;
+              const noteParams = [note, schedule.scheduleId, 1];
+
+              return db.query(noteSql, noteParams)
+                .then(noteResults => {
+                  const [note] = noteResults.rows;
+
+                  const output = {
+                    ideaId: idea.ideaId,
+                    title: idea.title,
+                    description: idea.description,
+                    locationId: location.locationId,
+                    address: location.address,
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    scheduleId: schedule.scheduleId,
+                    date: schedule.date,
+                    time: schedule.time,
+                    note: note.note,
+                    noteId: note.noteId
+                  };
+                  res.status(201).json(output);
+                });
             });
         });
     })
@@ -238,10 +256,13 @@ app.get('/api/upcoming', (req, res, next) => {
            "s"."date",
            "s"."time",
            "s"."canceled",
-           "s"."scheduleId"
+           "s"."scheduleId",
+           "n"."note",
+           "n"."noteId"
     from "ideas" as "i"
     join "locations" as "l" using ("locationId")
     join "schedule" as "s" using ("ideaId")
+    join "notes" as "n" using ("scheduleId")
     where "s"."canceled" = false
     order by "s"."date" asc
   `;
@@ -309,13 +330,12 @@ app.put('/api/my-dates/:ideaId', (req, res, next) => {
               const [schedule] = scheduleResult.rows;
               const { note } = req.body;
               const notesSql = `
-                insert into "notes"
-                  ("note", "scheduleId", "userId")
-                  values
-                    ($1, $2, $3)
-                    returning *
+                update "notes"
+                   set "note" = $1
+                 where "scheduleId" = $2
+                returning *
               `;
-              const notesParams = [note, schedule.scheduleId, 1];
+              const notesParams = [note, schedule.scheduleId];
 
               return db.query(notesSql, notesParams)
                 .then(notesResult => {

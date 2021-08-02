@@ -16,6 +16,7 @@ export default class MyDates extends React.Component {
       ideaId: date.ideaId,
       title: date.title,
       description: date.description,
+      note: date.note,
       locationId: date.locationId,
       address: date.address,
       latitude: date.latitude,
@@ -94,6 +95,9 @@ export default class MyDates extends React.Component {
                   <div className="date-description color-medium-gray">
                     {date.description}
                   </div>
+                  <div className="date-description color-medium-gray">
+                    {date.note}
+                  </div>
                 </div>
               </div>
             </div>
@@ -111,6 +115,9 @@ export default class MyDates extends React.Component {
               </div>
               <div className="date-description color-medium-gray">
                 {date.description}
+              </div>
+              <div className="date-description color-medium-gray">
+                {date.note}
               </div>
             </div>
         )
@@ -155,6 +162,9 @@ export default class MyDates extends React.Component {
                   <div className="date-description--modal color-medium-gray">
                     {date.description}
                   </div>
+                  <div className="date-description--modal color-medium-gray">
+                    {date.note}
+                  </div>
                   <div className="edit-button-container--modal">
                     <a href="#edit-date" onClick={() => this.handleEditButtonClick(date)} className="edit-button--modal border-radius no-underline text-center">
                       <span className="fas fa-edit idea-edit-icon--modal color-dark-gray"></span>
@@ -180,6 +190,9 @@ export default class MyDates extends React.Component {
                   </div>
                   <div className="date-description--modal color-medium-gray">
                     {date.description}
+                  </div>
+                  <div className="date-description--modal color-medium-gray">
+                    {date.note}
                   </div>
                   <div className="edit-button-container--modal">
                     <a href="#edit-date" onClick={() => this.handleEditButtonClick(date)} className="edit-button--modal border-radius no-underline text-center">
