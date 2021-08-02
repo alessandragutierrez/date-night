@@ -266,28 +266,46 @@ export default class DateForm extends React.Component {
       : 'hidden';
 
     return (
-      <>
-        <div className="form-label">Images</div>
-        <div className="file-uploads-container">
-          <label className="border-radius file-box-style file-input-box">
-            <span className="fas fa-plus file-add-icon"></span>
-            <input
-              className="hidden"
-              type="file"
-              name="image"
-              // multiple
-              onChange={this.handleImageChange} />
-          </label>
-          <span className={imgPlaceholder}>
-            <span className="far fa-images file-image-icon"></span>
-          </span>
-          {this.state.imgs && [...this.state.imgs].map((file, i) => (
-            <span key={i} className="border-radius file-box-style">
-              <img className="border-radius image-preview" src={URL.createObjectURL(file)} />
-            </span>
-          ))}
-        </div>
-      </>
+      this.props.dateToEdit.image && this.state.imgs.length < 1
+        ? <>
+            <div className="form-label">Images</div>
+            <div className="file-uploads-container">
+              <label className="border-radius file-box-style file-input-box">
+                <span className="fas fa-plus file-add-icon"></span>
+                <input
+                  className="hidden"
+                  type="file"
+                  name="image"
+                  // multiple
+                  onChange={this.handleImageChange} />
+              </label>
+              <span className="border-radius file-box-style">
+                <img src={`http://localhost:3000${this.props.dateToEdit.image.url}`} className="border-radius image-preview"/>
+              </span>
+            </div>
+          </>
+        : <>
+            <div className="form-label">Images</div>
+            <div className="file-uploads-container">
+              <label className="border-radius file-box-style file-input-box">
+                <span className="fas fa-plus file-add-icon"></span>
+                <input
+                  className="hidden"
+                  type="file"
+                  name="image"
+                  // multiple
+                  onChange={this.handleImageChange} />
+              </label>
+              <span className={imgPlaceholder}>
+                <span className="far fa-images file-image-icon"></span>
+              </span>
+              {this.state.imgs && [...this.state.imgs].map((file, i) => (
+                <span key={i} className="border-radius file-box-style">
+                  <img className="border-radius image-preview" src={URL.createObjectURL(file)} />
+                </span>
+              ))}
+            </div>
+          </>
     );
   }
 
