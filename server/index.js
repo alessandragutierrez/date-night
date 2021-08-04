@@ -1,4 +1,5 @@
 require('dotenv/config');
+const { path } = require('dotenv/lib/env-options');
 const express = require('express');
 const ClientError = require('./client-error');
 const db = require('./db');
@@ -249,6 +250,12 @@ app.get('/api/upcoming', (req, res, next) => {
       res.json(result.rows);
     })
     .catch(err => next(err));
+});
+
+app.use((req, res) => {
+  res.sendFile('/index.html', {
+    root: path.join(__dirname, 'public')
+  });
 });
 
 app.use(errorMiddleware);
