@@ -1,5 +1,5 @@
 require('dotenv/config');
-const { path } = require('dotenv/lib/env-options');
+const path = require('path');
 const express = require('express');
 const ClientError = require('./client-error');
 const db = require('./db');
