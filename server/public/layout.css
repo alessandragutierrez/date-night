@@ -126,8 +126,10 @@ main {
 .idea-box--modal,
 .upcoming-box--modal,
 .delete-box--modal,
-.set-date-box--modal {
-  width: 320px;
+.set-date-box--modal,
+.date-box--modal {
+  width: 85%;
+  max-width: 30.5rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -259,7 +261,7 @@ main {
   /* modals */
   .idea-box--modal,
   .upcoming-box--modal {
-    width: 420px;
+    width: 30.5rem;
   }
 
   .date-box--modal {
