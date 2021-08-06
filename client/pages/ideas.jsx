@@ -345,7 +345,7 @@ export default class Ideas extends React.Component {
       this.state.setDateModalOpen === false
         ? null
         : <div onClick={this.handleSetDateModalBackgroundClick} className="background--modal">
-            <div className="modal border-radius background-white set-date-box--modal">
+            <div className="border-radius background-white set-date-box--modal">
               <div className="text-center set-date-text--modal">Make it a Date</div>
               <form>
                 <div className="set-date-form-row">
