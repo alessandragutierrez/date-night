@@ -20,7 +20,9 @@ export default class HeaderBar extends React.Component {
             }
           : this.props.page === 'my-dates'
             ? {
-                icon1: 'fas fa-map-marked-alt header-map-icon',
+                icon1: '',
+                // feature in progress
+                // icon1: 'fas fa-map-marked-alt header-map-icon',
                 icon2: ''
               }
             : {

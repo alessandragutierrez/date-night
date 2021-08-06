@@ -27,12 +27,13 @@ export default class ViewDateMobile extends React.Component {
               <div className="date-description--mobile color-medium-gray">
                 {date.description}
               </div>
-              <div className="edit-button-container--mobile">
+              {/* feature in progress */}
+              {/* <div className="edit-button-container--mobile">
                 <a className="edit-button--mobile border-radius no-underline text-center">
                   <span className="fas fa-edit idea-edit-icon--mobile color-dark-gray"></span>
                   <span className="idea-edit-label--mobile color-dark-gray">Edit</span>
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
     );
