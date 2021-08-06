@@ -217,7 +217,7 @@ input[type="radio"] {
   width: 23px;
   position: absolute;
   left: 0;
-  color: pink;
+  color: #ff9fc2;
   border-radius: 50%;
   border: 1px solid rgba(0, 0, 0, 0.4);
   background-color: transparent;

@@ -14,6 +14,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
+      loading: true,
       monthsArray: [
         { monthText: 'January', monthNum: '01' },
         { monthText: 'February', monthNum: '02' },
@@ -72,7 +73,8 @@ export default class App extends React.Component {
             this.setState({
               ideas: ideas,
               upcomingDates: upcomingDates,
-              pastDates: pastDates
+              pastDates: pastDates,
+              loading: false
             });
           });
       });
@@ -285,6 +287,10 @@ export default class App extends React.Component {
 
   render() {
     const { route } = this.state;
+    const { loading } = this.state;
+    if (loading) {
+      return null;
+    }
     return (
       <>
         <HeaderBar page={route.path}/>
