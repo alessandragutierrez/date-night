@@ -59,6 +59,7 @@ main {
 
 .header-bar {
   border-bottom: 0.1px solid #e0e0e0;
+  padding-inline: 1.5rem;
 }
 
 .nav-bar {
@@ -172,11 +173,13 @@ main {
   .header-bar {
     display: flex;
     justify-content: flex-start;
+    padding-left: 3.5rem;
   }
 
   .nav-bar {
     display: flex;
     justify-content: flex-end;
+    padding-right: 3rem;
   }
 
   /* form and inputs */
