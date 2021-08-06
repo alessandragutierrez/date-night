@@ -59,6 +59,7 @@ main {
 
 .header-bar {
   border-bottom: 0.1px solid #e0e0e0;
+  padding-inline: 1.5rem;
 }
 
 .nav-bar {
@@ -125,8 +126,10 @@ main {
 .idea-box--modal,
 .upcoming-box--modal,
 .delete-box--modal,
-.set-date-box--modal {
-  width: 320px;
+.set-date-box--modal,
+.date-box--modal {
+  width: 85%;
+  max-width: 30.5rem;
 }
 
 @media screen and (min-width: 768px) {
@@ -172,11 +175,13 @@ main {
   .header-bar {
     display: flex;
     justify-content: flex-start;
+    padding-left: 3.5rem;
   }
 
   .nav-bar {
     display: flex;
     justify-content: flex-end;
+    padding-right: 3rem;
   }
 
   /* form and inputs */
@@ -256,7 +261,7 @@ main {
   /* modals */
   .idea-box--modal,
   .upcoming-box--modal {
-    width: 420px;
+    width: 30.5rem;
   }
 
   .date-box--modal {

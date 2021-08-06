@@ -14,6 +14,8 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
+      loading: true,
+      networkFailure: false,
       monthsArray: [
         { monthText: 'January', monthNum: '01' },
         { monthText: 'February', monthNum: '02' },
@@ -72,9 +74,18 @@ export default class App extends React.Component {
             this.setState({
               ideas: ideas,
               upcomingDates: upcomingDates,
-              pastDates: pastDates
+              pastDates: pastDates,
+              loading: false
             });
           });
+      })
+      .catch(error => {
+        if (error.message === 'Failed to fetch') {
+          this.setState({
+            loading: false,
+            networkFailure: true
+          });
+        }
       });
   }
 
@@ -283,8 +294,28 @@ export default class App extends React.Component {
     );
   }
 
+  renderNetworkFailureMessage() {
+    return (
+      <div className="network-failure">
+        <div>Sorry, there was an error connecting to the network!</div>
+        <br />
+        <div>Please check your internet connection.</div>
+      </div>
+    );
+  }
+
   render() {
     const { route } = this.state;
+    const { loading } = this.state;
+    const { networkFailure } = this.state;
+    if (loading) {
+      return null;
+    }
+    if (networkFailure) {
+      return (
+        this.renderNetworkFailureMessage()
+      );
+    }
     return (
       <>
         <HeaderBar page={route.path}/>
