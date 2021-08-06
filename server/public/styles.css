@@ -183,22 +183,24 @@ body {
 
 .set-date-form-radio-section {
   padding-top: 33px;
-  padding-right: 5px;
 }
 
 .month-select {
-  width: 140px;
+  width: 130px;
 }
 
-.day-select,
+.day-select {
+  width: 70px;
+}
+
 .time-select {
-  width: 80px;
+  width: 87px;
 }
 
 .set-date-form-radio-container {
   display: inline;
-  margin: 0 10px;
-  padding-left: 30px;
+  margin: 0 7px;
+  padding-left: 27px;
   position: relative;
 }
 
