@@ -10,16 +10,16 @@ body {
 }
 
 .header-icon {
-  font-size: 28px;
+  font-size: 1.8rem;
 }
 
 .header-map-icon {
-  font-size: 26px;
+  font-size: 1.6rem;
 }
 
 .header-title {
-  font-size: 24px;
-  margin-bottom: 5px;
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
 }
 
 /* navbar */
@@ -27,27 +27,27 @@ body {
   display: inline-flex;
   flex-direction: column;
   margin: 0;
-  padding-top: 5px;
+  padding-top: 0.3rem;
 }
 
 .nav-icon {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .nav-label {
-  font-size: 12px;
+  font-size: 0.75rem;
   display: inline;
 }
 
 /* ideas/upcoming */
 .empty-text {
   margin: auto;
-  padding: 40px 0;
+  padding: 2.5rem 0;
 }
 
 .date-title,
 .date-title--modal {
-  font-size: 17px;
+  font-size: 1.1rem;
 }
 
 .idea-address,
@@ -60,78 +60,78 @@ body {
 .date-description--modal,
 .date-schedule--mobile,
 .date-description--mobile {
-  font-size: 13px;
+  font-size: 0.8rem;
 }
 
 .date-title--modal,
 .date-schedule--modal,
 .date-description--modal,
 .date-schedule--mobile {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .upcoming-address,
 .date-address {
-  margin-bottom: 3px;
+  margin-bottom: 0.2rem;
 }
 
 .date-address--modal {
-  margin-bottom: 5px;
+  margin-bottom: 0.3rem;
 }
 
 .date-description--mobile {
-  margin-bottom: 17px;
+  margin-bottom: 1.1rem;
 }
 
 .map-marker-icon {
-  font-size: 12px;
-  padding-right: 7px;
+  font-size: 0.8rem;
+  padding-right: 0.4rem;
 }
 
 .scheduled-calendar-icon {
-  font-size: 12px;
-  padding-right: 6px;
-  padding-top: 8px;
+  font-size: 0.8rem;
+  padding-right: 0.4rem;
+  padding-top: 0.5rem;
 }
 
 .desktop-idea-buttons,
 .desktop-upcoming-buttons {
-  margin-top: 8px;
+  margin-top: 0.5rem;
   position: absolute;
-  bottom: 20px;
+  bottom: 1.3rem;
   z-index: 5;
 }
 
 .desktop-edit-button-container,
 .desktop-calendar-button-container {
   display: inline-flex;
-  margin-right: 25px;
+  margin-right: 1.6rem;
 }
 
 .desktop-edit-icon,
 .desktop-calendar-icon {
-  padding-right: 5px;
+  padding-right: 0.3rem;
   align-self: center;
 }
 
 /* form and inputs */
 .idea-form-title {
-  font-size: 20px;
+  font-size: 1.3rem;
   font-weight: 500;
-  padding-top: 20px;
+  padding-top: 1.3rem;
 }
 
 .idea-form-container {
   display: flex;
   justify-content: center;
   margin: auto;
-  margin-top: 10px;
+  margin-top: 0.6rem;
   position: relative;
 }
 
 .form-label {
   color: #5b5b5b;
-  padding-left: 10px;
+  padding-left: 0.6rem;
 }
 
 .form-input,
@@ -140,9 +140,9 @@ body {
 .form-select {
   border: 1px solid rgba(0, 0, 0, 0.2);
   outline: none;
-  font-size: 16px;
-  padding: 5px 12px;
-  margin-top: 3px;
+  font-size: 1rem;
+  padding: 0.3rem 0.75rem;
+  margin-top: 0.2rem;
   background-color: white;
 }
 
@@ -162,7 +162,7 @@ body {
 
 .suggestion-item {
   background-color: white;
-  padding: 5px 8px;
+  padding: 0.3rem 0.5rem;
   border: 0.1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -178,11 +178,11 @@ body {
 
 .set-date-form-section {
   display: inline;
-  margin-bottom: 20px;
+  margin-bottom: 1.3rem;
 }
 
 .set-date-form-radio-section {
-  padding-top: 33px;
+  padding-top: 2.1rem;
 }
 
 .month-select {
@@ -199,8 +199,8 @@ body {
 
 .set-date-form-radio-container {
   display: inline;
-  margin: 0 7px;
-  padding-left: 27px;
+  margin: 0 0.4rem;
+  padding-left: 1.7rem;
   position: relative;
 }
 
@@ -270,23 +270,23 @@ input[type="radio"] {
   background-color: #ff9fc2;
   color: white;
   font-weight: 600;
-  padding: 5px 0;
+  padding: 0.3rem 0;
 }
 
 .add-button {
-  padding-inline: 25px;
+  padding-inline: 1.6rem;
 }
 
 .update-button,
 .delete-button--modal,
 .set-date-button--modal {
-  padding-inline: 15px;
+  padding-inline: 0.9rem;
 }
 
 .confirm-delete-text--modal {
-  font-size: 18px;
-  padding: 0 10px;
-  margin-bottom: 30px;
+  font-size: 1.1rem;
+  padding: 0 0.6rem;
+  margin-bottom: 1.9rem;
 }
 
 .delete-buttons-container--modal {
@@ -305,37 +305,37 @@ input[type="radio"] {
 .edit-button--mobile {
   width: 190px;
   border: none;
-  padding: 8px 0;
-  margin-top: 15px;
+  padding: 0.5rem 0;
+  margin-top: 0.9rem;
   background-color: rgb(239, 239, 239);
 }
 
 .calendar-button--modal {
-  margin-top: 20px;
-  margin-bottom: 5px;
+  margin-top: 1.3rem;
+  margin-bottom: 0.3rem;
 }
 
 .idea-edit-icon--modal,
 .idea-calendar-icon--modal,
 .idea-edit-icon--mobile {
-  padding-right: 5px;
-  font-size: 13px;
+  padding-right: 0.3rem;
+  font-size: 0.8rem;
 }
 
 .idea-edit-label--modal,
 .idea-calendar-label--modal,
 .idea-edit-label--mobile {
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 .set-date-text--modal {
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 1.3rem;
 }
 
 .set-date-buttons-container--modal {
-  margin-top: 7px;
+  margin-top: 0.4rem;
 }
 
 .background--modal {
@@ -351,12 +351,12 @@ input[type="radio"] {
 
 .modal {
   margin: auto;
-  padding: 25px 35px;
+  padding: 1.6rem 2.2rem;
 }
 
 .button {
   border: none;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 /* general */
@@ -396,14 +396,14 @@ input[type="radio"] {
 
 .error-message {
   color: #d70000;
-  font-size: 11px;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
 
 .date-error {
   color: #d70000;
-  font-size: 11px;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.3px;
   position: absolute;
@@ -411,7 +411,7 @@ input[type="radio"] {
 }
 
 .add-edit-error {
-  margin-left: 5px;
+  margin-left: 0.3rem;
 }
 
 .header-icon:hover,
@@ -442,8 +442,8 @@ input[type="radio"] {
 }
 
 .date-item--mobile {
-  padding-top: 75px;
-  padding-inline: 40px;
+  padding-top: 4.7rem;
+  padding-inline: 2.5rem;
 
   /* margin: auto; */
 }
