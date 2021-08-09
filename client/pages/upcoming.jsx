@@ -66,14 +66,14 @@ export default class Upcoming extends React.Component {
             </div>
             {/* features in progress */}
             {/* <div className="row desktop-upcoming-buttons">
-              <span className="desktop-edit-button-container no-underline">
+              <a className="desktop-edit-button-container no-underline">
                 <span className="fas fa-edit desktop-edit-icon color-dark-gray"></span>
                 <span className="desktop-edit-icon-label color-dark-gray">Edit</span>
-              </span>
-              <span className="desktop-calendar-button-container">
+              </a>
+              <a className="desktop-calendar-button-container">
                 <span className="far fa-calendar-times desktop-calendar-icon color-dark-gray"></span>
                 <span className="desktop-calendar-icon-label color-dark-gray">Cancel Date</span>
-              </span>
+              </a>
             </div> */}
           </div>
         )

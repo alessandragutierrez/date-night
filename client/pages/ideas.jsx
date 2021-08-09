@@ -208,10 +208,10 @@ export default class Ideas extends React.Component {
                   <span className="fas fa-edit desktop-edit-icon color-dark-gray"></span>
                   <span className="desktop-edit-icon-label color-dark-gray">Edit</span>
                 </a>
-                <span onClick={() => this.openSetDateModal(idea)} className="desktop-calendar-button-container">
+                <a onClick={() => this.openSetDateModal(idea)} className="desktop-calendar-button-container">
                   <span className="far fa-calendar-plus desktop-calendar-icon color-dark-gray"></span>
                   <span className="desktop-calendar-icon-label color-dark-gray">Make It a Date</span>
-                </span>
+                </a>
               </div>
             </div>
         )
