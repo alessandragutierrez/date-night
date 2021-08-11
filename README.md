@@ -2,6 +2,9 @@
 
 A web application to plan and document date nights.
 
+![Aug-10-2021 20-57-25](https://user-images.githubusercontent.com/82188718/128967383-c6404ac2-c918-4561-9b09-d1469b5e6401.gif)
+
+
 ## Motive
 
 The intention behind Date Night was rather simple... my bullet point list of ideas in my Apple Notes was just not cutting it anymore. I thought to myself, "How can I build an application that takes this list, and turns it into something comprehensive and long lasting?", and in came the objective for Date Night! 
