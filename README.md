@@ -46,3 +46,22 @@ My hope for Date Night is that it can, through the power and practicality of thi
   - User can 'invite' another user on a date.
 
 ## Getting Started
+
+1. Clone the repository.
+```bash
+git clone git@github.com:alessandragutierrez/date-night.git
+cd date-night
+```
+2. Install all dependencies with NPM.
+```bash
+npm install
+```
+3. Import the example database to PostgreSQL.
+```bash
+npm run db:import
+```
+4. Start the project. Once started you can view the application by opening [http://localhost:3000](http://0.0.0.0:3000/#) in your browser.
+```bash
+npm run dev
+```
+
