@@ -7,7 +7,7 @@ A web application to plan and document date nights.
 
 ## Motive
 
-The intention behind Date Night was rather simple... my bulleted list of ideas in my Apple Notes was just not cutting it anymore. I thought to myself, "How can I build an application that takes this list, and turns it into something comprehensive and long-lasting?", and in came the objective for Date Night! 
+The intention behind Date Night was rather simple... my bulleted list of ideas in my Apple Notes was just not cutting it anymore. I thought to myself, "How can I build an application that takes this list, and turns it into something comprehensive and long-lasting?", and in came my idea for Date Night.
 
 Date Night allows the user to not only create ideas for dates, but also helps make them a reality by including functionality to set a time and place. Consequently, the dates are saved and stored, giving the user a convenient space to cherish their memories.
 
